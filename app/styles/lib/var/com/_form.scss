@@ -4,14 +4,13 @@
   @extend .clr;
   label {
     font-size: 1.1em;
-    line-height: 44px;
-    @include breakpoint(1280px) {
-      width: 140px;
-      display: inline-block;
-      float: left;
-    }
+    line-height: 1.6;
+    color: $white;
+    text-align: center;
+    display: block;
   }
   .controls {
+    
     &.small {
       width: 50%;
       margin: 0 auto;
@@ -52,7 +51,7 @@ input,input[type=search] {
   background-color: $smokygray;
   padding: 0 1em;
   outline: none;
-
+  border-radius: 6px;
   &:focus {
     border: 1px solid $main-dark;
     background-color: $main-dark;
@@ -77,7 +76,7 @@ input,input[type=search] {
     -moz-appearance: window;
     border: 0;
     color: $darkgray;
-    border-radius: 0;
+    border-radius: 6px;
   }
   select::-ms-expand {
     display: none;

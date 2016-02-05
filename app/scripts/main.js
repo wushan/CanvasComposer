@@ -2,11 +2,35 @@
 var canvas = new fabric.Canvas('c', {
   selectionColor: 'blue',
   selectionLineWidth: 2,
-  width: 600,
-  height: 400
+  width: 800,
+  height: 600
   // ...
 });
 
+//Listener
+$("#widthValue").on("change paste keyup", function() {
+   canvas.setWidth($(this).val());
+   canvas.renderAll();
+});
+
+$("#heightValue").on("change paste keyup", function() {
+   canvas.setHeight($(this).val());
+   canvas.renderAll();
+});
+
+$("#canvas-select").change(function(){
+  var presetWidth = $('#canvas-select option:selected').attr('data-width'),
+      presetHeight = $('#canvas-select option:selected').attr('data-height');
+  $("#widthValue").val(presetWidth);
+  $("#heightValue").val(presetHeight);
+  canvas.setWidth(presetWidth);
+  canvas.setHeight(presetHeight);
+  canvas.renderAll();
+})
+
+
+
+//Refresh canvas size
 
 // // Select
 // rect.on('selected', function() {
@@ -23,16 +47,16 @@ var canvas = new fabric.Canvas('c', {
 
 var initRadius = 100;
 
-var addObject = {
+var Artboard = {
   addRect : function(){
     var rect = new fabric.Rect({
       left: canvas.getWidth()/2-initRadius/2,
-      top: canvas.getWidth()/2-initRadius/2,
+      top: canvas.getHeight()/2-initRadius/2,
       fill: 'rgba(0,0,0,0.33)',
       width: initRadius,
       height: initRadius
     });
-
+    rect.perPixelTargetFind = true;
     canvas.add(rect);
     //Bind
     bindEvents(rect);
@@ -42,10 +66,11 @@ var addObject = {
   addCircle : function(){
     var circle = new fabric.Circle({
       left: canvas.getWidth()/2-initRadius/2,
-      top: canvas.getWidth()/2-initRadius/2,
+      top: canvas.getHeight()/2-initRadius/2,
       fill: 'rgba(0,0,0,0.33)',
       radius: initRadius/2
     });
+    circle.perPixelTargetFind = true;
     canvas.add(circle);
     //Bind
     bindEvents(circle);
@@ -55,16 +80,59 @@ var addObject = {
   addTriangle : function(){
     var triangle = new fabric.Triangle({
       left: canvas.getWidth()/2-initRadius/2,
-      top: canvas.getWidth()/2-initRadius/2,
+      top: canvas.getHeight()/2-initRadius/2,
       fill: 'rgba(0,0,0,0.33)',
       width: initRadius,
       height: initRadius
     });
+    //Set Perpixel Movement
+    triangle.perPixelTargetFind = true;
     canvas.add(triangle);
     //Bind
     bindEvents(triangle);
     //Refresh log
     logObj();
+  },
+  addVideo : function() {
+    //Set InitRadius for Videos 16:9
+    var w = initRadius*1.6;
+    var h = initRadius*0.9;
+    var videoEl = document.createElement("video");
+    videoEl.loop = true;
+    videoEl.controls = true;
+    console.log(videoEl);
+    videoEl.innerHTML = '<source src="http://www.quirksmode.org/html5/videos/big_buck_bunny.mp4">';
+
+    var video = new fabric.Image(videoEl, {
+      left: canvas.getWidth()/2-w/2,
+      top: canvas.getHeight()/2-h/2,
+      angle: 0,
+      width: w,
+      height: h
+    });
+    video.crossOrigin = "";
+    video.perPixelTargetFind = true;
+    canvas.add(video);
+    video.getElement().play();
+
+    //Bind
+    bindEvents(video);
+    //Refresh log
+    logObj();
+
+    fabric.util.requestAnimFrame(function render() {
+      canvas.renderAll();
+      fabric.util.requestAnimFrame(render);
+    });
+  },
+  dispose : function() {
+    // canvas.deactivateAllWithDispatch();
+    canvas.clear();
+    //Refresh log
+    logObj();
+  },
+  removeObject: function() {
+    canvas.getActiveObject().remove();
   }
 }
 
@@ -78,13 +146,26 @@ $('.tools').on('click', 'a', function(){
   var className = $(this).attr('class');
   switch(className){
     case 'js-add-rect':
-      addObject.addRect();
+      Artboard.addRect();
       break;
     case 'js-add-circle':
-      addObject.addCircle();
+      Artboard.addCircle();
       break;
     case 'js-add-triangle':
-      addObject.addTriangle();
+      Artboard.addTriangle();
+      break;
+    case 'js-dispose':
+      Artboard.dispose();
+      break;
+    case 'js-add-video':
+      Artboard.addVideo();
+  }
+})
+$('.objectControl').on('click', 'button', function(){
+  var className = $(this).attr('class');
+  switch(className){
+    case 'js-delete':
+      Artboard.removeObject();
       break;
   }
 })
@@ -92,8 +173,16 @@ $('.tools').on('click', 'a', function(){
 function bindEvents(obj) {
   obj.on('selected', function() {
     console.log('selected');
+    $('.objectControl').addClass('active');
     instantMeta(obj);
   });
+  //deselect
+  canvas.on('before:selection:cleared', function() {
+    console.log('deselected');
+    $('.objectControl').removeClass('active');
+    instantMeta(obj);
+  });
+
   //Scaling
   obj.on('scaling', function() {
     console.log('scaling');
@@ -139,6 +228,8 @@ function instantMeta(obj) {
 }
 
 function logObj() {
-  $('#console').html(JSON.stringify(canvas.toJSON()));
+  $('#console .shapeobj .content').html(JSON.stringify(canvas.toJSON()));
+  $('#console .canvasobj .content').html(JSON.stringify(canvas));
+
   // fabric.log(canvas.toJSON());
 }

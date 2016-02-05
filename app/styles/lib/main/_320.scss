@@ -9,19 +9,18 @@
 		height: 100%;
 	}
 	#artboard {
-		@include span(8 of 12 0);
+		@include span(9 of 12 0);
 		background-color: #cccccc;
 		height: 100%;
 	}
 	#sidebar {
-		@include span(2 of 12 0 last);
+		@include span(1.5 of 12 0 last);
 		height: 100%;
 		box-sizing: border-box;
 		padding: 1em;
 	}
 	#console {
-		@include span(2 of 12 0);
-		height: 100%;
+		@include span(1.5 of 12 0);
 	}
 	.row {
 		@extend .clr;
@@ -29,13 +28,27 @@
 	}
 }
 #console {
-	background-color: $black;
+	background-color: $darkestgray;
 	color: $white;
-	padding: 1em;
-	box-sizing: border-box;
 	overflow-y: scroll;
 	word-break: break-all;
 	font-size: .8em;
+	height: 100%;
+	h3 {
+		padding: 0 1em;
+	}
+	.shapeobj {
+		height: 50%;
+		overflow: scroll;
+	}
+	.canvasobj {
+		height: 50%;
+	}
+	.content {
+		background-color: darken($darkestgray, 10%);
+		padding: 1em;
+		box-sizing: border-box;
+	}
 }
 
 //Sidebar
@@ -58,13 +71,38 @@
 		}
 	}
 }
+.canvas-wrapper {
+	height: 100%;
+	text-align: center;
+	font-size: 0;
+	&:before {
+		content: '';
+		height: 100%;
+		width: 0;
+		display: inline-block;
+		vertical-align: middle;
+	}
+	#canvas {
+		display: inline-block;
+		vertical-align: middle;
+	}
+}
 #canvas {
-	// margin: 0 auto;
-	// background-color: $white;
-	// box-shadow: 1px 1px 3px rgba(0,0,0,0.14);
-	// background-image: url('../images/components/tiny_grid.png');
-	// background-repeat: repeat;
-	// background-position: left top;
+	position: relative;
+	.objectControl {
+		@extend .transition;
+		opacity: 0;
+		position: absolute;
+		font-size: 1rem;
+		background-color: $black;
+		bottom: 100%;
+		right: 0;
+		padding: .5em;
+		&.active {
+			bottom: calc( 100% - 43px );
+			opacity: 1;
+		}
+	}
 }
 .canvas-container {
 	margin: 0 auto;
@@ -78,17 +116,16 @@ canvas {
 	
 }
 
-.canvasconfig-wrapper {}
+.canvasconfig-wrapper {
+	font-size: 12px;
+	border-bottom: 1px solid $darkestgray;
+	padding-bottom: 1em;
+	margin-bottom: 1em;
+}
 
 .canvasconfig-inner {
-	padding: 2em;
+	background-color: $darkgray;
 	@extend .clr;
-	.block {
-		@include span(6 of 12);
-		&:last-child {
-			@include last;
-		}
-	}
 }
 .information {
 	background-color: $white;
