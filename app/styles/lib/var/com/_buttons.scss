@@ -1,0 +1,58 @@
+//BUTTONS
+.call-action {
+  padding: 2em 0;
+}
+.btn {
+  @extend .transition;
+  display: inline-block;
+  vertical-align: middle;
+  padding: .6em 2em;
+  box-sizing: border-box;
+  outline: none;
+  background-color: transparent;
+  border: 0;
+  margin: 0 .1em;
+  &.basic {
+    background-color: $main;
+    color: $white;
+    &:hover {
+      background-color: $main-dark;
+    }
+    &:active {
+      background-color: darken($main-dark, 10%);
+    }
+  }
+  &.frame {
+    border: 1px solid $main;
+    color: $main;
+    &:hover {
+      background-color: $main;
+      color: $white;
+    }
+    &:active {
+      background-color: darken($main-dark, 10%);
+    }
+  }
+  &.reverse {
+    background-color: $main-dark;
+    color: $white;
+    &:hover {
+      background-color: $main;
+      color: $white;
+    }
+    &:active {
+      background-color: darken($main-dark, 10%);
+    }
+  }
+  //Gredient
+  &.gradient {
+    &.yellow {
+      color: $black;
+      background-color: #ffd150;
+      // @include background-image(linear-gradient( 0deg, #ffb600 2%, #ffecb8 100%));
+      &:hover {
+        background-image: inherit;
+      }
+    }
+  }
+}

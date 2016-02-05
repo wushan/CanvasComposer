@@ -1,0 +1,73 @@
+.transition {
+  transition: .3s all ease-in-out;
+}
+.clr {
+  &:before, &:after {
+    content:'';
+    clear: both;
+    display: block;
+  }
+}
+//Fix HTML5 Tag
+main {
+  display: block;
+}
+
+//UL
+ul{
+  // list-style-type: none;
+  li{
+
+  }
+}
+//OL
+ol {
+  li {
+    
+  }
+}
+//Link
+a{
+  text-decoration: none;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+//IE
+.goodbyeieeight {
+  text-align: center;
+  position: fixed;
+  z-index: 9999;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: $black;
+  color: $white;
+  padding-top: 120px;
+  h1, h2 {
+    margin: 0 auto;
+    width: 50%;
+  }
+  p {
+    margin: 20px auto;
+    width: 50%;
+  }
+  a {
+    display: inline-block;
+    color: $white;
+    width: 120px;
+  }
+  img {
+    width: 64px;
+  }
+  span {
+    display: block;
+    text-align: center;
+  }
+}
+

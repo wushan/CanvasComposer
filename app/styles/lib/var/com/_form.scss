@@ -1,0 +1,136 @@
+//ControlGroup
+.controlgroup {
+  margin-bottom: .5em;
+  @extend .clr;
+  label {
+    font-size: 1.1em;
+    line-height: 44px;
+    @include breakpoint(1280px) {
+      width: 140px;
+      display: inline-block;
+      float: left;
+    }
+  }
+  .controls {
+    &.small {
+      width: 50%;
+      margin: 0 auto;
+    }
+    .status {
+      display: inline-block;
+      vertical-align: middle;
+    }
+    .vertify {
+      display: inline-block;
+      vertical-align: middle;
+      img {
+        display: block;
+      }
+    }
+  }
+}
+textarea {
+  width: 100%;
+  border: 1px solid $gray;
+  box-sizing: border-box;
+  height: 44px;
+  background-color: $smokygray;
+  padding: 1em;
+  outline: none;
+  min-height: 200px;
+  &:focus {
+    border: 1px solid $main-dark;
+    background-color: $main-dark;
+    color: $white;
+  }
+}
+input,input[type=search] {
+  width: 100%;
+  border: 1px solid $gray;
+  box-sizing: border-box;
+  height: 44px;
+  background-color: $smokygray;
+  padding: 0 1em;
+  outline: none;
+
+  &:focus {
+    border: 1px solid $main-dark;
+    background-color: $main-dark;
+    color: $white;
+  }
+  &.calc {
+    display: inline-block;
+    vertical-align: middle;
+    width: calc( 100% - 60px );
+  }
+  &#CAPTCHA {
+    display: inline-block;
+    vertical-align: middle;
+    width: calc( 100% - 93px );
+  }
+}
+//Select
+.controlgroup {
+  select {
+    width: 100%;
+    -webkit-appearance: none;
+    -moz-appearance: window;
+    border: 0;
+    color: $darkgray;
+    border-radius: 0;
+  }
+  select::-ms-expand {
+    display: none;
+  }
+  @-moz-document url-prefix() {
+    .select-wrapper {
+      //background-color: #ffffff;
+      background-image: url("../images/components/select-arrow.png");
+      background-position: 97% center;
+      background-repeat: no-repeat;
+      background-color: $smokygray;
+      select {
+        width: 110%;
+        background-image: url("../images/components/select-arrow.png");
+        background-position: 88% center;
+        background-repeat: no-repeat;
+      }
+    }
+  }
+  select {
+    background-color: transparent;
+    background-image: url("../images/components/select-arrow.png");
+    background-position: 97% center;
+    background-repeat: no-repeat;
+    box-sizing: border-box;
+    height: 44px;
+    padding: .3em .7em;
+    background-color: $smokygray;
+    &:focus {
+      outline: none;
+    }
+  }
+  .select-wrapper {
+    box-sizing: border-box;
+    width: 100%;
+    border: 0;
+    outline: none;
+    background-color: $smokygray;
+    display: inline-block;
+    vertical-align: middle;
+    overflow: hidden;
+    border: 1px solid $gray;
+    box-shadow: inset 0 0 3px rgba($black, .33);
+    &:focus {
+
+    }
+  }
+}
+//Placehoder
+::-webkit-input-placeholder { /* WebKit browsers */ color: $gray; }
+
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */ color: $gray; opacity: 1; }
+
+::-moz-placeholder { /* Mozilla Firefox 19+ */ color: $gray; opacity: 1; }
+
+:-ms-input-placeholder { /* Internet Explorer 10+ */ color: $gray; }

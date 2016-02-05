@@ -1,0 +1,101 @@
+#wrapper {
+	background-color: $darkgray;
+
+}
+#main {
+	height: 100vh;
+	@extend .clr;
+	.row {
+		height: 100%;
+	}
+	#artboard {
+		@include span(8 of 12 0);
+		background-color: #cccccc;
+		height: 100%;
+	}
+	#sidebar {
+		@include span(2 of 12 0 last);
+		height: 100%;
+		box-sizing: border-box;
+		padding: 1em;
+	}
+	#console {
+		@include span(2 of 12 0);
+		height: 100%;
+	}
+	.row {
+		@extend .clr;
+		// height: 75vh;
+	}
+}
+#console {
+	background-color: $black;
+	color: $white;
+	padding: 1em;
+	box-sizing: border-box;
+	overflow-y: scroll;
+	word-break: break-all;
+	font-size: .8em;
+}
+
+//Sidebar
+#sidebar {
+	ul {
+		margin: 0;
+		padding: 0;
+		list-style-type: none;
+		li {
+			margin-bottom: .5em;
+			a {
+				height: 40px;
+				margin: 0 auto;
+				color: $white;
+				text-align: center;
+				display: block;
+				line-height: 40px;
+				background-color: $darkestgray;
+			}
+		}
+	}
+}
+#canvas {
+	// margin: 0 auto;
+	// background-color: $white;
+	// box-shadow: 1px 1px 3px rgba(0,0,0,0.14);
+	// background-image: url('../images/components/tiny_grid.png');
+	// background-repeat: repeat;
+	// background-position: left top;
+}
+.canvas-container {
+	margin: 0 auto;
+	background-color: $white;
+	box-shadow: 0px 3px 3px rgba(0,0,0,.66);
+	background-image: url('../images/components/tiny_grid.png');
+	background-repeat: repeat;
+	background-position: left top;
+}
+canvas {
+	
+}
+
+.canvasconfig-wrapper {}
+
+.canvasconfig-inner {
+	padding: 2em;
+	@extend .clr;
+	.block {
+		@include span(6 of 12);
+		&:last-child {
+			@include last;
+		}
+	}
+}
+.information {
+	background-color: $white;
+	padding: 1em;
+	box-sizing: border-box;
+	font-size: .9em;
+	span {
+		color: $red;
+	}
+}

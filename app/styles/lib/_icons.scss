@@ -1,0 +1,4 @@
+//Icons using retina-sprites mixin
+.icons-mobile-btn {
+	@include sprite($mobile-menu);
+}

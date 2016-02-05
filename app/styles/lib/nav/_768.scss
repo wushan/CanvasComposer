@@ -1,0 +1,15 @@
+@include susy-breakpoint(768px, 12) {
+  nav {
+    text-align: center;
+    //Normal
+    ul {
+      display: block;
+      li {
+      }
+    }
+    a.mobile-trigger {
+      display: none;
+    }
+  }
+
+}

@@ -1,0 +1,20 @@
+//Basic Colors // Do Not Modify
+$white: #ffffff;
+$black: #000000;
+$gray: #cccccc;
+$smokygray: #f2f2f2;
+$darkgray: #666666;
+$darkestgray: #3e3e3e;
+
+//Set Main Color
+$main: #1565c0;
+$yellow: #ffd150;
+$red: #ff0000;
+//
+$main-dark: darken($main, 20%);
+$main-light: lighten($main, 20%);
+
+
+
+//Fonts
+$sans-serif: "Helvetica Neue",Arial,"Heiti TC","LiHei Pro","微軟正黑體","Microsoft Jhenghei", sans-serif;

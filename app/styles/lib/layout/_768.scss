@@ -1,0 +1,120 @@
+@include susy-breakpoint(768px, 12) {
+
+  //Grid
+  .g-12-12 {
+    @include span(12 of 12);
+    &.no-gutters {
+      @include span(12 of 12 no-gutters);
+      padding: 0;
+    }
+  }
+  .g-11-12 {
+    @include span(11 of 12);
+    &.no-gutters {
+      @include span(11 of 12 no-gutters);
+      padding: 0;
+    }
+  }
+  .g-10-12 {
+    @include span(10 of 12);
+    &.no-gutters {
+      @include span(10 of 12 no-gutters);
+      padding: 0;
+    }
+  }
+  .g-9-12 {
+    @include span(9 of 12);
+    &.no-gutters {
+      @include span(9 of 12 no-gutters);
+      padding: 0;
+    }
+  }
+  .g-8-12 {
+    @include span(8 of 12);
+    &.no-gutters {
+      @include span(8 of 12 no-gutters);
+      padding: 0;
+    }
+  }
+  .g-7-12 {
+    @include span(7 of 12);
+    &.no-gutters {
+      @include span(7 of 12 no-gutters);
+      padding: 0;
+    }
+  }
+  .g-6-12 {
+    @include span(6 of 12);
+    &.no-gutters {
+      @include span(6 of 12 no-gutters);
+      padding: 0;
+    }
+  }
+  .g-5-12 {
+    @include span(5 of 12);
+    &.no-gutters {
+      @include span(5 of 12 no-gutters);
+      padding: 0;
+    }
+  }
+  .g-4-12 {
+    @include span(4 of 12);
+    &.no-gutters {
+      @include span(4 of 12 no-gutters);
+      padding: 0;
+    }
+  }
+  .g-3-12 {
+    @include span(3 of 12);
+    &.no-gutters {
+      @include span(3 of 12 no-gutters);
+      padding: 0;
+    }
+  }
+  .g-2-12 {
+    @include span(2 of 12);
+    &.no-gutters {
+      @include span(2 of 12 no-gutters);
+      padding: 0;
+    }
+  }
+  .g-1-12 {
+    @include span(1 of 12);
+    &.no-gutters {
+      @include span(1 of 12 no-gutters);
+      padding: 0;
+    }
+  }
+
+  .grid {
+    &:last-child {
+      @include last;
+    }
+  }
+  //Table
+  .table {
+    display: table;
+  }
+  .table-c {
+    display: table-cell;
+  }
+  .t-1-10 {
+    width: 10%;
+  }
+  .t-2-10 {
+    width: 20%;
+  }
+  .t-3-10 {
+    width: 30%;
+  }
+  .t-4-10 {
+    width: 40%;
+  }
+  .t-6-10 {
+    width: 60%;
+  }
+  .t-5-10 {
+    width: 50%;
+  }
+
+}

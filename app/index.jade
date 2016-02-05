@@ -1,0 +1,44 @@
+extends layouts/default
+
+block content
+  #main
+    .row
+      #console
+        p.
+          Console
+      #artboard
+        .canvasconfig-wrapper
+          .canvasconfig-inner
+            .block
+              .controlgroup
+                label Width
+                .controls
+                  input(type="text")
+            .block
+              .controlgroup
+                label Height
+                .controls
+                  input(type="text")
+
+        #canvas
+          canvas#c
+      #sidebar
+        ul.tools
+          li
+            a.js-add-rect(href="javascript:;") Rect
+          li
+            a.js-add-circle(href="javascript:;") Circle
+          li
+            a.js-add-triangle(href="javascript:;") Tri
+        .information
+          .type Type: <span></span>
+          .size
+            .width Width:<span></span>
+            .height Height:<span></span>
+          .radius Radius:<span></span>
+          .position
+            .top Top:<span></span>
+            .left Left:<span></span>
+          .angle Angle:<span></span>
+
+    

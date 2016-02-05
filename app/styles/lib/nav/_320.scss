@@ -1,0 +1,31 @@
+nav {
+  text-align: center;
+  @extend .clr;
+  //Normal
+  ul {
+    font-size: 0;
+    display: none;
+    li {
+      display: inline-block;
+      vertical-align: middle;
+      font-size: 1rem;
+      a {
+        display: block;
+      }
+    }
+  }
+  a.mobile-trigger {
+    display: inline-block;
+    vertical-align: middle;
+    @include last;
+  }
+  //Nav in SlideBar
+  &.slide {
+    ul {
+      display: block;
+      li {
+        display: block;
+      }
+    }
+  }
+}

@@ -1,0 +1,30 @@
+body {
+	font-family: 'Open Sans', $sans-serif;
+	font-size: 100%;
+	line-height: 1.6;
+}
+
+//Typography
+
+//Align
+.centered {
+	text-align: center;
+}
+.left {
+	text-align: left;
+}
+.right {
+	text-align: right;
+}
+.justify {
+	text-align: justify;
+	text-justify: inter-ideograph;
+	-ms-text-justify: inter-ideograph; /*IE9*/
+	-moz-text-align-last:justify; /*Firefox*/
+	-webkit-text-align-last:justify; /*Chrome*/
+	&:after {
+		content: '';
+		display: inline-block;
+		width: 100%;
+	}
+}
