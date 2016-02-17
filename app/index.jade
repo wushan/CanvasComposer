@@ -11,13 +11,6 @@ block content
         .canvasobj
           h3 Canvas Object
           .content
-      #artboard
-        .canvas-wrapper
-          #canvas
-            canvas#c
-            .objectControl
-              button Dimension
-              button.js-delete Delete
       #sidebar
         .canvasconfig-wrapper
           .canvasconfig-inner
@@ -43,14 +36,14 @@ block content
           li
             a.js-add-video(href="javascript:;") Video
           li
-            a.js-add-rect(href="javascript:;") Rect
+            a.js-add-rect(href="javascript:;") 通用元件
+          //- li
+          //-   a.js-add-circle(href="javascript:;") Circle
+          //- li
+          //-   a.js-add-triangle(href="javascript:;") Tri
           li
-            a.js-add-circle(href="javascript:;") Circle
-          li
-            a.js-add-triangle(href="javascript:;") Tri
-          li
-            a.js-dispose(href="javascript:;") Clean
-        .information
+            a.js-dispose(href="javascript:;") 全部清除
+        .attributes
           .type Type: <span></span>
           .size
             .width Width:<span></span>
@@ -60,5 +53,13 @@ block content
             .top Top:<span></span>
             .left Left:<span></span>
           .angle Angle:<span></span>
+      #artboard
+        .canvas-wrapper
+          #canvas
+            canvas#c
+            .objectControl
+              button Dimension
+              button.js-delete Delete
+      
 
     

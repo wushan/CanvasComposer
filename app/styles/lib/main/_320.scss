@@ -9,18 +9,19 @@
 		height: 100%;
 	}
 	#artboard {
-		@include span(9 of 12 0);
+		@include span(10 of 12 0);
 		background-color: #cccccc;
 		height: 100%;
 	}
 	#sidebar {
-		@include span(1.5 of 12 0 last);
+		@include span(2 of 12 0 last);
 		height: 100%;
 		box-sizing: border-box;
 		padding: 1em;
 	}
 	#console {
-		@include span(1.5 of 12 0);
+		// @include span(1.5 of 12 0);
+		display: none;
 	}
 	.row {
 		@extend .clr;
@@ -77,8 +78,8 @@
 	font-size: 0;
 	&:before {
 		content: '';
-		height: 100%;
 		width: 0;
+		height: 100%;
 		display: inline-block;
 		vertical-align: middle;
 	}
@@ -89,6 +90,8 @@
 }
 #canvas {
 	position: relative;
+	margin: 2em 0;
+	transform-origin: 25%;
 	.objectControl {
 		@extend .transition;
 		opacity: 0;
@@ -127,7 +130,7 @@ canvas {
 	background-color: $darkgray;
 	@extend .clr;
 }
-.information {
+.attributes {
 	background-color: $white;
 	padding: 1em;
 	box-sizing: border-box;
