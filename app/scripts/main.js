@@ -1,3 +1,9 @@
+//Extend Attributes for Image Array
+fabric.Object.prototype.media = {
+  'slides' : [],
+  'video' : ''
+}
+
 //Setting Up Canvas
 var canvas = new fabric.Canvas('c', {
   selectionColor: 'blue',
@@ -6,7 +12,6 @@ var canvas = new fabric.Canvas('c', {
   height: 600
   // ...
 });
-console.log(canvas);
 var container = document.getElementById('artboard');
 var paintArea = document.getElementById('canvas');
 // canvas.wrapperEl.style.transform = "scale(.8)";
@@ -52,82 +57,102 @@ function artboardScale() {
   }
 }
 
-
-//aspectRatio
-
 $(window).resize(function(){
   artboardScale();
 })
-// Canvas container scaling
-// var container = document.getElementById('artboard');
-// var paintArea = document.getElementById('canvas');
-// console.log(container.clientHeight);
-// artboardScale();
-// function artboardScale() {
-//   //Check Aspect
-//   var aspectRatio = paintArea.clientWidth/paintArea.clientHeight;
-//   var wide,
-//       long;
 
-//   if (aspectRatio > 1) {
-
-//   } else {
-
-//   }
-
-//   if ($('.canvas-container').outerWidth() > container.clientWidth || $('.canvas-container').outerHeight() > container.clientHeight) {
-//     console.log(paintArea);
-//     var ratio = container.clientWidth/paintArea.clientWidth;
-//     console.log(ratio);
-//     var motive = ratio*ratio;
-//     paintArea.style.transform = "scale(" + motive + ")";
-//   }else if ($('.canvas-container').outerWidth() < container.clientWidth || $('.canvas-container').outerHeight() < container.clientHeight) {
-//     console.log(paintArea);
-//     var ratio = container.clientWidth/paintArea.clientWidth;
-//     console.log(ratio);
-//     var motive = ratio*ratio;
-//     if (motive > 1) {
-//       motive = 1;
-//     }
-//     paintArea.style.transform = "scale(" + motive + ")";
-//   }
-// }
-// $(window).resize(function(){
-//   artboardScale();
-// })
 
 //Listener
-$("#widthValue").on("change paste keyup", function() {
-   //Refresh Canvas Size
-   canvas.setWidth($(this).val());
-   canvas.renderAll();
-   //Fit Artboard
-   artboardScale();
-});
+  //Canvas Attrs Control
+    $("#canvasWidth").on("change paste keyup", function() {
+       //Refresh Canvas Size
+       canvas.setWidth($(this).val());
+       canvas.renderAll();
+       //Fit Artboard
+       artboardScale();
+       //Set Canvas tip tags
+      $(".sizeTag .tag.width span").html($(this).val());
+    });
 
-$("#heightValue").on("change paste keyup", function() {
-   //Refresh Canvas Size
-   canvas.setHeight($(this).val());
-   canvas.renderAll();
-   //Fit Artboard
-   artboardScale();
-});
+    $("#canvasHeight").on("change paste keyup", function() {
+       //Refresh Canvas Size
+       canvas.setHeight($(this).val());
+       canvas.renderAll();
+       //Fit Artboard
+       artboardScale();
+       //Set Canvas tip tags
+      $(".sizeTag .tag.height span").html($(this).val());
+    });
 
-$("#canvas-select").change(function(){
-  //Refresh Canvas Size
-  var presetWidth = $('#canvas-select option:selected').attr('data-width'),
-      presetHeight = $('#canvas-select option:selected').attr('data-height');
-  $("#widthValue").val(presetWidth);
-  $("#heightValue").val(presetHeight);
-  canvas.setWidth(presetWidth);
-  canvas.setHeight(presetHeight);
-  canvas.renderAll();
-  //Fit Artboard
-  artboardScale();
-  //Set Canvas tip tags
-  $(".sizeTag .tag.width span").html(presetWidth);
-  $(".sizeTag .tag.height span").html(presetHeight);
-})
+    $("#canvas-select").change(function(){
+      //Refresh Canvas Size
+      var presetWidth = $('#canvas-select option:selected').attr('data-width'),
+          presetHeight = $('#canvas-select option:selected').attr('data-height');
+      $("#widthValue").val(presetWidth);
+      $("#heightValue").val(presetHeight);
+      canvas.setWidth(presetWidth);
+      canvas.setHeight(presetHeight);
+      canvas.renderAll();
+      //Fit Artboard
+      artboardScale();
+      //Set Canvas tip tags
+      $(".sizeTag .tag.width span").html(presetWidth);
+      $(".sizeTag .tag.height span").html(presetHeight);
+    });
+
+  //Object Attr Control
+    //Media
+    $('#mediaValue').on("change paste keyup", function() {
+      var obj = canvas.getActiveObject();
+      // var img = new Image();
+      // img.onload = function(){
+      //     obj.setElement(img);
+      // }
+      // img.src = $(this).val();
+      obj.setSrc($(this).val(), function(oImg){
+        canvas.renderAll();
+      })
+      
+    });
+
+    //Size
+    var objectSize,
+        objectWidth,
+        objectHeight,
+        objectScaleX,
+        objectScaleY;
+
+    objectSize = $('.objectSize');
+    objectSize.on("change paste keyup", function() {
+      var obj = canvas.getActiveObject();
+      objectWidth = obj.width*obj.scaleX;
+      objectHeight = obj.height*obj.scaleY;
+      objectScaleX = $("#objectWidth").val()/objectWidth;
+      objectScaleY = $("#objectHeight").val()/objectHeight;
+      obj.setScaleX(objectScaleX);
+      obj.setScaleY(objectScaleY);
+      canvas.renderAll();
+    });
+
+    // $('#objectWidth').on("change paste keyup", function() {
+    //   var obj = canvas.getActiveObject();
+    //   var width = obj.width;
+    //   var scale = $(this).val()/width;
+    //   obj.setScaleX(scale);
+    //   obj.setScaleY(scale);
+    //   canvas.renderAll();
+    // });
+
+    // $('#objectHeight').on("change paste keyup", function() {
+    //   var obj = canvas.getActiveObject();
+    //   var height = obj.height;
+    //   var scale = $(this).val()/height;
+    //   obj.setScaleX(scale);
+    //   obj.setScaleY(scale);
+    //   canvas.renderAll();
+    // });
+
+
 
 
 
@@ -157,6 +182,7 @@ var Artboard = {
       width: initRadius,
       height: initRadius
     });
+
     rect.perPixelTargetFind = true;
     canvas.add(rect);
     //Bind
@@ -195,36 +221,61 @@ var Artboard = {
     logObj();
   },
   addVideo : function() {
-    //Set InitRadius for Videos 16:9
-    var w = initRadius*1.6;
-    var h = initRadius*0.9;
-    var videoEl = document.createElement("video");
-    videoEl.loop = true;
-    videoEl.controls = true;
-    console.log(videoEl);
-    videoEl.innerHTML = '<source src="http://www.quirksmode.org/html5/videos/big_buck_bunny.mp4">';
-
-    var video = new fabric.Image(videoEl, {
-      left: canvas.getWidth()/2-w/2,
-      top: canvas.getHeight()/2-h/2,
-      angle: 0,
-      width: w,
-      height: h
+    //Add Image/Video
+    var media = new fabric.Image.fromURL('images/uploads/abc.png', function(oImg) {
+      oImg.set({
+        'left': canvas.getWidth()/2-oImg.width/2,
+        'top': canvas.getHeight()/2-oImg.height/2
+      });
+      canvas.add(oImg);
+      oImg.toObject = (function(toObject) {
+        return function() {
+          return fabric.util.object.extend(toObject.call(this), {
+            media: {
+              slides : this.media.slides,
+              video: this.media.video
+            }
+          });
+        };
+      })(oImg.toObject);
+      //Bind
+      bindEvents(oImg);
+      //Refresh log
+      logObj();
     });
-    // video.crossOrigin = "";
-    // video.perPixelTargetFind = true;
-    canvas.add(video);
-    video.getElement().play();
 
-    //Bind
-    bindEvents(video);
-    //Refresh log
-    logObj();
+    
 
-    fabric.util.requestAnimFrame(function render() {
-      canvas.renderAll();
-      fabric.util.requestAnimFrame(render);
-    });
+    // //Set InitRadius for Videos 16:9
+    // var w = initRadius*1.6;
+    // var h = initRadius*0.9;
+    // var videoEl = document.createElement("video");
+    // videoEl.loop = true;
+    // videoEl.controls = true;
+    // console.log(videoEl);
+    // videoEl.innerHTML = '<source src="http://www.quirksmode.org/html5/videos/big_buck_bunny.mp4">';
+
+    // var video = new fabric.Image(videoEl, {
+    //   left: canvas.getWidth()/2-w/2,
+    //   top: canvas.getHeight()/2-h/2,
+    //   angle: 0,
+    //   width: w,
+    //   height: h
+    // });
+    // // video.crossOrigin = "";
+    // // video.perPixelTargetFind = true;
+    // canvas.add(video);
+    // video.getElement().play();
+
+    // //Bind
+    // bindEvents(video);
+    // //Refresh log
+    // logObj();
+
+    // fabric.util.requestAnimFrame(function render() {
+    //   canvas.renderAll();
+    //   fabric.util.requestAnimFrame(render);
+    // });
   },
   dispose : function() {
     // canvas.deactivateAllWithDispatch();
@@ -275,58 +326,83 @@ function bindEvents(obj) {
   obj.on('selected', function() {
     console.log('selected');
     $('.objectControl').addClass('active');
-    instantMeta(obj);
+    instantMeta.log(obj);
   });
   //deselect
   canvas.on('before:selection:cleared', function() {
     console.log('deselected');
     $('.objectControl').removeClass('active');
-    instantMeta(obj);
+    instantMeta.clean();
   });
 
   //Scaling
   obj.on('scaling', function() {
     console.log('scaling');
-    instantMeta(obj);
+    instantMeta.log(obj);
   });
   //Moving
   obj.on('moving', function() {
     console.log('moving');
-    instantMeta(obj);
+    instantMeta.log(obj);
   });
   //Rotating
   obj.on('rotating', function() {
     console.log('rotating');
-    instantMeta(obj);
+    instantMeta.log(obj);
   });
 }
 
-function instantMeta(obj) {
-  console.log(obj);
-  var width,
-      height,
-      radius,
-      left,
-      top,
-      angle,
-      type;
+var instantMeta = {
+  log: function(obj){
+    console.log(obj);
+    var width,
+        height,
+        radius,
+        left,
+        top,
+        angle,
+        type,
+        media;
 
-  width = obj.width*obj.scaleX;
-  height = obj.height*obj.scaleY;
-  radius = obj.radius;
-  left = obj.left;
-  top = obj.top;
-  angle = obj.angle;
-  type = obj.type;
+    width = obj.width*obj.scaleX;
+    height = obj.height*obj.scaleY;
+    radius = obj.radius;
+    left = obj.left;
+    top = obj.top;
+    angle = obj.angle;
+    type = obj.type;
+    //混合物件
+    if (type === "image") {
+      if (obj.media.video != '') {
+        media = obj.media.video;
+      } else if ( obj.media.slides.length != 0 ) {
+        media = obj.media.slides;
+      } else if ( obj.toObject().src != ''){
+        media = obj.toObject().src;
+      } else {
+        alert('Type Error');
+      }
+    }
+    // media = obj.media.video;
 
-  $('.attributes .type span').html(type);
-  $('.attributes .width span').html(width);
-  $('.attributes .height span').html(height);
-  $('.attributes .radius span').html(radius);
-  $('.attributes .angle span').html(angle);
-  $('.attributes .position .top span').html(top);
-  $('.attributes .position .left span').html(left);
+    $('.attributes-wrapper .type input').val(type);
+    $('.attributes-wrapper .width input').val(width);
+    $('.attributes-wrapper .height input').val(height);
+    $('.attributes-wrapper .radius input').val(radius);
+    $('.attributes-wrapper .angle input').val(angle);
+    $('.attributes-wrapper .top input').val(top);
+    $('.attributes-wrapper .left input').val(left);
+    $('.attributes-wrapper .media input').val(media);
+    logObj();
+  },
+  clean: function(obj){
+    $('.attributes-wrapper input').val('');
+    console.log('clean');
+  }
 }
+// function instantMeta(obj) {
+  
+// }
 
 function logObj() {
   $('#console .shapeobj .content').html(JSON.stringify(canvas.toJSON()));

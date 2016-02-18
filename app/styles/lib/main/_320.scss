@@ -1,5 +1,5 @@
 #wrapper {
-	background-color: $darkgray;
+	background-color: $gray;
 
 }
 #main {
@@ -9,11 +9,17 @@
 		height: 100%;
 	}
 	#artboard {
-		@include span(10 of 12 0);
+		@include span(9 of 12 0);
 		background-color: #cccccc;
 		height: 100%;
 	}
 	#sidebar {
+		@include span(1 of 12 0);
+		height: 100%;
+		box-sizing: border-box;
+		padding: 1em;
+	}
+	#config {
 		@include span(2 of 12 0 last);
 		height: 100%;
 		box-sizing: border-box;
@@ -21,7 +27,7 @@
 	}
 	#console {
 		// @include span(1.5 of 12 0);
-		display: none;
+		// display: none;
 	}
 	.row {
 		@extend .clr;
@@ -51,13 +57,33 @@
 		box-sizing: border-box;
 	}
 }
+//Config
+#config {
 
+}
 //Sidebar
 #sidebar {
-	ul {
+	background-color: $darkgray;
+}
+//Panels
+.panel {
+	background-color: $darkestgray;
+	color: $white;
+	.title {
+		text-align: center;
+		h3 {
+			margin: 0;
+			font-weight: 200;
+		}
+	}
+}
+ul {
+	&.tools {
 		margin: 0;
 		padding: 0;
 		list-style-type: none;
+		@extend .clr;
+		@extend .transition;
 		li {
 			margin-bottom: .5em;
 			a {
@@ -70,8 +96,72 @@
 				background-color: $darkestgray;
 			}
 		}
+		&.overall {
+			border-top: 1px solid $gray;
+			padding-top: .5em;
+		}
 	}
 }
+.attributes-wrapper {
+	box-shadow: 0px 3px 3px rgba(0,0,0,.33);
+	// background-color: $white;
+	box-sizing: border-box;
+	font-size: .8em;
+	padding: 1em .5em;
+	@extend .clr;
+	&:hover {
+		box-shadow: 0px 3px 3px rgba(0,0,0,.66);
+	}
+	.attributes-inner {
+		.block {
+			@include gallery(6 of 12 .5);
+		}
+	}
+}
+.canvasconfig-wrapper {
+	box-shadow: 0px 3px 3px rgba(0,0,0,.33);
+	// background-color: $white;
+	box-sizing: border-box;
+	font-size: .8em;
+	padding: .5em;
+	margin-bottom: 1em;
+}
+
+.canvasconfig-inner {
+	@extend .clr;
+	.block {
+		margin-bottom: .5em;
+	}
+	.row {
+		background-color: $gray;
+		color: $black;
+		padding: .5em;
+		.block {
+			@include gallery(6 of 12 .5);
+		}
+	}
+	.layoutpresets {
+		@extend .clr;
+		.block {
+			text-align: center;
+			@include gallery(6 of 12 .5);
+			background-color: $black;
+			margin-bottom: .5em;
+			a {
+				border: 2px solid transparent;
+				display: block;
+				color: $white;
+				padding: .5em;
+				opacity: .3;
+				&:hover, &.active {
+					border: 2px solid yellow;
+					opacity: 1;
+				}
+			}
+		}
+	}
+}
+
 .canvas-wrapper {
 	height: 100%;
 	text-align: center;
@@ -149,32 +239,15 @@
 .canvas-container {
 	margin: 0 auto;
 	background-color: $white;
-	box-shadow: 0px 3px 3px rgba(0,0,0,.66);
+	box-shadow: 0px 3px 3px rgba(0,0,0,.33);
 	background-image: url('../images/components/tiny_grid.png');
 	background-repeat: repeat;
 	background-position: left top;
+	@extend .transition;
+	&:hover {
+		box-shadow: 0px 3px 3px rgba(0,0,0,.66);
+	}
 }
 canvas {
 	
-}
-
-.canvasconfig-wrapper {
-	font-size: 12px;
-	border-bottom: 1px solid $darkestgray;
-	padding-bottom: 1em;
-	margin-bottom: 1em;
-}
-
-.canvasconfig-inner {
-	background-color: $darkgray;
-	@extend .clr;
-}
-.attributes {
-	background-color: $white;
-	padding: 1em;
-	box-sizing: border-box;
-	font-size: .9em;
-	span {
-		color: $red;
-	}
 }

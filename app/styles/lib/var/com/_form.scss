@@ -1,11 +1,10 @@
 //ControlGroup
 .controlgroup {
-  margin-bottom: .5em;
+  // margin-bottom: 1em;
   @extend .clr;
   label {
-    font-size: 1.1em;
     line-height: 1.6;
-    color: $white;
+    // color: $white;
     text-align: center;
     display: block;
   }
@@ -47,15 +46,15 @@ input,input[type=search] {
   width: 100%;
   border: 1px solid $gray;
   box-sizing: border-box;
-  height: 44px;
-  background-color: $smokygray;
-  padding: 0 1em;
+  height: 30px;
+  background-color: $white;
+  padding: 0 .4em;
   outline: none;
-  border-radius: 6px;
+  border-radius: 3px;
   &:focus {
-    border: 1px solid $main-dark;
-    background-color: $main-dark;
-    color: $white;
+    border: 1px solid $gray;
+    background-color: $smokygray;
+    color: $black;
   }
   &.calc {
     display: inline-block;
@@ -75,8 +74,8 @@ input,input[type=search] {
     -webkit-appearance: none;
     -moz-appearance: window;
     border: 0;
-    color: $darkgray;
-    border-radius: 6px;
+    color: $black;
+    border-radius: 3px;
   }
   select::-ms-expand {
     display: none;
@@ -102,7 +101,7 @@ input,input[type=search] {
     background-position: 97% center;
     background-repeat: no-repeat;
     box-sizing: border-box;
-    height: 44px;
+    height: 30px;
     padding: .3em .7em;
     background-color: $smokygray;
     &:focus {
