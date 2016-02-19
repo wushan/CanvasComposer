@@ -87,13 +87,18 @@ ul {
 		li {
 			margin-bottom: .5em;
 			a {
-				height: 40px;
+				// height: 40px;
 				margin: 0 auto;
 				color: $white;
 				text-align: center;
 				display: block;
-				line-height: 40px;
+				// line-height: 40px;
+				padding: 1em 0;
 				background-color: $darkestgray;
+				@extend .transition;
+				&:hover {
+					background-color: $black;
+				}
 			}
 		}
 		&.overall {
@@ -240,9 +245,9 @@ ul {
 	margin: 0 auto;
 	background-color: $white;
 	box-shadow: 0px 3px 3px rgba(0,0,0,.33);
-	background-image: url('../images/components/tiny_grid.png');
-	background-repeat: repeat;
-	background-position: left top;
+	// background-image: url('../images/components/tiny_grid.png');
+	// background-repeat: repeat;
+	// background-position: left top;
 	@extend .transition;
 	&:hover {
 		box-shadow: 0px 3px 3px rgba(0,0,0,.66);

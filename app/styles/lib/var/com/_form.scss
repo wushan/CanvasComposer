@@ -9,7 +9,21 @@
     display: block;
   }
   .controls {
-    
+    &.richcontrol {
+      @extend .clr;
+      a {
+        display: block;
+        float: right;
+        color: $white;
+        i {
+           margin: 2px 0;
+        }
+      }
+      input {
+        float: left;
+        width: calc( 100% - 40px );
+      }
+    }
     &.small {
       width: 50%;
       margin: 0 auto;
@@ -65,6 +79,9 @@ input,input[type=search] {
     display: inline-block;
     vertical-align: middle;
     width: calc( 100% - 93px );
+  }
+  &:read-only {
+    background-color: $gray;
   }
 }
 //Select

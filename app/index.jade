@@ -6,15 +6,13 @@ block content
     .row
       #sidebar
         ul.tools
-          li
-            a.js-add-media(href="javascript:;")
-              i.fa.fa-picture-o
+          
           li
             a.js-add-video(href="javascript:;")
-              i.fa.fa-video-camera
+              i.fa.fa-video-camera.fa-lg
           li
             a.js-add-rect(href="javascript:;" title="新增物件")
-              i.fa.fa-object-group
+              i.fa.fa-object-group.fa-lg
           //- li
           //-   a.js-add-circle(href="javascript:;") Circle
           //- li
@@ -22,10 +20,10 @@ block content
         ul.tools.overall
           li
             a(href="javascript:;" title="鎖定所有物件")
-              i.fa.fa-lock
+              i.fa.fa-lock.fa-lg
           li
             a.js-dispose(href="javascript:;" title="清除所有物件")
-              i.fa.fa-trash-o
+              i.fa.fa-eraser.fa-lg
         
       #artboard
         .canvas-wrapper
@@ -85,7 +83,7 @@ block content
               .controlgroup
                 label Type
                 .controls
-                  input(type='text')
+                  input(type='text' readonly)
           .attributes-inner            
             .block.attr.width
               .controlgroup
@@ -122,7 +120,9 @@ block content
             .block.attr.media
               .controlgroup
                 label Media
-                .controls
+                .controls.richcontrol
+                  a.js-library(href="javascript:;")
+                    i.fa.fa-cloud-upload.fa-2x
                   input#mediaValue(type='text')
     #console
       .shapeobj
