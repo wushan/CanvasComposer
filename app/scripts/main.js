@@ -102,31 +102,38 @@ $(window).resize(function(){
 
   //Object Attr Control
     //Media
-    $('#mediaValue').on("change paste keyup", function() {
+    $('#mediaValue').on("keyup", function() {
+      console.log('got one');
       var obj = canvas.getActiveObject();
-      // var img = new Image();
-      // img.onload = function(){
-      //     obj.setElement(img);
-      // }
-      // img.src = $(this).val();
-      obj.setSrc($(this).val(), function(oImg){
-        canvas.renderAll();
-      })
-      
+      if (obj.type === 'rect') {
+        var newImage = $(this).val();
+        console.log(newImage);
+        obj.remove();
+        Artboard.addMedia(newImage);
+        
+        // var newImage = canvas.getActiveObject();
+        // console.log(newImage);
+        // newImage.setSrc($(this).val(), function(oImg){
+        //   canvas.renderAll();
+        // })
+      } else {
+        obj.setSrc($(this).val(), function(oImg){
+          canvas.renderAll();
+        })
+      }
     });
 
     //Size
-    var objectSize,
-        objectWidth,
-        objectHeight,
-        objectScaleX,
-        objectScaleY;
 
-    objectSize = $('.objectSize');
-    objectSize.on("change paste keyup", function() {
+    $('.objectSize').on("change paste keyup", function() {
+      var objectSize,
+          objectWidth,
+          objectHeight,
+          objectScaleX,
+          objectScaleY;
       var obj = canvas.getActiveObject();
-      objectWidth = obj.width*obj.scaleX;
-      objectHeight = obj.height*obj.scaleY;
+      objectWidth = obj.width;
+      objectHeight = obj.height;
       objectScaleX = $("#objectWidth").val()/objectWidth;
       objectScaleY = $("#objectHeight").val()/objectHeight;
       obj.setScaleX(objectScaleX);
@@ -134,23 +141,7 @@ $(window).resize(function(){
       canvas.renderAll();
     });
 
-    // $('#objectWidth').on("change paste keyup", function() {
-    //   var obj = canvas.getActiveObject();
-    //   var width = obj.width;
-    //   var scale = $(this).val()/width;
-    //   obj.setScaleX(scale);
-    //   obj.setScaleY(scale);
-    //   canvas.renderAll();
-    // });
-
-    // $('#objectHeight').on("change paste keyup", function() {
-    //   var obj = canvas.getActiveObject();
-    //   var height = obj.height;
-    //   var scale = $(this).val()/height;
-    //   obj.setScaleX(scale);
-    //   obj.setScaleY(scale);
-    //   canvas.renderAll();
-    // });
+    
 
 
 
@@ -173,120 +164,150 @@ $(window).resize(function(){
 
 var initRadius = 100;
 
-var Artboard = {
-  addRect : function(){
-    var rect = new fabric.Rect({
-      left: canvas.getWidth()/2-initRadius/2,
-      top: canvas.getHeight()/2-initRadius/2,
-      fill: 'rgba(0,0,0,0.33)',
-      width: initRadius,
-      height: initRadius
-    });
-
-    rect.perPixelTargetFind = true;
-    canvas.add(rect);
-    //Bind
-    bindEvents(rect);
-    //Refresh log
-    logObj();
-  },
-  addCircle : function(){
-    var circle = new fabric.Circle({
-      left: canvas.getWidth()/2-initRadius/2,
-      top: canvas.getHeight()/2-initRadius/2,
-      fill: 'rgba(0,0,0,0.33)',
-      radius: initRadius/2
-    });
-    circle.perPixelTargetFind = true;
-    canvas.add(circle);
-    //Bind
-    bindEvents(circle);
-    //Refresh log
-    logObj();
-  },
-  addTriangle : function(){
-    var triangle = new fabric.Triangle({
-      left: canvas.getWidth()/2-initRadius/2,
-      top: canvas.getHeight()/2-initRadius/2,
-      fill: 'rgba(0,0,0,0.33)',
-      width: initRadius,
-      height: initRadius
-    });
-    //Set Perpixel Movement
-    triangle.perPixelTargetFind = true;
-    canvas.add(triangle);
-    //Bind
-    bindEvents(triangle);
-    //Refresh log
-    logObj();
-  },
-  addVideo : function() {
-    //Add Image/Video
-    var media = new fabric.Image.fromURL('images/uploads/abc.png', function(oImg) {
-      oImg.set({
-        'left': canvas.getWidth()/2-oImg.width/2,
-        'top': canvas.getHeight()/2-oImg.height/2
+var Artboard = (function (){
+  return {
+    addRect : function(){
+      var rect = new fabric.Rect({
+        left: canvas.getWidth()/2-initRadius/2,
+        top: canvas.getHeight()/2-initRadius/2,
+        fill: 'rgba(0,0,0,0.33)',
+        width: initRadius,
+        height: initRadius
       });
-      canvas.add(oImg);
-      oImg.toObject = (function(toObject) {
-        return function() {
-          return fabric.util.object.extend(toObject.call(this), {
-            media: {
-              slides : this.media.slides,
-              video: this.media.video
-            }
-          });
-        };
-      })(oImg.toObject);
+
+      rect.perPixelTargetFind = true;
+      canvas.add(rect);
       //Bind
-      bindEvents(oImg);
+      bindEvents(rect);
+      //Programmatically Select Newly Added Object
+      canvas.setActiveObject(rect);
       //Refresh log
       logObj();
-    });
+    },
+    addCircle : function(){
+      var circle = new fabric.Circle({
+        left: canvas.getWidth()/2-initRadius/2,
+        top: canvas.getHeight()/2-initRadius/2,
+        fill: 'rgba(0,0,0,0.33)',
+        radius: initRadius/2
+      });
+      circle.perPixelTargetFind = true;
+      canvas.add(circle);
+      //Bind
+      bindEvents(circle);
+      //Refresh log
+      logObj();
+    },
+    addTriangle : function(){
+      var triangle = new fabric.Triangle({
+        left: canvas.getWidth()/2-initRadius/2,
+        top: canvas.getHeight()/2-initRadius/2,
+        fill: 'rgba(0,0,0,0.33)',
+        width: initRadius,
+        height: initRadius
+      });
+      //Set Perpixel Movement
+      triangle.perPixelTargetFind = true;
+      canvas.add(triangle);
+      //Bind
+      bindEvents(triangle);
+      //Refresh log
+      logObj();
+    },
+    addVideo : function() {
+      //Set InitRadius for Videos 16:9
+      var w = initRadius*1.6;
+      var h = initRadius*0.9;
+      var videoEl = document.createElement("video");
+      videoEl.loop = true;
+      videoEl.controls = true;
+      console.log(videoEl);
+      videoEl.innerHTML = '<source src="http://www.quirksmode.org/html5/videos/big_buck_bunny.mp4">';
 
-    
+      var video = new fabric.Image(videoEl, {
+        left: canvas.getWidth()/2-w/2,
+        top: canvas.getHeight()/2-h/2,
+        angle: 0,
+        width: w,
+        height: h
+      });
+      // video.crossOrigin = "";
+      // video.perPixelTargetFind = true;
+      canvas.add(video);
+      video.getElement().play();
 
-    // //Set InitRadius for Videos 16:9
-    // var w = initRadius*1.6;
-    // var h = initRadius*0.9;
-    // var videoEl = document.createElement("video");
-    // videoEl.loop = true;
-    // videoEl.controls = true;
-    // console.log(videoEl);
-    // videoEl.innerHTML = '<source src="http://www.quirksmode.org/html5/videos/big_buck_bunny.mp4">';
+      //Bind
+      bindEvents(video);
+      //Programmatically Select Newly Added Object
+      canvas.setActiveObject(video);
+      //Refresh log
+      logObj();
 
-    // var video = new fabric.Image(videoEl, {
-    //   left: canvas.getWidth()/2-w/2,
-    //   top: canvas.getHeight()/2-h/2,
-    //   angle: 0,
-    //   width: w,
-    //   height: h
-    // });
-    // // video.crossOrigin = "";
-    // // video.perPixelTargetFind = true;
-    // canvas.add(video);
-    // video.getElement().play();
+      fabric.util.requestAnimFrame(function render() {
+        canvas.renderAll();
+        fabric.util.requestAnimFrame(render);
+      });
+    },
+    addMedia : function(objImage) {
+      console.log('obj:' + objImage);
+      // var newImage = objImage;
+      if (objImage === '' || objImage === undefined) {
+        objImage = 'images/uploads/abc.png';
+        console.log(objImage);
+      } else {
+        console.log(objImage);
+      }
+      //Add Image/Video
+      var media = new fabric.Image.fromURL(objImage, function(oImg) {
+        oImg.set({
+          'left': canvas.getWidth()/2-oImg.width/2,
+          'top': canvas.getHeight()/2-oImg.height/2
+        });
+        canvas.add(oImg);
+        oImg.toObject = (function(toObject) {
+          return function() {
+            return fabric.util.object.extend(toObject.call(this), {
+              media: {
+                slides : this.media.slides,
+                video: this.media.video
+              }
+            });
+          };
+        })(oImg.toObject);
+        canvas.renderAll();
+        //Bind
+        bindEvents(oImg);
+        //Programmatically Select Newly Added Object
+        canvas.setActiveObject(oImg);
+        //Refresh log
+        logObj();
+      });
+    },
+    dispose : function() {
+      // canvas.deactivateAllWithDispatch();
+      canvas.clear();
+      //Refresh log
+      logObj();
+    },
+    removeObject: function() {
+      var obj = canvas.getActiveObject();
+      if (obj._element !== undefined && obj._element.localName === "video") {
+        obj.getElement().pause();
+        obj.remove();
+      } else {
+        obj.remove();
+      }
 
-    // //Bind
-    // bindEvents(video);
-    // //Refresh log
-    // logObj();
-
-    // fabric.util.requestAnimFrame(function render() {
-    //   canvas.renderAll();
-    //   fabric.util.requestAnimFrame(render);
-    // });
-  },
-  dispose : function() {
-    // canvas.deactivateAllWithDispatch();
-    canvas.clear();
-    //Refresh log
-    logObj();
-  },
-  removeObject: function() {
-    canvas.getActiveObject().remove();
+    },
+    reset : function() {
+      // var size = canvas.getActiveObject().getOriginalSize();
+      var obj = canvas.getActiveObject();
+      obj.setScaleX('1');
+      obj.setScaleY('1');
+      canvas.renderAll();
+    }
   }
-}
+} ());
 
 //Get Objects
 canvas.getObjects();
@@ -309,15 +330,23 @@ $('.tools').on('click', 'a', function(){
     case 'js-dispose':
       Artboard.dispose();
       break;
+    case 'js-add-media':
+      Artboard.addMedia();
+      break;
     case 'js-add-video':
       Artboard.addVideo();
+      break;
   }
 })
+
 $('.objectControl').on('click', 'button', function(){
   var className = $(this).attr('class');
   switch(className){
     case 'js-delete':
       Artboard.removeObject();
+      break;
+    case 'js-reset':
+      Artboard.reset();
       break;
   }
 })

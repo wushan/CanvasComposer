@@ -7,8 +7,11 @@ block content
       #sidebar
         ul.tools
           li
-            a.js-add-video(href="javascript:;")
+            a.js-add-media(href="javascript:;")
               i.fa.fa-picture-o
+          li
+            a.js-add-video(href="javascript:;")
+              i.fa.fa-video-camera
           li
             a.js-add-rect(href="javascript:;" title="新增物件")
               i.fa.fa-object-group
@@ -29,8 +32,12 @@ block content
           #canvas
             canvas#c
             .objectControl
-              button Dimension
-              button.js-delete Delete
+              button.js-reset(title="原始比例")
+                i.fa.fa-crosshairs
+
+              button.js-delete
+                i.fa.fa-trash(title="刪除")
+
             .sizeTag
               .tag.width<span>800</span>
               .tag.height <span>600</span>
@@ -116,7 +123,7 @@ block content
               .controlgroup
                 label Media
                 .controls
-                  input#mediaValue(type='text', value='images/uploaded/abc.png')
+                  input#mediaValue(type='text')
     #console
       .shapeobj
         h3 Shape Objects
