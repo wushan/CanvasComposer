@@ -256,3 +256,24 @@ ul {
 canvas {
 	
 }
+
+//Components
+#mediaLibrary {
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	width: 600px;
+	height: 400px;
+	margin: auto;
+	background-color: $white;
+	display: none;
+	word-break: break-all;
+	box-shadow: 0 0 3px rgba($black, .33);
+	box-sizing: border-box;
+	padding: 2em;
+	&.active {
+		display: block;
+	}
+}

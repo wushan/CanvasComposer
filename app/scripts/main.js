@@ -304,12 +304,21 @@
 
   //Object Attr Control
     //Media //Bind OnChange to avoid 'undefined'
-    $('#mediaValue').on("change keyup", function() {
+    $('.js-library').on('click', function(){
+      $('#mediaLibrary').addClass('active');
+    })
+    $('#mediaLibrary .resources').on('click', 'a', function(){
+      var resource = $(this).attr('data-src');
+      $('#mediaValue').val(resource);
       console.log('got one');
       var obj = canvas.getActiveObject();
       
-        var newImage = $(this).val();
-        console.log(newImage);
+      var newImage = resource;
+      console.log(newImage);
+      if (obj == null) {
+        alert('未選取任何物件');
+
+      } else {
         if (obj._element !== undefined && obj._element.localName === "video") {
           obj.getElement().pause();
           obj.remove();
@@ -321,7 +330,28 @@
         obj.center();
         obj.setCoords();
         logObj();
-    });
+      }
+      
+      $(this).parents('#mediaLibrary').removeClass('active');
+    }) 
+    // $('#mediaValue').on("change keyup", function() {
+    //   console.log('got one');
+    //   var obj = canvas.getActiveObject();
+      
+    //   var newImage = $(this).val();
+    //   console.log(newImage);
+    //   if (obj._element !== undefined && obj._element.localName === "video") {
+    //     obj.getElement().pause();
+    //     obj.remove();
+    //   } else {
+    //     obj.remove();
+    //   }
+    //   Artboard.addMedia(newImage);
+    //   canvas.renderAll();
+    //   obj.center();
+    //   obj.setCoords();
+    //   logObj();
+    // });
 
     //Size
 
@@ -338,6 +368,7 @@
       objectScaleY = $("#objectHeight").val()/objectHeight;
       obj.setScaleX(objectScaleX);
       obj.setScaleY(objectScaleY);
+      obj.setCoords();
       canvas.renderAll();
     });
 
@@ -411,7 +442,7 @@ var Artboard = (function (){
         var media;
         console.log(extension);
 
-        if (extension.match(/^(gif|jpg|jpeg|tiff|svg)$/)) {
+        if (extension.match(/^(gif|png|jpg|jpeg|tiff|svg)$/)) {
           //If is image file
           console.log('match');
           media = new fabric.Image.fromURL(objImage, function(oImg) {
@@ -466,7 +497,16 @@ var Artboard = (function (){
           // video.perPixelTargetFind = true;
           canvas.add(video);
           video.getElement().play();
-
+          video.toObject = (function(toObject) {
+              return function() {
+                return fabric.util.object.extend(toObject.call(this), {
+                  media: {
+                    slides : this.media.slides,
+                    video: objImage
+                  }
+                });
+              };
+            })(video.toObject);
           //Bind
           bindEvents(video);
           //Programmatically Select Newly Added Object

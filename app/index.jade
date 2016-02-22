@@ -8,9 +8,6 @@ block content
         ul.tools
           
           li
-            a.js-add-video(href="javascript:;")
-              i.fa.fa-video-camera.fa-lg
-          li
             a.js-add-rect(href="javascript:;" title="新增物件")
               i.fa.fa-object-group.fa-lg
           //- li
@@ -39,11 +36,7 @@ block content
             .sizeTag
               .tag.width<span>800</span>
               .tag.height <span>600</span>
-          .tips
-            h3 Video Test :
-            ul
-              li http://download.wavetlan.com/SVV/Media/HTTP/H264/Talkinghead_Media/H264_test1_Talkinghead_mp4_480x360.mp4
-              li http://www.quirksmode.org/html5/videos/big_buck_bunny.mp4
+          
       #config
         .canvasconfig-wrapper.panel
           .title
@@ -128,7 +121,7 @@ block content
                 .controls.richcontrol
                   a.js-library(href="javascript:;")
                     i.fa.fa-cloud-upload.fa-2x
-                  input#mediaValue(type='text')
+                  input#mediaValue(type='text' readonly)
     #console
       .shapeobj
         h3 Shape Objects
@@ -138,4 +131,18 @@ block content
         .content
       
 
-    
+    #mediaLibrary
+      h2 Demo Image Resouces
+      ul.resources
+        li
+          a(href="javascript:;" data-src="http://twimg.edgesuite.net/appledaily/images/RnewsRecommend_1456107806.jpg") http://twimg.edgesuite.net/appledaily/images/RnewsRecommend_1456107806.jpg
+        li
+          a(href="javascript:;" data-src="http://twimg.edgesuite.net/www/extfile/specialtopic/a0c140339379e5c6b2f9c9c447d1a2a9.jpg") http://twimg.edgesuite.net/www/extfile/specialtopic/a0c140339379e5c6b2f9c9c447d1a2a9.jpg
+      h2 Demo Video Resouces
+      ul.resources
+        li
+          a(href="javascript:;" data-src="http://www.quirksmode.org/html5/videos/big_buck_bunny.mp4") http://www.quirksmode.org/html5/videos/big_buck_bunny.mp4
+        li
+          a(href="javascript:;" data-src="http://download.wavetlan.com/SVV/Media/HTTP/H264/Talkinghead_Media/H264_test1_Talkinghead_mp4_480x360.mp4") http://download.wavetlan.com/SVV/Media/HTTP/H264/Talkinghead_Media/H264_test1_Talkinghead_mp4_480x360.mp4
+        li
+          a(href="javascript:;" data-src="http://techslides.com/demos/sample-videos/small.webm") http://techslides.com/demos/sample-videos/small.webm
