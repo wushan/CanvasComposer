@@ -1,5 +1,6 @@
-//Click Body
-
+//Sortable List
+var el = document.getElementById('selectionOrder');
+var sortable = Sortable.create(el);
 
 //Fonts
 (function(d) {

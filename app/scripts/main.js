@@ -319,7 +319,7 @@
       src = $(this).attr('data-src');
       filename = $(this).find('.filename').html();
       continued = "5";
-      var $item = "<li><div class='order'><div class='count'></div><div class='continued'>" + continued + "</div></div><div class='description'><div class='filename'>" + filename + "</div><div class='src'>" + src + "</div></div></li>";
+      var $item = "<li><div class='order'><div class='count'></div><div class='continued'>" + continued + "</div></div><div class='description'><div class='filename'>" + filename + "</div></div></li>";
       $('.settings-container .selection').append($item);
     })
     // $('#mediaLibrary .resources').on('click', 'a', function(){

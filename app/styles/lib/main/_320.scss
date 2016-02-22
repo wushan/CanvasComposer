@@ -301,19 +301,36 @@ canvas {
 		}
 		.settings-container {
 			@include span(3 of 12 last);
-			background-color: $gray;
+			background-color: $smokygray;
 			.selection {
-				margin: 0;
+				margin: 1em;
 				padding: 0;
-				list-style-type: none;
+				list-style-position: inside;
+				// border: 6px solid $darkgray;
+				box-shadow: 0 0 0 5px rgba($gray,.5);
+				border-radius: 6px;
 				li {
-					background-color: $smokygray;
+					background-color: $white;
 					box-sizing: border-box;
 					padding: .5em;
 					text-align: left;
+					display: block;
+					// box-shadow: inset 0 0px 3px -3px rgba($black,.33);
+					border-bottom: 1px solid $gray;
 					@extend .clr;
+					&:hover, &:active, &.active {
+						color: $white;
+						background-color: $blue;
+					}
+					&:first-child {
+						box-shadow: none;
+						border-radius: 6px 6px 0 0;
+					}
+					&:last-child {
+						border-radius: 0 0 6px 6px;
+					}
 					&:nth-child(2n) {
-						background-color: lighten($gray, 10%);
+						// background-color: $smokygray;
 					}
 					.order {
 						text-align: center;
@@ -334,14 +351,10 @@ canvas {
 						@include span(10 of 12 last);
 					}
 					.filename {
-
-					}
-					.src {
 						font-size: .8em;
-						color: $darkgray;
-						width: 100%;
 						overflow-x: scroll;
 						white-space: nowrap;
+						width: 100%;
 					}
 				}
 			}
