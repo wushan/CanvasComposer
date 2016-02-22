@@ -307,51 +307,49 @@
     $('.js-library').on('click', function(){
       $('#mediaLibrary').addClass('active');
     })
-    $('#mediaLibrary .resources').on('click', 'a', function(){
-      var resource = $(this).attr('data-src');
-      $('#mediaValue').val(resource);
-      console.log('got one');
-      var obj = canvas.getActiveObject();
-      
-      var newImage = resource;
-      console.log(newImage);
-      if (obj == null) {
-        alert('未選取任何物件');
-
-      } else {
-        if (obj._element !== undefined && obj._element.localName === "video") {
-          obj.getElement().pause();
-          obj.remove();
-        } else {
-          obj.remove();
-        }
-        Artboard.addMedia(newImage);
-        canvas.renderAll();
-        obj.center();
-        obj.setCoords();
-        logObj();
-      }
-      
-      $(this).parents('#mediaLibrary').removeClass('active');
-    }) 
-    // $('#mediaValue').on("change keyup", function() {
+    $('#mediaLibrary .js-close').on('click', function(){
+      $('#mediaLibrary').removeClass('active');
+    })
+    $('#mediaLibrary .resources').on('click','a',function(){
+      $(this).toggleClass('active');
+      var filename,
+          src,
+          count,
+          continued;
+      src = $(this).attr('data-src');
+      filename = $(this).find('.filename').html();
+      continued = "5";
+      var $item = "<li><div class='order'><div class='count'></div><div class='continued'>" + continued + "</div></div><div class='description'><div class='filename'>" + filename + "</div><div class='src'>" + src + "</div></div></li>";
+      $('.settings-container .selection').append($item);
+    })
+    // $('#mediaLibrary .resources').on('click', 'a', function(){
+    //   var resource = $(this).attr('data-src');
+    //   $('#mediaValue').val(resource);
     //   console.log('got one');
     //   var obj = canvas.getActiveObject();
       
-    //   var newImage = $(this).val();
+    //   var newImage = resource;
     //   console.log(newImage);
-    //   if (obj._element !== undefined && obj._element.localName === "video") {
-    //     obj.getElement().pause();
-    //     obj.remove();
+    //   if (obj == null) {
+    //     alert('未選取任何物件');
+
     //   } else {
-    //     obj.remove();
+    //     if (obj._element !== undefined && obj._element.localName === "video") {
+    //       obj.getElement().pause();
+    //       obj.remove();
+    //     } else {
+    //       obj.remove();
+    //     }
+    //     Artboard.addMedia(newImage);
+    //     canvas.renderAll();
+    //     obj.center();
+    //     obj.setCoords();
+    //     logObj();
     //   }
-    //   Artboard.addMedia(newImage);
-    //   canvas.renderAll();
-    //   obj.center();
-    //   obj.setCoords();
-    //   logObj();
-    // });
+      
+    //   $(this).parents('#mediaLibrary').removeClass('active');
+    // })
+    
 
     //Size
 
@@ -395,36 +393,6 @@ var Artboard = (function (){
       //Refresh log
       logObj();
     },
-    // addCircle : function(){
-    //   var circle = new fabric.Circle({
-    //     left: canvas.getWidth()/2-initRadius/2,
-    //     top: canvas.getHeight()/2-initRadius/2,
-    //     fill: 'rgba(0,0,0,0.33)',
-    //     radius: initRadius/2
-    //   });
-    //   circle.perPixelTargetFind = true;
-    //   canvas.add(circle);
-    //   //Bind
-    //   bindEvents(circle);
-    //   //Refresh log
-    //   logObj();
-    // },
-    // addTriangle : function(){
-    //   var triangle = new fabric.Triangle({
-    //     left: canvas.getWidth()/2-initRadius/2,
-    //     top: canvas.getHeight()/2-initRadius/2,
-    //     fill: 'rgba(0,0,0,0.33)',
-    //     width: initRadius,
-    //     height: initRadius
-    //   });
-    //   //Set Perpixel Movement
-    //   triangle.perPixelTargetFind = true;
-    //   canvas.add(triangle);
-    //   //Bind
-    //   bindEvents(triangle);
-    //   //Refresh log
-    //   logObj();
-    // },
     
     addMedia : function(objImage) {
       console.log('obj:' + objImage);
@@ -493,8 +461,6 @@ var Artboard = (function (){
             width: w,
             height: h
           });
-          // video.crossOrigin = "";
-          // video.perPixelTargetFind = true;
           canvas.add(video);
           video.getElement().play();
           video.toObject = (function(toObject) {
@@ -649,7 +615,7 @@ function bindEvents(obj) {
 
 var instantMeta = {
   log: function(obj){
-    console.log(obj);
+    console.log(obj.toObject());
     var width,
         height,
         radius,
@@ -657,7 +623,8 @@ var instantMeta = {
         top,
         angle,
         type,
-        media;
+        media,
+        preview;
 
     width = obj.width*obj.scaleX;
     height = obj.height*obj.scaleY;
@@ -668,12 +635,16 @@ var instantMeta = {
     type = obj.type;
     //混合物件
     if (type === "image") {
-      if (obj.media.video != '') {
-        media = obj.media.video;
-      } else if ( obj.media.slides.length != 0 ) {
-        media = obj.media.slides;
+      if (obj.toObject().media.video != '') {
+        media = obj.toObject().media.video;
+        preview = "<video controls autoplay muted><source src=" + obj.toObject().media.video + "></source></video>";
+        console.log(media);
+      } else if ( obj.toObject().media.slides.length != 0 ) {
+        media = obj.toObject().media.slides;
+        preview = "";
       } else if ( obj.toObject().src != ''){
         media = obj.toObject().src;
+        preview = "<img src=" + obj.toObject().src + ">";
       } else {
         alert('Type Error');
       }
@@ -688,10 +659,12 @@ var instantMeta = {
     $('.attributes-wrapper .top input').val(top);
     $('.attributes-wrapper .left input').val(left);
     $('.attributes-wrapper .media input').val(media);
+    $('.attributes-wrapper .mediaPreview').html(preview);
     logObj();
   },
   clean: function(obj){
     $('.attributes-wrapper input').val('');
+    $('.attributes-wrapper .mediaPreview').empty();
     console.log('clean');
   }
 }

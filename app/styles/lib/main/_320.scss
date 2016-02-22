@@ -264,16 +264,146 @@ canvas {
 	bottom: 0;
 	left: 0;
 	right: 0;
-	width: 600px;
-	height: 400px;
 	margin: auto;
-	background-color: $white;
+	background-color: rgba($black, .8);
 	display: none;
 	word-break: break-all;
-	box-shadow: 0 0 3px rgba($black, .33);
-	box-sizing: border-box;
-	padding: 2em;
+	text-align: center;
+	&:before {
+		content: '';
+		height: 100%;
+		width: 0;
+		display: inline-block;
+		vertical-align: middle;
+	}
 	&.active {
 		display: block;
+	}
+	.mediaLibrary-inner {
+		margin: auto;
+		background-color: $white;
+		width: 80%;
+		height: 80%;
+		display: inline-block;
+		vertical-align: middle;
+		position: relative;
+		@extend .clr;
+		.close-btn {
+			color: $white;
+			position: absolute;
+			bottom: 100%;
+			right: 0;
+		}
+		.library-container {
+			@include span(9 of 12);
+			box-sizing: border-box;
+			padding: 1em;
+		}
+		.settings-container {
+			@include span(3 of 12 last);
+			background-color: $gray;
+			.selection {
+				margin: 0;
+				padding: 0;
+				list-style-type: none;
+				li {
+					background-color: $smokygray;
+					box-sizing: border-box;
+					padding: .5em;
+					text-align: left;
+					@extend .clr;
+					&:nth-child(2n) {
+						background-color: lighten($gray, 10%);
+					}
+					.order {
+						text-align: center;
+						@include span(2 of 12);
+						.continued {
+							width: 100%;
+							font-size: .8em;
+							color: $red;
+							&:before {
+								content: "<"
+							}
+							&:after {
+								content: ">"
+							}
+						}
+					}
+					.description {
+						@include span(10 of 12 last);
+					}
+					.filename {
+
+					}
+					.src {
+						font-size: .8em;
+						color: $darkgray;
+						width: 100%;
+						overflow-x: scroll;
+						white-space: nowrap;
+					}
+				}
+			}
+		}
+	}
+	.resources {
+		margin: 0;
+		padding: 0;
+		list-style-type: none;
+		@extend .clr;
+		li {
+			@include gallery(2 of 12);
+			margin-bottom: .5em;
+			a {
+				display: block;
+				color: $darkgray;
+				@extend .transition;
+				font-size: .8em;
+				.thumbnail {
+					background-color: $black;
+					height: 100px;
+					overflow: hidden;
+					box-sizing: border-box;
+					border: 3px solid $smokygray;
+				}
+				i {
+					display: none;
+					font-size: 1.6em;
+				}
+				&:hover,&.active {
+					.thumbnail {
+						border-color: $blue;
+						position: relative;
+						img {
+							filter: brightness(50%);
+						}
+						i {
+							display: inline-block;
+							position: absolute;
+							left: .5em;
+							top: .5em;
+							z-index: 2;
+						}
+					}
+				}
+				&.active {
+					position: relative;
+					color: $blue;
+				}
+			}
+			img {
+				height: 100%;
+				width: auto;
+			}
+		}
+	}
+}
+.mediaPreview {
+	margin-top: .5em;
+	@extend .clr;
+	video, img {
+		display: block;
+		width: 100%;
 	}
 }
