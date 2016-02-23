@@ -338,22 +338,17 @@ canvas {
 						.continued {
 							width: 100%;
 							font-size: .8em;
-							color: $red;
-							&:before {
-								content: "<"
-							}
-							&:after {
-								content: ">"
-							}
 						}
 					}
 					.description {
 						@include span(10 of 12 last);
+						line-height: 30px;
 					}
 					.filename {
 						font-size: .8em;
 						overflow-x: scroll;
 						white-space: nowrap;
+						padding-left: .5em;
 						width: 100%;
 					}
 				}

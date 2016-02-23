@@ -306,21 +306,116 @@
     //Media //Bind OnChange to avoid 'undefined'
     $('.js-library').on('click', function(){
       $('#mediaLibrary').addClass('active');
+      selected.length = 0;
+      $('#mediaLibrary .selection').empty();
+      $('#mediaLibrary .resources a').removeClass('active');
     })
     $('#mediaLibrary .js-close').on('click', function(){
       $('#mediaLibrary').removeClass('active');
     })
+    var selected = [];
     $('#mediaLibrary .resources').on('click','a',function(){
       $(this).toggleClass('active');
       var filename,
           src,
           count,
-          continued;
+          continued,
+          resourceid,
+          targetid;
+      
       src = $(this).attr('data-src');
       filename = $(this).find('.filename').html();
+      resourceid = $(this).attr('data-resourceid');
       continued = "5";
-      var $item = "<li><div class='order'><div class='count'></div><div class='continued'>" + continued + "</div></div><div class='description'><div class='filename'>" + filename + "</div></div></li>";
-      $('.settings-container .selection').append($item);
+
+      // $('.settings-container .selection li').each(function(){
+      //   targetid = $(this).attr('data-resourceid');
+      //   if ( targetid != undefined ) {
+      //     selected.push(targetid);
+      //     console.log(selected);
+      //   }
+      // })
+      var $item = "<li data-resourceid="+ resourceid +"><div class='order'><div class='continued'><input type='number' value='" + continued + "'></div></div><div class='description'><div class='filename'>" + filename + "</div></div></li>";
+      if (in_array(selected, resourceid)) {
+        $('.settings-container .selection li').each(function(){
+          var targetid = $(this).attr('data-resourceid');
+          if (targetid === resourceid) {
+            //Remove self
+            $(this).remove();
+            //Remove this id in Array
+            var index = getIdx(selected, 'id', targetid);
+            if (index > -1) {
+              selected.splice(index, 1);
+            }
+            
+            console.log(selected);
+          }
+        })
+      } else {
+        $('.settings-container .selection').append($item);
+        var ooo = {'id':resourceid, 'src':src, 'continued': continued};
+        selected.push(ooo);
+        console.log(selected);
+      }
+    })
+    function getIdx(list, key, val){
+      return _.chain(list).pluck(key).indexOf(val).value();
+    }
+    function in_array(array, id) {
+        for(var i=0;i<array.length;i++) {
+          console.log(array[i]);
+            if(array[i].id === id)
+              return true;
+        }
+        return false;
+    }
+    //Send Object to Fabricjs
+    $('.js-sendToObj').on('click', function(){
+      if (selected.length === 1) {
+        var resource = selected[0].src;
+        $('#mediaValue').val(resource);
+        var obj = canvas.getActiveObject();
+        var newImage = resource;
+        console.log(newImage);
+        if (obj == null) {
+          alert('未選取任何物件');
+
+        } else {
+          if (obj._element !== undefined && obj._element.localName === "video") {
+            obj.getElement().pause();
+            obj.remove();
+          } else {
+            obj.remove();
+          }
+          Artboard.addMedia(newImage);
+          canvas.renderAll();
+          obj.center();
+          obj.setCoords();
+          logObj();
+        }
+        $(this).parents('#mediaLibrary').removeClass('active');
+      } else if (selected.length > 1){
+        //If Array
+        var obj = canvas.getActiveObject();
+        // var selectedObjs = [];
+        if (obj == null) {
+          alert('未選取任何物件');
+
+        } else {
+          // for (var i=0; i < selected.length; i++) {
+          //   selectedObjs.push({selected[i].src});
+          // }
+          Artboard.addMedia(selected);
+          canvas.renderAll();
+          obj.center();
+          obj.setCoords();
+          logObj();
+        }
+        $(this).parents('#mediaLibrary').removeClass('active');
+        
+      } else {
+        alert('未選擇任何素材');
+      }
     })
     // $('#mediaLibrary .resources').on('click', 'a', function(){
     //   var resource = $(this).attr('data-src');
@@ -396,7 +491,6 @@ var Artboard = (function (){
     
     addMedia : function(objImage) {
       console.log('obj:' + objImage);
-      // var newImage = objImage;
       if (objImage === '' || objImage === undefined) {
         //default image
         objImage = 'images/uploads/abc.png';
@@ -404,7 +498,38 @@ var Artboard = (function (){
       } else {
         console.log(objImage);
       }
-      //Add Image or Video
+
+      //Check if it is an Slide Array
+      if (Object.prototype.toString.call( objImage ) === '[object Array]') {
+        //Add Image ((Multiple))
+        // console.log(objImage.length);
+        var id,
+            continued = 0,
+            src;
+        var timerData = [];
+        var index = 0;
+        var leastTime;
+        
+
+        objSlider(index, objImage);
+        var counter;
+        function objSlider(index, objImage){
+          // console.log(objImage[1].continued);
+          counter = clearInterval(counter);
+          if (index === objImage.length) {
+            index = 0;
+          }
+          console.log(objImage);
+          console.log(index);
+          leastTime = objImage[index].continued*1000;
+          console.log(leastTime);
+          index++;
+          counter = setInterval(function(){objSlider(index, objImage)}, leastTime);
+        }
+
+        
+      } else {
+        //Add Image or Video ((Single))
         //extension
         var extension = objImage.split('.').pop();
         var media;
@@ -487,6 +612,8 @@ var Artboard = (function (){
         } else {
           console.log('不支援此檔案格式，請重試');
         }
+      }
+      
     },
     dispose : function() {
       // canvas.deactivateAllWithDispatch();
