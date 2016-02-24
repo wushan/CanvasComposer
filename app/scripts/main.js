@@ -1,8 +1,12 @@
+
 //Extend Attributes for Fabric Objects
-  fabric.Object.prototype.media = {
-    'slides' : [],
-    'video' : ''
-  }
+fabric.Object.prototype.id = {}
+
+fabric.Object.prototype.media = {
+  'slider' : '',
+  'slides' : [],
+  'video' : ''
+}
 
 //*Setting Up Canvas
   var canvas = new fabric.Canvas('c', {
@@ -402,15 +406,13 @@
           alert('未選取任何物件');
 
         } else {
-          // for (var i=0; i < selected.length; i++) {
-          //   selectedObjs.push({selected[i].src});
-          // }
-          Artboard.addMedia(selected);
-          canvas.renderAll();
-          obj.center();
-          obj.setCoords();
-          logObj();
+          obj.remove();
         }
+        Artboard.addMedia(selected);
+        canvas.renderAll();
+        obj.center();
+        obj.setCoords();
+        logObj();
         $(this).parents('#mediaLibrary').removeClass('active');
         
       } else {
@@ -423,7 +425,7 @@
     //   console.log('got one');
     //   var obj = canvas.getActiveObject();
       
-    //   var newImage = resource;
+    //   var newImage = resource;-
     //   console.log(newImage);
     //   if (obj == null) {
     //     alert('未選取任何物件');
@@ -506,25 +508,163 @@ var Artboard = (function (){
         var id,
             continued = 0,
             src;
-        var timerData = [];
         var index = 0;
-        var leastTime;
-        
+        var leastTime,
+            counter;
+        //Create Image Object with first SRC
+        var extension = objImage[0].src.split('.').pop();
+        var media;
+        console.log(extension);
 
-        objSlider(index, objImage);
-        var counter;
-        function objSlider(index, objImage){
-          // console.log(objImage[1].continued);
+        if (extension.match(/^(gif|png|jpg|jpeg|tiff|svg)$/)) {
+          //If is image file
+          console.log('match');
+          var padding = 0;
+          media = new fabric.Image.fromURL(objImage[0].src, function(oImg) {
+            
+
+            var patternSourceCanvas = new fabric.StaticCanvas();
+            patternSourceCanvas.add(oImg);
+
+            var pattern = new fabric.Pattern({
+              source: function() {
+                patternSourceCanvas.setDimensions({
+                  width: oImg.getBoundingRectWidth() + padding,
+                  height: oImg.getBoundingRectHeight() + padding
+                });
+                return patternSourceCanvas.getElement();
+              },
+              repeat: 'no-repeat'
+            });
+            var frame = new fabric.Rect({
+                left: canvas.getWidth()/2-oImg.getWidth()/2,
+                top: canvas.getHeight()/2-oImg.getHeight()/2,
+                fill: pattern,
+                width: oImg.getWidth() + padding,
+                height: oImg.getHeight() + padding
+              })
+            canvas.add(frame);
+            frame.toObject = (function(toObject) {
+              return function() {
+                return fabric.util.object.extend(toObject.call(this), {
+                  id: 1,
+                  media: {
+                    slides : objImage,
+                    video: this.media.video
+                  }
+                });
+              };
+            })(frame.toObject);
+
+            canvas.renderAll();
+
+            //Bind
+            bindEvents(frame);
+            //Programmatically do the image slide
+            //Exeacute
+            objSlider(index, objImage, oImg, frame, pattern, patternSourceCanvas );
+            //Refresh log
+            logObj();
+          });
+        } else if (extension.match(/^(mp4|avi|ogg|ogv|webm)$/)) {
+          //if is video file
+          console.log('match video');
+          //Set InitRadius for Videos 16:9
+          var w = initRadius*1.6;
+          var h = initRadius*0.9;
+
+          var videoEl = document.createElement("video");
+          videoEl.loop = true;
+          videoEl.controls = true;
+          console.log(videoEl);
+          videoEl.innerHTML = '<source src="'+ objImage +'">';
+
+          var video = new fabric.Image(videoEl, {
+            left: canvas.getWidth()/2-w/2,
+            top: canvas.getHeight()/2-h/2,
+            angle: 0,
+            width: w,
+            height: h
+          });
+          canvas.add(video);
+          video.getElement().play();
+          video.toObject = (function(toObject) {
+              return function() {
+                return fabric.util.object.extend(toObject.call(this), {
+                  media: {
+                    slides : this.media.slides,
+                    video: objImage
+                  }
+                });
+              };
+            })(video.toObject);
+          //Bind
+          bindEvents(video);
+          //Programmatically Select Newly Added Object
+          canvas.setActiveObject(video);
+          //Refresh log
+          logObj();
+
+          fabric.util.requestAnimFrame(function render() {
+            canvas.renderAll();
+            fabric.util.requestAnimFrame(render);
+          });
+        } else {
+          console.log('不支援此檔案格式，請重試');
+        }
+        ///////////////////////////////////
+        
+        
+        function objSlider(index, objImage, oImg, frame, pattern, patternSourceCanvas ){
           counter = clearInterval(counter);
+          console.log(pattern.source());
+
+          // setDimensions({width: 10, height:10});
           if (index === objImage.length) {
             index = 0;
           }
+          // console.log(frame);
+          // console.log(frame.getWidth());
+          // console.log(oImg.getWidth());
+          //AddMedia Here
           console.log(objImage);
-          console.log(index);
+          // fabric.util.loadImage(objImage[index].src, function (img) {
+          //     // img.scaleToWidth(frame.getWidth());
+          //     console.log(img);
+          //     frame.setPatternFill({
+          //         source: img,
+          //         repeat: 'repeat'
+          //     });
+          //     canvas.renderAll();
+          // });
+          ///////////////////////
+          // console.log(oImg);
+          oImg.setSrc(objImage[index].src, function(objBack){
+            // oImg.scaleToWidth(frame.getWidth());
+            // console.log(oImg.getWidth());
+            console.log('loaded');
+            canvas.renderAll();
+            //Refresh log
+            logObj();
+          });
+          console.log(oImg);
+          ////////////////////////
+    
+          oImg.scaleToWidth(frame.getWidth());
+          frame.setCoords();
+          console.log(frame.getWidth());
+          console.log(oImg);
+          // patternSourceCanvas.setDimensions({
+          //   width: oImg.getWidth()*oImg.getScaleX() + padding,
+          //   height: oImg.getHeight()*oImg.getScaleY() + padding
+          // });
+          patternSourceCanvas.renderAll();
+
+          /////////////End Media
           leastTime = objImage[index].continued*1000;
           console.log(leastTime);
           index++;
-          counter = setInterval(function(){objSlider(index, objImage)}, leastTime);
+          counter = setInterval(function(){objSlider(index, objImage, oImg, frame, pattern, patternSourceCanvas )}, leastTime);
         }
 
         
@@ -549,6 +689,7 @@ var Artboard = (function (){
             oImg.toObject = (function(toObject) {
               return function() {
                 return fabric.util.object.extend(toObject.call(this), {
+                  id: 1,
                   media: {
                     slides : this.media.slides,
                     video: this.media.video
@@ -558,7 +699,6 @@ var Artboard = (function (){
             })(oImg.toObject);
             // console.log(media);
             canvas.renderAll();
-
             //Bind
             bindEvents(oImg);
             //Programmatically Select Newly Added Object
