@@ -529,8 +529,8 @@ var Artboard = (function (){
             var pattern = new fabric.Pattern({
               source: function() {
                 patternSourceCanvas.setDimensions({
-                  width: oImg.getBoundingRectWidth() + padding,
-                  height: oImg.getBoundingRectHeight() + padding
+                  width: oImg.getWidth() + padding,
+                  height: oImg.getHeight() + padding
                 });
                 return patternSourceCanvas.getElement();
               },
@@ -623,43 +623,24 @@ var Artboard = (function (){
           if (index === objImage.length) {
             index = 0;
           }
-          // console.log(frame);
-          // console.log(frame.getWidth());
-          // console.log(oImg.getWidth());
-          //AddMedia Here
-          console.log(objImage);
-          // fabric.util.loadImage(objImage[index].src, function (img) {
-          //     // img.scaleToWidth(frame.getWidth());
-          //     console.log(img);
-          //     frame.setPatternFill({
-          //         source: img,
-          //         repeat: 'repeat'
-          //     });
-          //     canvas.renderAll();
-          // });
-          ///////////////////////
-          // console.log(oImg);
+          // patternSourceCanvas.renderAll();
+          // canvas.renderAll();
+          oImg.scaleToWidth(frame.getWidth());
+          patternSourceCanvas.setDimensions({
+            width: frame.getWidth() + padding,
+            height: frame.getHeight() + padding
+          });
+          patternSourceCanvas.renderAll();
+          canvas.renderAll();
+          
+
           oImg.setSrc(objImage[index].src, function(objBack){
-            // oImg.scaleToWidth(frame.getWidth());
-            // console.log(oImg.getWidth());
-            console.log('loaded');
+            patternSourceCanvas.renderAll();
             canvas.renderAll();
             //Refresh log
             logObj();
           });
           console.log(oImg);
-          ////////////////////////
-    
-          oImg.scaleToWidth(frame.getWidth());
-          frame.setCoords();
-          console.log(frame.getWidth());
-          console.log(oImg);
-          // patternSourceCanvas.setDimensions({
-          //   width: oImg.getWidth()*oImg.getScaleX() + padding,
-          //   height: oImg.getHeight()*oImg.getScaleY() + padding
-          // });
-          patternSourceCanvas.renderAll();
-
           /////////////End Media
           leastTime = objImage[index].continued*1000;
           console.log(leastTime);
