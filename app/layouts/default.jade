@@ -43,14 +43,16 @@ html.no-js
       // endbower
       // endbuild
 
-      script(src='http://cdnjs.cloudflare.com/ajax/libs/fabric.js/1.5.0/fabric.min.js')
-      //- script(src='scripts/fabric.min.js')
-      script(src='scripts/fabricExtensions.js')
+      //- script(src='http://cdnjs.cloudflare.com/ajax/libs/fabric.js/1.5.0/fabric.min.js')
+      
       // build:js scripts/plugins.js
+      script(src='../bower_components/fabric.js/dist/fabric.min.js')
       script(src='scripts/lib/Sortable.min.js')  
       // endbuild
     
       // build:js scripts/main.js
+      script(src='scripts/fabricExtensions.js')
+      script(src='scripts/editorConfig.js')
       script(src='scripts/main.js')
       script(src='scripts/miscellaneous.js')
       // endbuild
