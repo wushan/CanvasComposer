@@ -251,9 +251,8 @@ var Artboard = (function (){
       logObj();
     },
     addMedia : function(objImage) {
-
       if (objImage === '' || objImage === undefined) {
-        //default image
+        //Default image
         objImage = 'images/uploads/abc.png';
       } else {
       }
@@ -413,83 +412,28 @@ var Artboard = (function (){
         var extension = objImage.split('.').pop();
         var media;
         console.log(extension);
+        var youtubeId = validateYouTubeUrl(objImage);
 
+        if (youtubeId != false) {
+          //If It is from Youtube
+          YoutubeVideo(youtubeId, function(video){
+            console.log(video.title);
+            var webm = video.getSource("video/webm", "medium");
+            console.log("WebM: " + webm.url);
+            var mp4 = video.getSource("video/mp4", "medium");
+            console.log("MP4: " + mp4.url);
+
+          });
+        } else {
+
+        }
+        
         if (extension.match(/^(gif|png|jpg|jpeg|tiff|svg)$/)) {
-          //If is image file
-          console.log('match');
-          media = new fabric.Image.fromURL(objImage, function(oImg) {
-            oImg.set({
-              'left': canvas.getWidth()/2-oImg.width/2,
-              'top': canvas.getHeight()/2-oImg.height/2
-
-            });
-            canvas.add(oImg);
-            oImg.center();
-            oImg.setCoords();
-            oImg.toObject = (function(toObject) {
-              return function() {
-                return fabric.util.object.extend(toObject.call(this), {
-                  id: 1,
-                  media: {
-                    slides : this.media.slides,
-                    video: this.media.video
-                  }
-                });
-              };
-            })(oImg.toObject);
-            // console.log(media);
-            canvas.renderAll();
-            //Bind
-            bindEvents(oImg);
-            //Programmatically Select Newly Added Object
-            canvas.setActiveObject(oImg);
-            //Refresh log
-            logObj();
-          });
+          //Add Single Image
+          Multimedia.image(objImage);
         } else if (extension.match(/^(mp4|avi|ogg|ogv|webm)$/)) {
-          //if is video file
-          console.log('match video');
-          //Set InitRadius for Videos 16:9
-          var w = initRadius*1.6;
-          var h = initRadius*0.9;
-
-          var videoEl = document.createElement("video");
-          videoEl.loop = true;
-          videoEl.controls = true;
-          console.log(videoEl);
-          videoEl.innerHTML = '<source src="'+ objImage +'">';
-
-          var video = new fabric.Image(videoEl, {
-            left: canvas.getWidth()/2-w/2,
-            top: canvas.getHeight()/2-h/2,
-            angle: 0,
-            width: w,
-            height: h
-          });
-          
-          canvas.add(video);
-          video.getElement().play();
-          video.toObject = (function(toObject) {
-              return function() {
-                return fabric.util.object.extend(toObject.call(this), {
-                  media: {
-                    slides : this.media.slides,
-                    video: objImage
-                  }
-                });
-              };
-            })(video.toObject);
-          //Bind
-          bindEvents(video);
-          //Programmatically Select Newly Added Object
-          canvas.setActiveObject(video);
-          //Refresh log
-          logObj();
-
-          fabric.util.requestAnimFrame(function render() {
-            canvas.renderAll();
-            fabric.util.requestAnimFrame(render);
-          });
+          //Add Single Video
+          Multimedia.video(objImage);
         } else {
           console.log('不支援此檔案格式，請重試');
         }
@@ -531,6 +475,102 @@ var Artboard = (function (){
       obj.center();
       obj.setCoords();
       canvas.renderAll();
+    }
+  }
+} ());
+
+//Add Media
+var Multimedia = (function (){
+  return {
+    image : function(source) {
+      //Add Single Image
+      var media = new fabric.Image.fromURL(source, function(oImg) {
+        oImg.set({
+          'left': canvas.getWidth()/2-oImg.width/2,
+          'top': canvas.getHeight()/2-oImg.height/2
+
+        });
+        canvas.add(oImg);
+        oImg.center();
+        oImg.setCoords();
+        oImg.toObject = (function(toObject) {
+          return function() {
+            return fabric.util.object.extend(toObject.call(this), {
+              id: 1,
+              media: {
+                slides : this.media.slides,
+                video: this.media.video
+              }
+            });
+          };
+        })(oImg.toObject);
+        // console.log(media);
+        canvas.renderAll();
+        //Bind
+        bindEvents(oImg);
+        //Programmatically Select Newly Added Object
+        canvas.setActiveObject(oImg);
+        //Refresh log
+        logObj();
+      });
+    },
+    video : function(source) {
+      //Add Single Video
+      //if is video file
+      console.log('match video');
+      //Set InitRadius for Videos 16:9
+      var vw;
+      var vh;
+
+      var videoEl = document.createElement("video");
+      videoEl.loop = true;
+      videoEl.controls = true;
+      console.log(videoEl);
+      videoEl.innerHTML = '<source src="'+ source +'">';
+
+      var video = new fabric.Image(videoEl, {});
+
+      canvas.add(video);
+      videoEl.onloadeddata = function() {
+        vw = this.videoWidth;
+        vh = this.videoHeight;
+        video.setWidth(vw);
+        video.setHeight(vh);
+        video.center();
+        video.setCoords();
+        canvas.renderAll();
+      };
+      //Auto Play Video
+      video.getElement().play();
+      video.toObject = (function(toObject) {
+          return function() {
+            return fabric.util.object.extend(toObject.call(this), {
+              media: {
+                video: source
+              }
+            });
+          };
+        })(video.toObject);
+      //Bind
+      bindEvents(video);
+      //Programmatically Select Newly Added Object
+      canvas.setActiveObject(video);
+      //Refresh log
+      logObj();
+
+      fabric.util.requestAnimFrame(function render() {
+        canvas.renderAll();
+        fabric.util.requestAnimFrame(render);
+      });
+    },
+    slider : function() {
+      //Add Mixed Slider
+    },
+    clock : function() {
+      //Add Clock Object
+    },
+    iframe : function() {
+      //Get Screen Shot Only
     }
   }
 } ());
