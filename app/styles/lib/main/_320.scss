@@ -2,14 +2,77 @@
 	background-color: $gray;
 
 }
+/* tasks */
+
+.tasks {
+  // list-style: none;
+  // margin: 0;
+  // padding: 0;
+}
+
+.task {
+  // display: flex;
+  // justify-content: space-between;
+  // padding: 12px 0;
+  // border-bottom: solid 1px #dfdfdf;
+}
+
+.task:last-child {
+  // border-bottom: none;
+}
+
+/* context menu */
+
+.context-menu {
+  display: none;
+  position: absolute;
+  z-index: 10;
+  padding: 12px 0;
+  width: 240px;
+  background-color: #fff;
+  border: solid 1px #dfdfdf;
+  box-shadow: 1px 1px 2px #cfcfcf;
+}
+
+.context-menu--active {
+  display: block;
+}
+
+.context-menu__items {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.context-menu__item {
+  display: block;
+  margin-bottom: 4px;
+}
+
+.context-menu__item:last-child {
+  margin-bottom: 0;
+}
+
+.context-menu__link {
+  display: block;
+  padding: 4px 12px;
+  color: #0066aa;
+  text-decoration: none;
+}
+
+.context-menu__link:hover {
+  color: #fff;
+  background-color: #0066aa;
+}
 #main {
 	height: 100vh;
 	@extend .clr;
+	position: relative;
 	.row {
 		height: 100%;
 	}
 	#artboard {
-		@include span(9 of 12 0);
+		@include span(11 of 12 0 last);
 		background-color: #cccccc;
 		height: 100%;
 	}
@@ -20,10 +83,22 @@
 		padding: 1em;
 	}
 	#config {
-		@include span(2 of 12 0 last);
-		height: 100%;
+		@include span(2 of 12 0);
+		// height: 100%;
 		box-sizing: border-box;
 		padding: 1em;
+		position: absolute;
+		right: 10px;
+		top: 0;
+		bottom: 0;
+		font-size: 0;
+		&:before {
+			content: '';
+			height: 100%;
+			width: 0;
+			display: inline-block;
+			vertical-align: middle;
+		}
 	}
 	#console {
 		// @include span(1.5 of 12 0);
@@ -59,13 +134,17 @@
 }
 //Config
 #config {
-
+	display: none;
 }
 //Sidebar
 #sidebar {
 	background-color: $darkgray;
 }
 //Panels
+.panels {
+	display: inline-block;
+	vertical-align: middle;
+}
 .panel {
 	background-color: $darkestgray;
 	color: $white;
@@ -93,17 +172,30 @@ ul {
 				text-align: center;
 				display: block;
 				// line-height: 40px;
+				border-radius: 6px;
 				padding: 1em 0;
-				background-color: $darkestgray;
+				background-color: $blue;
 				@extend .transition;
 				&:hover {
-					background-color: $black;
+					background-color: darken($blue, 40%);
+					i {
+						text-shadow: none;
+					}
+				}
+				i {
+					@extend .transition;
+					text-shadow: 0 0 14px $black;
 				}
 			}
 		}
 		&.overall {
 			border-top: 1px solid $gray;
 			padding-top: .5em;
+			li {
+				a {
+					background-color: $darkestgray;
+				}
+			}
 		}
 	}
 }
@@ -111,7 +203,7 @@ ul {
 	box-shadow: 0px 3px 3px rgba(0,0,0,.33);
 	// background-color: $white;
 	box-sizing: border-box;
-	font-size: .8em;
+	font-size: .8rem;
 	padding: 1em .5em;
 	@extend .clr;
 	&:hover {
@@ -127,7 +219,7 @@ ul {
 	box-shadow: 0px 3px 3px rgba(0,0,0,.33);
 	// background-color: $white;
 	box-sizing: border-box;
-	font-size: .8em;
+	font-size: .8rem;
 	padding: .5em;
 	margin-bottom: 1em;
 }
@@ -170,14 +262,14 @@ ul {
 .canvas-wrapper {
 	height: 100%;
 	text-align: center;
-	// font-size: 0;
-	// &:before {
-	// 	content: '';
-	// 	width: 0;
-	// 	height: 100%;
-	// 	display: inline-block;
-	// 	vertical-align: middle;
-	// }
+	font-size: 0;
+	&:before {
+		content: '';
+		width: 0;
+		height: 100%;
+		display: inline-block;
+		vertical-align: middle;
+	}
 	#canvas {
 		display: inline-block;
 		vertical-align: middle;
@@ -194,7 +286,7 @@ ul {
 		font-size: 1rem;
 		background-color: $black;
 		bottom: 100%;
-		right: 0;
+		left: 0;
 		padding: .5em;
 		z-index: 2;
 		&.active {

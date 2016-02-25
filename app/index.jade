@@ -6,14 +6,19 @@ block content
     .row
       #sidebar
         ul.tools
-          
           li
-            a.js-add-rect(href="javascript:;" title="新增物件")
+            a.js-add-rect(href="javascript:;" title="新增矩形")
               i.fa.fa-object-group.fa-lg
           li
-            a.js-add-circle(href="javascript:;") Circle
+            a.js-add-circle(href="javascript:;" title="新增圓形") 
+              i.fa.fa-circle-thin.fa-lg
           li
-            a.js-add-triangle(href="javascript:;") Tri
+            a.js-add-text(href="javascript:;" title="新增文字") 
+              i.fa.fa-font.fa-lg
+          li
+            a.js-add-clock(href="javascript:;" title="新增時鐘") 
+              i.fa.fa-clock-o.fa-lg
+
         ul.tools.overall
           li
             a(href="javascript:;" title="鎖定所有物件")
@@ -22,7 +27,7 @@ block content
             a.js-dispose(href="javascript:;" title="清除所有物件")
               i.fa.fa-eraser.fa-lg
         
-      #artboard
+      #artboard.task
         .canvas-wrapper
           #canvas
             canvas#c
@@ -38,94 +43,110 @@ block content
               .tag.height <span>600</span>
           
       #config
-        .canvasconfig-wrapper.panel
-          .title
-            h3 版面屬性
-            #countdown0
-            #countdown1
-            #countdown2
-          .canvasconfig-inner
-            .block
-              .controlgroup
-                label Presets
-                .controls
-                  select#canvas-select
-                    option(data-width="800" data-height="600") 800*600
-                    option(data-width="1024" data-height="768") 1024*768
-                    option(data-width="768" data-height="1024") 768*1024
-                    option(data-width="800" data-height="800") 800*800
-            .layoutpresets
+        .panels
+          .canvasconfig-wrapper.panel
+            .title
+              h3 版面屬性
+              #countdown0
+              #countdown1
+              #countdown2
+            .canvasconfig-inner
               .block
-                a(href="javascript:;") A
-              .block
-                a.active(href="javascript:;") B
-              .block
-                a(href="javascript:;") C
-              .block
-                a(href="javascript:;") D
-              .block
-                a(href="javascript:;") E
-            .row        
-              .block
+                .controlgroup
+                  label Presets
+                  .controls
+                    select#canvas-select
+                      option(data-width="800" data-height="600") 800*600
+                      option(data-width="1024" data-height="768") 1024*768
+                      option(data-width="768" data-height="1024") 768*1024
+                      option(data-width="800" data-height="800") 800*800
+              .layoutpresets
+                .block
+                  a(href="javascript:;") A
+                .block
+                  a.active(href="javascript:;") B
+                .block
+                  a(href="javascript:;") C
+                .block
+                  a(href="javascript:;") D
+                .block
+                  a(href="javascript:;") E
+              .row        
+                .block
+                  .controlgroup
+                    label Width
+                    .controls
+                      input#canvasWidth(type="number" value="800")
+                .block
+                  .controlgroup
+                    label Height
+                    .controls
+                      input#canvasHeight(type="number" value="600")
+          .attributes-wrapper.panel
+            .title
+              h3 物件屬性
+            .row
+              .block.attr.type
+                .controlgroup
+                  label Type
+                  .controls
+                    input(type='text' readonly)
+            .attributes-inner            
+              .block.attr.width
                 .controlgroup
                   label Width
                   .controls
-                    input#canvasWidth(type="number" value="800")
-              .block
+                    input.objectSize#objectWidth(type='number')
+              .block.attr.height
                 .controlgroup
                   label Height
                   .controls
-                    input#canvasHeight(type="number" value="600")
-        .attributes-wrapper.panel
-          .title
-            h3 物件屬性
-          .row
-            .block.attr.type
-              .controlgroup
-                label Type
-                .controls
-                  input(type='text' readonly)
-          .attributes-inner            
-            .block.attr.width
-              .controlgroup
-                label Width
-                .controls
-                  input.objectSize#objectWidth(type='number')
-            .block.attr.height
-              .controlgroup
-                label Height
-                .controls
-                  input.objectSize#objectHeight(type='number')
-            .block.attr.radius
-              .controlgroup
-                label Radius
-                .controls
-                  input#objectRadius(type='text')
-            
-            .block.attr.top
-              .controlgroup
-                label Top
-                .controls
-                  input#objectTop(type='text')
-            .block.attr.left
-              .controlgroup
-                label Left
-                .controls
-                  input#objectLeft(type='text')
-            .block.attr.angle
-              .controlgroup
-                label Angle
-                .controls
-                  input#objectAngle(type='text')
-          .row
-            .block.attr.media
-              .controlgroup
-                label Media
-                .controls.richcontrol
-                  a.js-library(href="javascript:;")
-                    i.fa.fa-cloud-upload.fa-2x
-                  input#mediaValue(type='text' readonly)
-                .mediaPreview
+                    input.objectSize#objectHeight(type='number')
+              .block.attr.radius
+                .controlgroup
+                  label Radius
+                  .controls
+                    input#objectRadius(type='text')
+              
+              .block.attr.top
+                .controlgroup
+                  label Top
+                  .controls
+                    input#objectTop(type='text')
+              .block.attr.left
+                .controlgroup
+                  label Left
+                  .controls
+                    input#objectLeft(type='text')
+              .block.attr.angle
+                .controlgroup
+                  label Angle
+                  .controls
+                    input#objectAngle(type='text')
+              .block.attr.scalex
+                .controlgroup
+                  label ScaleX
+                  .controls
+                    input#objectScaleX(type='text')
+              .block.attr.scaley
+                .controlgroup
+                  label ScaleY
+                  .controls
+                    input#objectScaleY(type='text')
+              .block.attr.color
+                .controlgroup
+                  label Color
+                  .controls
+                    input#objectColor(type='text')
+            .row
+              .block.attr.media
+                .controlgroup
+                  label Media
+                  .controls.richcontrol
+                    a.js-library(href="javascript:;")
+                      i.fa.fa-cloud-upload.fa-2x
+                    input#mediaValue(type='text' readonly)
+                  .mediaPreview
     #console
       .shapeobj
         h3 Shape Objects
@@ -133,7 +154,28 @@ block content
       .canvasobj
         h3 Canvas Object
         .content
-      
+
+    #context-menu.context-menu
+      ul.context-menu__items
+        li.context-menu__item
+          a.context-menu__link(href='#', data-action='layertop')
+            i.fa.fa-angle-double-up
+            |  移至頂層
+          a.context-menu__link(href='#', data-action='layerup')
+            i.fa.fa-angle-up
+            |  上移一層
+        li.context-menu__item
+          a.context-menu__link(href='#', data-action='layerdown')
+            i.fa.fa-angle-down
+            |  下移一層
+        a.context-menu__link(href='#', data-action='layerbottom')
+            i.fa.fa-angle-double-down
+            |  移至底層
+        li.context-menu__item
+          a.context-menu__link.js-delete(href='#', data-action='delete')
+            i.fa.fa-times
+            |  刪除物件
+ 
 
     #mediaLibrary
       .mediaLibrary-inner
@@ -188,45 +230,53 @@ block content
               a(href="javascript:;" data-src="http://stories.gettyimages.com/wp-content/uploads/2015/08/GettyImages-557187411-11.jpg" data-resourceid="8")
                 .thumbnail
                   i.fa.fa-check-circle-o
-                    img(src="http://stories.gettyimages.com/wp-content/uploads/2015/08/GettyImages-557187411-11.jpg")
+                  img(src="http://stories.gettyimages.com/wp-content/uploads/2015/08/GettyImages-557187411-11.jpg")
                 .filename GettyImages-557187411-11.jpg
             li
               a(href="javascript:;" data-src="images/uploads/slide-same-1.jpg" data-resourceid="9")
                 .thumbnail
                   i.fa.fa-check-circle-o
-                    img(src="images/uploads/slide-same-1.jpg")
+                  img(src="images/uploads/slide-same-1.jpg")
                 .filename slider-same-1.jpg
             li
               a(href="javascript:;" data-src="images/uploads/slide-same-2.jpg" data-resourceid="10")
                 .thumbnail
                   i.fa.fa-check-circle-o
-                    img(src="images/uploads/slide-same-2.jpg")
+                  img(src="images/uploads/slide-same-2.jpg")
                 .filename slider-same-2.jpg
             li
               a(href="javascript:;" data-src="images/uploads/slide-same-3.jpg" data-resourceid="11")
                 .thumbnail
                   i.fa.fa-check-circle-o
-                    img(src="images/uploads/slide-same-3.jpg")
+                  img(src="images/uploads/slide-same-3.jpg")
                 .filename slider-same-3.jpg
 
           h2 Demo Video Resouces
           ul.resources
             li
               a(href="javascript:;" data-src="http://www.quirksmode.org/html5/videos/big_buck_bunny.mp4" data-resourceid="12")
-                i.fa.fa-check-circle-o
-                img(src="http://www.quirksmode.org/html5/videos/big_buck_bunny.mp4")
+                .thumbnail
+                  i.fa.fa-check-circle-o
+                  img(src="http://www.quirksmode.org/html5/videos/big_buck_bunny.mp4")
+                .filename xxx
             li
               a(href="javascript:;" data-src="http://download.wavetlan.com/SVV/Media/HTTP/H264/Talkinghead_Media/H264_test1_Talkinghead_mp4_480x360.mp4" data-resourceid="13")
-                i.fa.fa-check-circle-o
-                img(src="http://download.wavetlan.com/SVV/Media/HTTP/H264/Talkinghead_Media/H264_test1_Talkinghead_mp4_480x360.mp4")
+                .thumbnail
+                  i.fa.fa-check-circle-o
+                  img(src="http://download.wavetlan.com/SVV/Media/HTTP/H264/Talkinghead_Media/H264_test1_Talkinghead_mp4_480x360.mp4")
+                .filename xxx
             li
               a(href="javascript:;" data-src="http://techslides.com/demos/sample-videos/small.webm" data-resourceid="14")
-                i.fa.fa-check-circle-o
-                img(src="http://techslides.com/demos/sample-videos/small.webm")
+                .thumbnail
+                  i.fa.fa-check-circle-o
+                  img(src="http://techslides.com/demos/sample-videos/small.webm")
+                .filename xxx
             li
               a(href="javascript:;" data-src="https://www.youtube.com/watch?v=4XpDdIISlYo" data-resourceid="4XpDdIISlYo")
-                i.fa.fa-check-circle-o
-                img(src="http://lorempixel.com/400/200")
+                .thumbnail
+                  i.fa.fa-check-circle-o
+                  img(src="http://lorempixel.com/400/200")
+                .filename xxx
         .settings-container
           ol.selection#selectionOrder
           a.js-sendToObj(href="javascript:;") 置入選取物件

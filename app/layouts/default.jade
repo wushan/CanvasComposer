@@ -12,6 +12,7 @@ html.no-js
 
     // build:css styles/vendor.css
     // bower:css
+
     // endbower
     // endbuild
 
@@ -40,20 +41,25 @@ html.no-js
       // bower:js
       script(src='../bower_components/jquery/dist/jquery.js')
       script(src='../bower_components/underscore/underscore-min.js')
+      script(src='scripts/vendor/spectrum.js')
       // endbower
       // endbuild
 
-      //- script(src='http://cdnjs.cloudflare.com/ajax/libs/fabric.js/1.5.0/fabric.min.js')
-      
       // build:js scripts/plugins.js
       script(src='../bower_components/fabric.js/dist/fabric.min.js')
       script(src='scripts/lib/youtubeDecoder.js')
       script(src='scripts/lib/Sortable.min.js')  
+      script(src='scripts/editor/contextMenu.js')
       // endbuild
     
       // build:js scripts/main.js
       script(src='scripts/fabricExtensions.js')
-      script(src='scripts/editorConfig.js')
+      script(src='scripts/editor/editorConfig.js')
+      script(src='scripts/editor/panels.js')
+      script(src='scripts/editor/objEvents.js')
+      script(src='scripts/editor/mediaLib.js')
+      script(src='scripts/editor/keyBoard.js')
+      script(src='scripts/editor/logs.js')
       script(src='scripts/main.js')
       script(src='scripts/miscellaneous.js')
       // endbuild
