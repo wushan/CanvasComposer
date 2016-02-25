@@ -15,6 +15,18 @@ fabric.Video = fabric.util.createClass(fabric.Image, {
 	type: 'video'
 });
 
+//Create Fabric Slider Class
+fabric.Slider = fabric.util.createClass(fabric.Rect, {
+	type: 'slider'
+});
+
+fabric.Slider.fromArray = function(source, callback, imgOptions) {
+	fabric.util.loadImage(source, function(img) {
+      callback && callback(new fabric.Slider(img, imgOptions));
+    }, null, imgOptions && imgOptions.crossOrigin);
+};
+
+
 fabric.Video.fromURL = function(url, callback, imgOptions) {
     fabric.util.loadImage(url, function(img) {
       callback && callback(new fabric.Video(img, imgOptions));
