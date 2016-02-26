@@ -2,6 +2,15 @@ function bindEvents(obj) {
   obj.on('selected', function() {
     console.log('selected');
     $('.objectControl').addClass('active');
+    //Determine which Config Panel Should be shown
+    if (obj.type === 'i-text') {
+      $('.text-attr').show();
+      $('.basic-attr').hide();
+    } else {
+      $('.text-attr').hide();
+      $('.basic-attr').show();
+    }
+    
     $('#config').fadeTo('fast',0.9);
     instantMeta.log(obj);
   });
@@ -28,4 +37,9 @@ function bindEvents(obj) {
     console.log('rotating');
     instantMeta.log(obj);
   });
+  //After Edit
+  obj.on('changed', function() {
+    console.log('Exited');
+    instantMeta.log(obj);
+  })
 }

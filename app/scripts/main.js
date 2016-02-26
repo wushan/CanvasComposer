@@ -48,7 +48,22 @@ var Artboard = (function (){
       //Refresh log
       logObj();
     },
-    
+    addText : function(){
+      var text = new fabric.IText('test',{
+        //options
+        left: 200,
+        top: 200,
+        lockScalingX: true,
+        lockScalingY: true
+      })
+      canvas.add(text);
+      //Bind
+      bindEvents(text);
+      //Programmatically Select Newly Added Object
+      canvas.setActiveObject(text);
+      //Refresh log
+      logObj();
+    },
     addMedia : function(objImage) {
       if (objImage === '' || objImage === undefined) {
         //Default image
@@ -272,6 +287,8 @@ var Multimedia = (function (){
         })
 
         canvas.add(frame);
+        var allObjs = canvas.getObjects();
+        index = allObjs.length-1;
 
         frame.toObject = (function(toObject) {
           return function() {

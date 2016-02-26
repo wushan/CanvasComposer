@@ -90,7 +90,7 @@ input,input[type=search] {
     width: 100%;
     -webkit-appearance: none;
     -moz-appearance: window;
-    border: 0;
+    border: 1px solid $gray;
     color: $black;
     border-radius: 3px;
   }
@@ -103,7 +103,7 @@ input,input[type=search] {
       background-image: url("../images/components/select-arrow.png");
       background-position: 97% center;
       background-repeat: no-repeat;
-      background-color: $smokygray;
+      background-color: $white;
       select {
         width: 110%;
         background-image: url("../images/components/select-arrow.png");
@@ -120,7 +120,7 @@ input,input[type=search] {
     box-sizing: border-box;
     height: 30px;
     padding: .3em .7em;
-    background-color: $smokygray;
+    background-color: $white;
     &:focus {
       outline: none;
     }
@@ -130,7 +130,7 @@ input,input[type=search] {
     width: 100%;
     border: 0;
     outline: none;
-    background-color: $smokygray;
+    background-color: $white;
     display: inline-block;
     vertical-align: middle;
     overflow: hidden;

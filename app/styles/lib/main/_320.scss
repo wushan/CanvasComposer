@@ -84,6 +84,7 @@
 		height: 100%;
 	}
 	#artboard {
+		position: relative;
 		@include span(11 of 12 0 last);
 		background-color: #cccccc;
 		height: 100%;
@@ -151,6 +152,15 @@
 //Sidebar
 #sidebar {
 	background-color: $darkgray;
+}
+//canvasConfig
+#canvassetting {
+	display: none;
+	position: absolute;
+	top: .5em;
+	left: 0;
+	right: 0;
+	z-index: 1;
 }
 //Panels
 .panels {
@@ -221,41 +231,56 @@ ul {
 	&:hover {
 		box-shadow: 0px 3px 3px rgba(0,0,0,.66);
 	}
-	.attributes-inner {
+	.attributes-inner-text {
+		@extend .clr;
 		.block {
 			@include gallery(6 of 12 .5);
 		}
 	}
+	.attributes-inner {
+		@extend .clr;
+		.block {
+			@include gallery(6 of 12 .5);
+		}
+	}
+	
 }
 .canvasconfig-wrapper {
 	box-shadow: 0px 3px 3px rgba(0,0,0,.33);
-	// background-color: $white;
 	box-sizing: border-box;
 	font-size: .8rem;
-	padding: .5em;
 	margin-bottom: 1em;
+	max-width: 1000px;
+	margin: 0 auto;
 }
 
 .canvasconfig-inner {
 	@extend .clr;
 	.block {
-		margin-bottom: .5em;
+		// margin-bottom: .5em;
 	}
 	.row {
-		background-color: $gray;
+		background-color: $smokygray;
 		color: $black;
 		padding: .5em;
+		// @include gallery(4 of 12);
 		.block {
 			@include gallery(6 of 12 .5);
+		}
+		&.layoutpresets {
+			.block {
+				@include gallery(2 of 12 .1);
+			}
 		}
 	}
 	.layoutpresets {
 		@extend .clr;
+		background-color: $darkgray;
 		.block {
 			text-align: center;
 			@include gallery(6 of 12 .5);
 			background-color: $black;
-			margin-bottom: .5em;
+			// margin-bottom: .5em;
 			a {
 				border: 2px solid transparent;
 				display: block;

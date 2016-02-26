@@ -12,7 +12,8 @@ var instantMeta = {
         type,
         media,
         preview,
-        color;
+        color,
+        textcolor;
 
     width = obj.width*obj.scaleX;
     height = obj.height*obj.scaleY;
@@ -23,7 +24,12 @@ var instantMeta = {
     top = obj.top;
     angle = obj.angle;
     type = obj.type;
-    color = obj.fill;
+    if (obj.type === 'i-text') {
+        color = obj.textBackgroundColor;
+    } else {
+      color = obj.fill;
+    }
+    textcolor = obj.fill;
 
     //混合物件 preview
     // if (type === "image") {
@@ -55,6 +61,7 @@ var instantMeta = {
     $('.attributes-wrapper .scalex input').val(scaleX);
     $('.attributes-wrapper .scaley input').val(scaleY);
     $('#objectColor').spectrum("set", color);
+    $('#objectTextColor').spectrum("set", textcolor);
     logObj();
   },
   clean: function(obj){
