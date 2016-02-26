@@ -18,7 +18,7 @@ var Artboard = (function (){
       var rect = new fabric.Rect({
         left: canvas.getWidth()/2-initRadius/2,
         top: canvas.getHeight()/2-initRadius/2,
-        fill: '#cccccc',
+        fill: '#'+Math.floor(Math.random()*16777215).toString(16),
         width: initRadius,
         height: initRadius
       });
@@ -36,7 +36,7 @@ var Artboard = (function (){
       var circle = new fabric.Circle({
         left: canvas.getWidth()/2-initRadius/2,
         top: canvas.getHeight()/2-initRadius/2,
-        fill: '#cccccc',
+        fill: '#'+Math.floor(Math.random()*16777215).toString(16),
         radius: initRadius/2
       });
       circle.perPixelTargetFind = true;
@@ -100,6 +100,27 @@ var Artboard = (function (){
       canvas.clear();
       //Refresh log
       logObj();
+    },
+    duplicateObject: function() {
+      var obj = canvas.getActiveObject();
+      canvas.add(obj.clone());
+      canvas.renderAll();
+    },
+    lockObject: function() {
+      var obj = canvas.getActiveObject();
+      if (obj.lockMovementY === true) {
+        obj.lockMovementY = false;
+        obj.lockMovementX = false;
+        obj.lockRotation = false;
+        obj.lockScalingX = false;
+        obj.lockScalingY = false;
+      } else {
+        obj.lockMovementY = true;
+        obj.lockMovementX = true;
+        obj.lockRotation = true;
+        obj.lockScalingX = true;
+        obj.lockScalingY = true;
+      }
     },
     removeObject: function() {
       var obj = canvas.getActiveObject();
@@ -225,105 +246,81 @@ var Multimedia = (function (){
     slider : function(imageset) {
       //Add Mixed Slider
       var slider = new fabric.Image.fromURL(imageset[0].src, function(res){
-  
+        //Create Static Canvas
+        var patternSourceCanvas = new fabric.StaticCanvas();
+        patternSourceCanvas.add(res);
 
-      //Create Static Canvas
-      var patternSourceCanvas = new fabric.StaticCanvas();
-      patternSourceCanvas.add(res);
-
-      //Create Pattern via res
-      var pattern = new fabric.Pattern({
-        source: function() {
-          //Set Static Canvas Dimension
-          patternSourceCanvas.setDimensions({
-            width: res.getWidth(),
-            height: res.getHeight()
-          });
-          return patternSourceCanvas.getElement();
-        },
-        repeat: 'no-repeat'
-      });
-      //Create Frame
-      var frame = new fabric.Slider({
-        left: canvas.getWidth()/2-res.getWidth()/2,
-        top: canvas.getHeight()/2-res.getHeight()/2,
-        fill: pattern,
-        width: res.getWidth(),
-        height: res.getHeight()
-      })
-
-      canvas.add(frame);
-
-      frame.toObject = (function(toObject) {
-        return function() {
-          return fabric.util.object.extend(toObject.call(this), {
-            slides: [imageset]
-          });
-        };
-      })(frame.toObject);
-      console.log(frame);
-      canvas.renderAll();
-      var i = 0;
-      var leastTime = imageset[0].continued*1000;
-      // var counter;
-      var counter = setInterval(function(){objectSlider(i)}, leastTime);
-      // objectSlider(i);
-      function objectSlider(i) {
-        counter = clearInterval(counter);
-        console.log(imageset);
-        if (i === imageset.length) {
-          i = 0;
-        }
-        
-        console.log(i);
-        // console.log(patternSourceCanvas);
-        // console.log(patternSourceCanvas._objects[0].getElement());
-        var element = patternSourceCanvas._objects[0];
-        element.remove();
-        var media = new fabric.Image.fromURL(imageset[i].src, function(oImg) {
-          // oImg.set({
-          //   'left': canvas.getWidth()/2-oImg.width/2,
-          //   'top': canvas.getHeight()/2-oImg.height/2
-          // });
-          patternSourceCanvas.add(oImg);
-          console.log(pattern);
-          // pattern.source(patternSourceCanvas.setDimensions({
-          //   width: oImg.getWidth()*oImg.getScaleX(),
-          //   height: oImg.getHeight()*oImg.getScaleY()
-          // }));
-          patternSourceCanvas.setDimensions({
-            width: frame.getWidth(),
-            height: frame.getHeight()
-          })
-          oImg.scaleToWidth(frame.getWidth());
-          console.log(patternSourceCanvas);
-          console.log(patternSourceCanvas.getWidth());
-          console.log(frame.getWidth());
-          console.log(frame);
-          console.log(oImg.getWidth());
-          patternSourceCanvas.renderAll();
-          canvas.renderAll();
+        //Create Pattern via res
+        var pattern = new fabric.Pattern({
+          source: function() {
+            //Set Static Canvas Dimension
+            patternSourceCanvas.setDimensions({
+              width: res.getWidth(),
+              height: res.getHeight()
+            });
+            return patternSourceCanvas.getElement();
+          },
+          repeat: 'no-repeat'
         });
-        // console.log(i);
-        // element.setSrc(imageset[i].src);
-        // element.scaleToWidth(frame.getWidth());
+        //Create Frame
+        var frame = new fabric.Slider({
+          left: canvas.getWidth()/2-res.getWidth()/2,
+          top: canvas.getHeight()/2-res.getHeight()/2,
+          fill: pattern,
+          width: res.getWidth(),
+          height: res.getHeight()
+        })
 
-        leastTime = imageset[i].continued*1000;
-        console.log(leastTime);
-        // element.src = 'http://www.sony.net/Products/di/common/images/products/lenses/lineup/detail/sel55f18z/photo_4.jpg';
-        
-        
-        counter = setInterval(function(){objectSlider(i)}, leastTime);
-        i++;
-      }
-      // counter = clearInterval(counter);
-      //Bind
-      bindEvents(frame);
-      //Programmatically Select Newly Added Object
-      canvas.setActiveObject(frame);
-      //Refresh log
-      logObj();
-    });
+        canvas.add(frame);
+
+        frame.toObject = (function(toObject) {
+          return function() {
+            return fabric.util.object.extend(toObject.call(this), {
+              slides: [imageset]
+            });
+          };
+        })(frame.toObject);
+        console.log(frame);
+        canvas.renderAll();
+        var i = 0;
+        var leastTime = imageset[0].continued*1000;
+        // var counter;
+        var counter = setInterval(function(){objectSlider(i)}, leastTime);
+        // objectSlider(i);
+
+        function objectSlider(i) {
+          counter = clearInterval(counter);
+          console.log(imageset);
+          i++;
+          if (i === imageset.length) {
+            i = 0;
+          }
+          
+          console.log(i);
+          
+          console.log(pattern);
+          console.log(frame);
+          patternSourceCanvas._objects[0].remove();
+          var media = new fabric.Image.fromURL(imageset[i].src, function(oImg) {
+            patternSourceCanvas.add(oImg);
+            console.log(pattern);
+            oImg.scaleToWidth(frame.getWidth());
+            
+            patternSourceCanvas.renderAll();
+            canvas.renderAll();
+          });
+          leastTime = imageset[i].continued*1000;
+          console.log(leastTime);
+          
+          counter = setInterval(function(){objectSlider(i)}, leastTime);
+        }
+        //Bind
+        bindEvents(frame);
+        //Programmatically Select Newly Added Object
+        canvas.setActiveObject(frame);
+        //Refresh log
+        logObj();
+      });
     },
     clock : function() {
       //Add Clock Object

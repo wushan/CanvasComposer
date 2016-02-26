@@ -27,11 +27,11 @@
   display: none;
   position: absolute;
   z-index: 10;
-  padding: 12px 0;
-  width: 240px;
-  background-color: #fff;
-  border: solid 1px #dfdfdf;
-  box-shadow: 1px 1px 2px #cfcfcf;
+  width: 220px;
+  border-radius: 6px;
+  background-color: $white;
+  // border: solid 1px #dfdfdf;
+  box-shadow: 1px 1px 2px rgba($black,.33);
 }
 
 .context-menu--active {
@@ -46,7 +46,16 @@
 
 .context-menu__item {
   display: block;
-  margin-bottom: 4px;
+  &:first-child {
+  	.context-menu__link {
+  		border-radius: 6px 6px 0 0;
+  	}
+  }
+  &:last-child {
+  	.context-menu__link {
+  		border-radius: 0 0 6px 6px;
+  	}
+  }
 }
 
 .context-menu__item:last-child {
@@ -55,14 +64,17 @@
 
 .context-menu__link {
   display: block;
-  padding: 4px 12px;
-  color: #0066aa;
+  padding: .5em 1em;
+  color: $darkgray;
   text-decoration: none;
+  i {
+  	margin-right: .5em;
+  }
 }
 
 .context-menu__link:hover {
-  color: #fff;
-  background-color: #0066aa;
+  color: $white;
+  background-color: darken($blue, 20%);
 }
 #main {
 	height: 100vh;
@@ -426,14 +438,15 @@ canvas {
 					}
 					.order {
 						text-align: center;
-						@include span(2 of 12);
+						width: 65px;
+						float: left;
 						.continued {
 							width: 100%;
 							font-size: .8em;
 						}
 					}
 					.description {
-						@include span(10 of 12 last);
+						margin-left: 70px;
 						line-height: 30px;
 					}
 					.filename {

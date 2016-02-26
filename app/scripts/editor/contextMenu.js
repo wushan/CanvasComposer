@@ -224,6 +224,9 @@
       case 'delete':
         Artboard.removeObject();
         break;
+      case 'duplicate':
+        Artboard.duplicateObject();
+        break;
       case 'layertop':
         obj.bringToFront();
         canvas.renderAll();
@@ -238,6 +241,9 @@
         break;
       case 'layerbottom':
         obj.sendToBack();
+        break;
+      case 'lock':
+        Artboard.lockObject();
         break;
     }
     
