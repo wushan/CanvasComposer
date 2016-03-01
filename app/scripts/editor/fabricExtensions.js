@@ -27,6 +27,13 @@ fabric.Video = fabric.util.createClass(fabric.Image, {
 
             this._initElement(videoEl, options);
             this._initConfig(options);
+
+            //Auto Play Video
+            videoEl.play();
+            fabric.util.requestAnimFrame(function render() {
+              canvas.renderAll();
+              fabric.util.requestAnimFrame(render);
+            });
         },
   toObject: function () {
         return fabric.util.object.extend(this.callSuper('toObject'), {
@@ -62,11 +69,25 @@ fabric.Video.fromURL = function(url, callback, imgOptions) {
 fabric.Video.fromObject = function(objects, callback) {
   // console.log(objects.media.video);
   // return new fabric.Video(objects.media.video);
-  return new fabric.Video(objects.media.video, {
-          media: {
-            video: objects.media.video
-          }
-        });
+  var v = new fabric.Video(objects.media.video, {
+    width: objects.width,
+    height: objects.height,
+    scaleX: objects.scaleX,
+    scaleY: objects.scaleY,
+    top: objects.top,
+    left: objects.left,
+    media: {
+      video: objects.media.video
+    }
+  });
+  //Bind
+  bindEvents(v);
+  //Programmatically Select Newly Added Object
+  canvas.setActiveObject(v);
+  //Refresh log
+  logObj();
+  return v;
+  
 };
 
 // fabric.Video.fromObject = function(object, callback) {
