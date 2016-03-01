@@ -14,7 +14,9 @@ var instantMeta = {
         preview,
         color,
         textcolor,
-        text;
+        text,
+        textsize,
+        fontfamily;
 
     width = obj.width*obj.scaleX;
     height = obj.height*obj.scaleY;
@@ -32,6 +34,8 @@ var instantMeta = {
     }
     textcolor = obj.fill;
     text = obj.text;
+    textsize = obj.fontSize;
+    fontfamily = obj.fontFamily;
     //混合物件 preview
     // if (type === "image") {
     //   if (obj.toObject().media.video != '') {
@@ -62,6 +66,8 @@ var instantMeta = {
     $('.attributes-wrapper .scalex input').val(scaleX);
     $('.attributes-wrapper .scaley input').val(scaleY);
     $('.attributes-wrapper .text input').val(text);
+    $('.attributes-wrapper .fontsize select option[value=' + textsize + ']').attr('selected',true);
+    $('.attributes-wrapper .fontfamily select option[value="' + fontfamily + '"]').attr('selected',true);
     $('#objectColor').spectrum("set", color);
     $('#objectTextColor').spectrum("set", textcolor);
     logObj();

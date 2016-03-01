@@ -145,7 +145,8 @@ var Artboard = (function (){
         left: 200,
         top: 200,
         lockScalingX: true,
-        lockScalingY: true
+        lockScalingY: true,
+        fontSize: '36'
       })
       canvas.add(text);
       //Bind
@@ -307,15 +308,17 @@ var Multimedia = (function (){
         var vw;
         var vh;
 
-        var videoEl = document.createElement("video");
-        videoEl.loop = true;
-        videoEl.controls = true;
-        console.log(videoEl);
-        videoEl.innerHTML = '<source src="'+ source +'">';
 
-        var video = new fabric.Video(videoEl, {});
 
+        var video = new fabric.Video(source, {
+          media: {
+            video: source
+          }
+        });
+        var videoEl = video.getElement();
         canvas.add(video);
+        console.log(videoEl);
+        console.log(video);
         videoEl.onloadeddata = function() {
           vw = this.videoWidth;
           vh = this.videoHeight;
@@ -324,6 +327,8 @@ var Multimedia = (function (){
           video.center();
           video.setCoords();
           canvas.renderAll();
+          console.log(this);
+          console.log(vw);
         };
         //Auto Play Video
         video.getElement().play();

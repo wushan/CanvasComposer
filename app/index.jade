@@ -59,15 +59,15 @@ block content
                         input#canvasHeight(type="number" value="600")
               .row.layoutpresets
                 .block
-                  a(href="javascript:;") A
+                  a(href="javascript:;" data-src="presets/800x600/a.json") A
                 .block
-                  a.active(href="javascript:;") B
+                  a.active(href="javascript:;" data-src="presets/800x600/b.json") B
                 .block
-                  a(href="javascript:;") C
+                  a(href="javascript:;" data-src="presets/800x600/c.json") C
                 .block
-                  a(href="javascript:;") D
+                  a(href="javascript:;" data-src="presets/800x600/a.json") D
                 .block
-                  a(href="javascript:;") E
+                  a(href="javascript:;" data-src="presets/800x600/a.json") E
         .canvas-wrapper
           #canvas.task
             canvas#c
@@ -166,12 +166,17 @@ block content
                 .controlgroup
                   label Font-size
                   .controls
-                    select
-                      option(data-size='10') 10
-                      option(data-size='12') 12
-                      option(data-size='14') 14
-                      option(data-size='16') 16
-                      option(data-size='18') 18
+                    select#objectFontSize
+                      option(value='14') 14
+                      option(value='18') 18
+                      option(value='24') 24
+                      option(value='30') 30
+                      option(value='36') 36
+                      option(value='48') 48
+                      option(value='56') 56
+                      option(value='64') 64
+                      option(value='72') 72
+                      option(value='144') 144
             .row
               .block.attr.media
                 .controlgroup
@@ -310,10 +315,10 @@ block content
                   img(src="http://download.wavetlan.com/SVV/Media/HTTP/H264/Talkinghead_Media/H264_test1_Talkinghead_mp4_480x360.mp4")
                 .filename xxx
             li
-              a(href="javascript:;" data-src="http://techslides.com/demos/sample-videos/small.webm" data-resourceid="14")
+              a(href="javascript:;" data-src="images/uploads/small.webm" data-resourceid="14")
                 .thumbnail
                   i.fa.fa-check-circle-o
-                  img(src="http://techslides.com/demos/sample-videos/small.webm")
+                  img(src="images/uploads/small.webm")
                 .filename xxx
             li
               a(href="javascript:;" data-src="https://www.youtube.com/watch?v=4XpDdIISlYo" data-resourceid="4XpDdIISlYo")

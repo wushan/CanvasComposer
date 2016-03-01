@@ -35,6 +35,32 @@
     $(".sizeTag .tag.height span").html(presetHeight);
   });
 
+  $(".layoutpresets").on('click', 'a', function(){
+    if ($(this).attr('data-src') != '' || $(this).attr('data-src') != undefined) {
+      $(this).parent().siblings().children('a').removeClass('active');
+      $(this).addClass('active');
+      loadPresetsFromJSON($(this).attr('data-src'));
+    } else {
+      alert('Error loading preset.');
+    }
+  })
+
+  function loadPresetsFromJSON(src) {
+    $.getJSON(src, function(data){
+      console.log('success');
+    }).done(function(data){
+      console.log('done');
+      console.log(data);
+      canvas.loadFromJSON(data, function(){
+        canvas.renderAll();
+        logObj();
+      });
+      
+    }).fail(function() {
+      console.log( "error" );
+    })
+  }
+
 //ArtBoard Panel
 $('.tools').on('click', 'a', function(){
   var className = $(this).attr('class');
@@ -206,6 +232,15 @@ $('#objectFontFamily').on('change', function(){
   var selected = $(this).val();
   var obj = canvas.getActiveObject();
   obj.setFontFamily(selected);
+  obj.setCoords();
+  canvas.renderAll();
+})
+
+//Font Size
+$('#objectFontSize').on('change', function(){
+  var size = $(this).val();
+  var obj = canvas.getActiveObject();
+  obj.setFontSize(size);
   obj.setCoords();
   canvas.renderAll();
 })
