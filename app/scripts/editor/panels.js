@@ -192,3 +192,20 @@ $('#objectTextColor').spectrum({
         "rgb(12, 52, 61)", "rgb(28, 69, 135)", "rgb(7, 55, 99)", "rgb(32, 18, 77)", "rgb(76, 17, 48)"]
     ]
 });
+
+//Text
+$('#objectInput').on("keydown keyup paste change", function() {
+  var obj = canvas.getActiveObject();
+  obj.set('text', $(this).val());
+  obj.setCoords();
+  canvas.renderAll();
+});
+
+//Font Family
+$('#objectFontFamily').on('change', function(){
+  var selected = $(this).val();
+  var obj = canvas.getActiveObject();
+  obj.setFontFamily(selected);
+  obj.setCoords();
+  canvas.renderAll();
+})

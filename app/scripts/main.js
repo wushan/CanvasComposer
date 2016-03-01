@@ -350,6 +350,7 @@ var Multimedia = (function (){
       }
     },
     slider : function(imageset) {
+      
       //Add Mixed Slider
       var slider = new fabric.Image.fromURL(imageset[0].src, function(res){
         //Create Static Canvas
@@ -372,6 +373,7 @@ var Multimedia = (function (){
           },
           repeat: 'no-repeat'
         });
+
         //Create Frame
         var frame = new fabric.Slider({
           left: canvas.getWidth()/2-res.getWidth()/2,
@@ -392,6 +394,7 @@ var Multimedia = (function (){
         })(frame.toObject);
         console.log(frame);
         canvas.renderAll();
+
         var i = 0;
         var leastTime = imageset[0].continued*1000;
         // var counter;

@@ -13,7 +13,8 @@ var instantMeta = {
         media,
         preview,
         color,
-        textcolor;
+        textcolor,
+        text;
 
     width = obj.width*obj.scaleX;
     height = obj.height*obj.scaleY;
@@ -30,7 +31,7 @@ var instantMeta = {
       color = obj.fill;
     }
     textcolor = obj.fill;
-
+    text = obj.text;
     //混合物件 preview
     // if (type === "image") {
     //   if (obj.toObject().media.video != '') {
@@ -60,6 +61,7 @@ var instantMeta = {
     // $('.attributes-wrapper .mediaPreview').html(preview);
     $('.attributes-wrapper .scalex input').val(scaleX);
     $('.attributes-wrapper .scaley input').val(scaleY);
+    $('.attributes-wrapper .text input').val(text);
     $('#objectColor').spectrum("set", color);
     $('#objectTextColor').spectrum("set", textcolor);
     logObj();
