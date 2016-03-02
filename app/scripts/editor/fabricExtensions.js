@@ -49,14 +49,49 @@ fabric.Video = fabric.util.createClass(fabric.Image, {
 
 //Create Fabric Slider Class
 fabric.Slider = fabric.util.createClass(fabric.Rect, {
-	type: 'slider'
+	type: 'slider',
+	initialize: function (options) {
+            options || (options = {});
+            this.callSuper('initialize', options);
+            console.log('inittt');
+        },
+  toObject: function () {
+        return fabric.util.object.extend(this.callSuper('toObject'), {
+        		id: this.id,
+            fill: this.fill,
+            slides: this.slides
+        });
+    },
+  _render: function (ctx) {
+            this.callSuper('_render', ctx);
+        }
 });
 
-fabric.Slider.fromArray = function(source, callback, imgOptions) {
-	fabric.util.loadImage(source, function(img) {
-      callback && callback(new fabric.Slider(img, imgOptions));
-    }, null, imgOptions && imgOptions.crossOrigin);
-};
+fabric.Slider.fromArray = function(elements, callback, options) {
+	new fabric.Image.fromURL(elements[0].src, function(img) {
+		var patternSourceCanvas = new fabric.StaticCanvas();
+		console.log(img);
+		img.setHeight(patternSourceCanvas.height);
+    img.setWidth(patternSourceCanvas.width);
+    patternSourceCanvas.setBackgroundImage(img);
+    patternSourceCanvas.renderAll();
+
+		var pattern = new fabric.Pattern({
+      source: patternSourceCanvas.getElement(),
+      repeat: 'no-repeat'
+    });
+
+    callback && callback(new fabric.Slider({
+    	fill: pattern,
+    	width: img.width,
+    	height: img.height,
+    	left: img.left,
+    	top: img.top,
+    	slides: elements,
+    	id: generator.generate()
+    }));
+  }, null, options && options.crossOrigin);
+}
 
 
 fabric.Video.fromURL = function(url, callback, imgOptions) {
@@ -101,10 +136,53 @@ fabric.Video.fromObject = function(objects, callback) {
 //   };
 
 //Extend Attributes for Fabric Objects
-fabric.Object.prototype.id = {}
+// fabric.Object.prototype.id = {}
 
-fabric.Object.prototype.media = {
-  'slider' : '',
-  'slides' : [],
-  'video' : ''
+// fabric.Object.prototype.media = {
+//   'slider' : '',
+//   'slides' : [],
+//   'video' : ''
+// }
+
+var generator = new IDGenerator();
+
+function IDGenerator() {
+	this.length = 8;
+	this.timestamp = +new Date;
+
+	var _getRandomInt = function( min, max ) {
+		return Math.floor( Math.random() * ( max - min + 1 ) ) + min;
+	}
+
+	this.generate = function() {
+		var ts = this.timestamp.toString();
+		var parts = ts.split( "" ).reverse();
+		var id = "";
+	 
+		for( var i = 0; i < this.length; ++i ) {
+		var index = _getRandomInt( 0, parts.length - 1 );
+		id += parts[index];	 
+		}
+
+		return id;
+	}
 }
+
+function findObj(id) {
+	for(var i=0;i<canvas._objects.length; i++) {
+		if (canvas._objects[i].id === id) {
+			return canvas._objects[i];
+			// console.log(canvas._objects[i]);
+		} else {
+			console.log(canvas._objects[i]);
+		}
+	}
+	// var i=0;
+	// while (i<canvas._objects.length && canvas._objects[i].id === id) {
+	// 	console.log(canvas._objects[i]);
+	// 	i++;
+	// }
+	// console.log(canvas);
+}
+// findObj();
+
