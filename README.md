@@ -11,7 +11,7 @@ bower install
 ```
 
 ```bash
-gulp
+gulp serve
 ```
 
 Screen Shots

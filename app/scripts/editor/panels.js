@@ -39,7 +39,19 @@
     if ($(this).attr('data-src') != '' || $(this).attr('data-src') != undefined) {
       $(this).parent().siblings().children('a').removeClass('active');
       $(this).addClass('active');
-      loadPresetsFromJSON($(this).attr('data-src'));
+      //Check if there is already an object exist
+      if (canvas._objects.length > 0) {
+        var confirmation = confirm("讀取預設版型會移除目前畫面中的所有物件，是否確定讀取？");
+        var confirmationBtn;
+        if (confirmation == true) {
+            Artboard.dispose();
+            loadPresetsFromJSON($(this).attr('data-src'));
+        } else {
+            return;
+        }
+      } else {
+        loadPresetsFromJSON($(this).attr('data-src'));
+      }
     } else {
       alert('Error loading preset.');
     }
