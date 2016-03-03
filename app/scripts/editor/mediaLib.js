@@ -21,7 +21,7 @@
       src = $(this).attr('data-src');
       filename = $(this).find('.filename').html();
       resourceid = $(this).attr('data-resourceid');
-      continued = "5";
+      continued = "1";
 
       // $('.settings-container .selection li').each(function(){
       //   targetid = $(this).attr('data-resourceid');
@@ -82,6 +82,7 @@
           } else {
             obj.remove();
           }
+          console.log(newImage);
           Artboard.addMedia(newImage);
           canvas.renderAll();
           obj.center();
@@ -99,6 +100,7 @@
         } else {
           obj.remove();
         }
+        console.log(selected);
         Artboard.addMedia(selected);
         canvas.renderAll();
         obj.center();
