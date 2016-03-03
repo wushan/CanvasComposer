@@ -16,7 +16,8 @@ var instantMeta = {
         textcolor,
         text,
         textsize,
-        fontfamily;
+        fontfamily,
+        link;
 
     width = obj.width*obj.scaleX;
     height = obj.height*obj.scaleY;
@@ -27,6 +28,7 @@ var instantMeta = {
     top = obj.top;
     angle = obj.angle;
     type = obj.type;
+    link = obj.link;
     if (obj.type === 'i-text') {
         color = obj.textBackgroundColor;
     } else {
@@ -66,6 +68,7 @@ var instantMeta = {
     $('.attributes-wrapper .scalex input').val(scaleX);
     $('.attributes-wrapper .scaley input').val(scaleY);
     $('.attributes-wrapper .text input').val(text);
+    $('.attributes-wrapper .link input').val(link);
     $('.attributes-wrapper .fontsize select option[value=' + textsize + ']').attr('selected',true);
     $('.attributes-wrapper .fontfamily select option[value="' + fontfamily + '"]').attr('selected',true);
     $('#objectColor').spectrum("set", color);

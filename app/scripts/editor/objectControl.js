@@ -1,105 +1,3 @@
-// // init Slider
-// ///////////////////////
-// var imageset = [];
-//     imageset[0] = {src: 'http://twimg.edgesuite.net/images/thumbnail/other/f4d3e017ac4a72d6d24d087197b2eba7.jpg', continued: 5};
-//     imageset[1] = {src: 'http://stories.gettyimages.com/wp-content/uploads/2015/08/GettyImages-557187411-11.jpg', continued: 3};
-//     imageset[2] = {src: 'http://twimg.edgesuite.net/images/thumbnail/other/c3f2a6e793af2ab3ac2b99a1d353fc8f.jpg', continued: 5};
-// var imgtest = 'http://twimg.edgesuite.net/images/thumbnail/other/c3f2a6e793af2ab3ac2b99a1d353fc8f.jpg';
-// console.log(imageset);
-
-
-// //Play with canvas in canvas
-// var slider = new fabric.Image.fromURL(imageset[0].src, function(res){
-//         //Create Static Canvas
-//         var patternSourceCanvas = new fabric.StaticCanvas();
-//         patternSourceCanvas.setHeight(500);
-//         patternSourceCanvas.setWidth(500);
-//         // patternSourceCanvas.add(res);
-
-//         res.setWidth(patternSourceCanvas.width);
-//         res.setHeight(patternSourceCanvas.height);
-        
-//         patternSourceCanvas.setBackgroundImage(res);
-
-//         patternSourceCanvas.renderAll();
-
-//         console.log(patternSourceCanvas);
-//         //Create Pattern via res
-//         var pattern = new fabric.Pattern({
-//           source: function() {
-//             //Set Static Canvas Dimension
-//             // patternSourceCanvas.setDimensions({
-//             //   width: res.getWidth(),
-//             //   height: res.getHeight()
-//             // });
-//             return patternSourceCanvas.getElement();
-//           },
-//           repeat: 'no-repeat'
-//         });
-//         console.log(pattern);
-//         //Create Frame
-//         var frame = new fabric.Slider({
-//           left: canvas.getWidth()/2-res.getWidth()/2,
-//           top: canvas.getHeight()/2-res.getHeight()/2,
-//           fill: pattern,
-//           width: patternSourceCanvas.getWidth(),
-//           height: patternSourceCanvas.getHeight()
-//         })
-
-//         canvas.add(frame);
-//         // var allObjs = canvas.getObjects();
-//         // index = allObjs.length-1;
-
-//         frame.toObject = (function(toObject) {
-//           return function() {
-//             return fabric.util.object.extend(toObject.call(this), {
-//               slides: [imageset]
-//             });
-//           };
-//         })(frame.toObject);
-//         console.log(frame);
-//         canvas.renderAll();
-//         var i = 0;
-//         var leastTime = imageset[0].continued*1000;
-//         // var counter;
-//         // var counter = setInterval(function(){objectSlider(i)}, leastTime);
-//         // objectSlider(i);
-
-//         // function objectSlider(i) {
-//         //   counter = clearInterval(counter);
-//         //   console.log(imageset);
-//         //   i++;
-//         //   if (i === imageset.length) {
-//         //     i = 0;
-//         //   }
-          
-//         //   console.log(i);
-          
-//         //   console.log(pattern);
-//         //   console.log(frame);
-//         //   patternSourceCanvas._objects[0].remove();
-//         //   var media = new fabric.Image.fromURL(imageset[i].src, function(oImg) {
-//         //     patternSourceCanvas.add(oImg);
-//         //     console.log(pattern);
-//         //     oImg.scaleToWidth(frame.getWidth());
-            
-//         //     patternSourceCanvas.renderAll();
-//         //     canvas.renderAll();
-//         //   });
-//         //   leastTime = imageset[i].continued*1000;
-//         //   console.log(leastTime);
-          
-//           // counter = setInterval(function(){objectSlider(i)}, leastTime);
-//         // }
-//         //Bind
-//         bindEvents(frame);
-//         //Programmatically Select Newly Added Object
-//         canvas.setActiveObject(frame);
-//         //Refresh log
-//         logObj();
-//       });
-
-
 ///////////////////////////////////////
 var initRadius = 100;
 
@@ -113,7 +11,13 @@ var Artboard = (function (){
         width: initRadius,
         height: initRadius
       });
-
+      rect.toObject = (function(toObject) {
+        return function() {
+          return fabric.util.object.extend(toObject.call(this), {
+            link: this.link
+          });
+        };
+      })(rect.toObject);
       rect.perPixelTargetFind = true;
       canvas.add(rect);
       //Bind
@@ -130,6 +34,13 @@ var Artboard = (function (){
         fill: '#'+Math.floor(Math.random()*16777215).toString(16),
         radius: initRadius/2
       });
+      circle.toObject = (function(toObject) {
+        return function() {
+          return fabric.util.object.extend(toObject.call(this), {
+            link: this.link
+          });
+        };
+      })(circle.toObject);
       circle.perPixelTargetFind = true;
       canvas.add(circle);
       //Bind
@@ -148,6 +59,13 @@ var Artboard = (function (){
         lockScalingY: true,
         fontSize: '36'
       })
+      text.toObject = (function(toObject) {
+        return function() {
+          return fabric.util.object.extend(toObject.call(this), {
+            link: this.link
+          });
+        };
+      })(text.toObject);
       canvas.add(text);
       //Bind
       bindEvents(text);
@@ -263,11 +181,17 @@ var Multimedia = (function (){
         oImg.set({
           'left': canvas.getWidth()/2-oImg.width/2,
           'top': canvas.getHeight()/2-oImg.height/2
-
         });
         canvas.add(oImg);
         oImg.center();
         oImg.setCoords();
+        oImg.toObject = (function(toObject) {
+          return function() {
+            return fabric.util.object.extend(toObject.call(this), {
+              link: this.link
+            });
+          };
+        })(oImg.toObject);
         // console.log(media);
         canvas.renderAll();
         //Bind
@@ -288,6 +212,13 @@ var Multimedia = (function (){
             'top': canvas.getHeight()/2-oImg.height/2
 
           });
+          media.toObject = (function(toObject) {
+            return function() {
+              return fabric.util.object.extend(toObject.call(this), {
+                link: this.link
+              });
+            };
+          })(media.toObject);
           canvas.add(oImg);
           oImg.center();
           oImg.setCoords();
@@ -337,7 +268,8 @@ var Multimedia = (function (){
               return fabric.util.object.extend(toObject.call(this), {
                 media: {
                   video: source
-                }
+                },
+                link : this.link
               });
             };
           })(video.toObject);
@@ -402,82 +334,6 @@ var Multimedia = (function (){
         leastTime = obj.slides[i].continued*1000;
         counter = setInterval(function(){bgRelacer(i,obj,id)}, leastTime);
       }
-      // //Add Mixed Slider
-      // var slider = new fabric.Image.fromURL(imageset[0].src, function(res){
-      //   //Create Static Canvas
-      //   var patternSourceCanvas = new fabric.StaticCanvas();
-
-      //   res.setHeight(patternSourceCanvas.height);
-      //   res.setWidth(patternSourceCanvas.width);
-
-      //   patternSourceCanvas.setBackgroundImage(res);
-      //   patternSourceCanvas.renderAll();
-      //   //Create Pattern via res
-      //   var pattern = new fabric.Pattern({
-      //     source: function() {
-      //       // //Set Static Canvas Dimension
-      //       // patternSourceCanvas.setDimensions({
-      //       //   width: res.getWidth(),
-      //       //   height: res.getHeight()
-      //       // });
-      //       return patternSourceCanvas.getElement();
-      //     },
-      //     repeat: 'no-repeat'
-      //   });
-
-      //   //Create Frame
-      //   var frame = new fabric.Slider({
-      //     left: canvas.getWidth()/2-res.getWidth()/2,
-      //     top: canvas.getHeight()/2-res.getHeight()/2,
-      //     fill: pattern,
-      //     width: res.getWidth(),
-      //     height: res.getHeight()
-      //   })
-
-      //   canvas.add(frame);
-
-      //   frame.toObject = (function(toObject) {
-      //     return function() {
-      //       return fabric.util.object.extend(toObject.call(this), {
-      //         slides: [imageset]
-      //       });
-      //     };
-      //   })(frame.toObject);
-      //   console.log(frame);
-      //   canvas.renderAll();
-
-      //   var i = 0;
-      //   var leastTime = imageset[0].continued*1000;
-      //   // var counter;
-      //   var counter = setInterval(function(){objectSlider(i)}, leastTime);
-
-      //   function objectSlider(i) {
-      //     counter = clearInterval(counter);
-      //     console.log(imageset);
-      //     i++;
-      //     if (i === imageset.length) {
-      //       i = 0;
-      //     }
-          
-      //     var media = new fabric.Image.fromURL(imageset[i].src, function(oImg) {
-      //       oImg.setHeight(patternSourceCanvas.height);
-      //       oImg.setWidth(patternSourceCanvas.width);
-      //       patternSourceCanvas.setBackgroundImage(oImg);
-      //       patternSourceCanvas.renderAll();
-      //       canvas.renderAll();
-      //     });
-      //     leastTime = imageset[i].continued*1000;
-      //     console.log(leastTime);
-          
-      //     counter = setInterval(function(){objectSlider(i)}, leastTime);
-      //   }
-      //   //Bind
-      //   bindEvents(frame);
-      //   //Programmatically Select Newly Added Object
-      //   canvas.setActiveObject(frame);
-      //   //Refresh log
-      //   logObj();
-      // });
     },
     clock : function() {
       //Add Clock Object

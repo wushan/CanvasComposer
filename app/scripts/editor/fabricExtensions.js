@@ -1,14 +1,4 @@
-// fabric.Canvas.prototype.getItemByAttr = function(attr, name) {
-//     var object = null,
-//     objects = this.getObjects();
-//     for (var i = 0, len = this.size(); i < len; i++) {
-//         if (objects[i][attr] && objects[i][attr] === name) {
-//             object = objects[i];
-//             break;
-//         }
-//     }
-//     return object;
-// };
+fabric.Object.prototype.link = '';
 
 //Create Fabric Video Class
 fabric.Video = fabric.util.createClass(fabric.Image, {
@@ -39,7 +29,8 @@ fabric.Video = fabric.util.createClass(fabric.Image, {
         return fabric.util.object.extend(this.callSuper('toObject'), {
             media: {
               video: this.media.video
-            }
+            },
+            link: this.link
         });
     },
   _render: function (ctx) {

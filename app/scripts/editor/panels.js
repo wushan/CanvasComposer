@@ -122,6 +122,7 @@ $('.objectSize').on("change", function() {
   obj.setScaleY(objectScaleY);
   obj.setCoords();
   canvas.renderAll();
+  logObj();
 });
 
 //Scale
@@ -160,6 +161,7 @@ $('#objectColor').spectrum({
       }
       // obj.backgroundColor(color);
       canvas.renderAll();
+      logObj();
       $('#objectColor').spectrum("hide");
     },
     palette: [
@@ -211,6 +213,7 @@ $('#objectTextColor').spectrum({
       }
       // obj.backgroundColor(color);
       canvas.renderAll();
+      logObj();
       $('#objectTextColor').spectrum("hide");
     },
     palette: [
@@ -246,7 +249,7 @@ $('#objectFontFamily').on('change', function(){
   obj.setFontFamily(selected);
   obj.setCoords();
   canvas.renderAll();
-})
+});
 
 //Font Size
 $('#objectFontSize').on('change', function(){
@@ -255,4 +258,12 @@ $('#objectFontSize').on('change', function(){
   obj.setFontSize(size);
   obj.setCoords();
   canvas.renderAll();
-})
+});
+
+//Link
+$('#linkValue').on('keydown keyup change', function(){
+  var obj = canvas.getActiveObject();
+  var val = $(this).val();
+  obj.set('link', val);
+  logObj();
+});

@@ -1,17 +1,3 @@
-
-// window.YoutubeVideo = function(id, callback) {
-//   var url = "https://www.googleapis.com/youtube/v3/videos?id=" + id + "&part=snippet&key=AIzaSyCjiWPLJdE-QbakmKin__3rDqOKLgKyCRY"
-//   return {
-//     $.getJSON(url,function(){
-//       console.log('success');
-//     }).done(function(res){
-//       console.log(res);
-//       var thumbnails = res.items[0].snippet.thumbnails.default.url;
-//     }).fail(function(error){
-//       console.log(error);
-//     })
-//   }
-// };
 function getThumbnails(id , callback) {
   var url = "https://www.googleapis.com/youtube/v3/videos?id=" + id + "&part=snippet&key=AIzaSyCjiWPLJdE-QbakmKin__3rDqOKLgKyCRY"
   $.getJSON(url,function(){
