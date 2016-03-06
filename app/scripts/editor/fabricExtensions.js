@@ -38,55 +38,7 @@ fabric.Video = fabric.util.createClass(fabric.Image, {
         }
 });
 
-//Create Fabric Slider Class
-fabric.Slider = fabric.util.createClass(fabric.Rect, {
-	type: 'slider',
-	initialize: function (options) {
-            options || (options = {});
-            this.callSuper('initialize', options);
-            console.log('inittt');
-        },
-  toObject: function () {
-        return fabric.util.object.extend(this.callSuper('toObject'), {
-        		id: this.id,
-            fill: this.fill,
-            slides: this.slides
-        });
-    },
-  _render: function (ctx) {
-            this.callSuper('_render', ctx);
-        }
-});
-
-fabric.Slider.fromArray = function(elements, callback, options) {
-	new fabric.Image.fromURL(elements[0].src, function(img) {
-		var patternSourceCanvas = new fabric.StaticCanvas();
-		console.log(img);
-		img.setHeight(patternSourceCanvas.height);
-    img.setWidth(patternSourceCanvas.width);
-    patternSourceCanvas.setBackgroundImage(img);
-    patternSourceCanvas.renderAll();
-    console.log(patternSourceCanvas.getElement());
-		var pattern = new fabric.Pattern({
-      source: patternSourceCanvas.getElement(),
-      repeat: 'no-repeat'
-    });
-
-    callback && callback(new fabric.Slider({
-    	fill: pattern,
-    	width: img.width,
-    	height: img.height,
-    	left: options.left,
-    	top: options.top,
-    	slides: elements,
-    	id: generator.generate(),
-      pattern: pattern,
-      patternSourceCanvas: patternSourceCanvas
-    }));
-  }, null, options && options.crossOrigin);
-}
-
-
+//Video
 fabric.Video.fromURL = function(url, callback, imgOptions) {
     fabric.util.loadImage(url, function(img) {
       callback && callback(new fabric.Video(img, imgOptions));
@@ -118,24 +70,58 @@ fabric.Video.fromObject = function(objects, callback) {
   
 };
 
-// fabric.Video.fromObject = function(object, callback) {
-//     fabric.util.loadImage(object.src, function(img) {
-//       fabric.Image.prototype._initFilters.call(object, object, function(filters) {
-//         object.filters = filters || [ ];
-//         var instance = new fabric.Image(img, object);
-//         callback && callback(instance);
-//       });
-//     }, null, object.crossOrigin);
-//   };
+//Create Fabric Slider Class
+fabric.Slider = fabric.util.createClass(fabric.Rect, {
+  type: 'slider',
+  initialize: function (options) {
+            options || (options = {});
+            this.callSuper('initialize', options);
+            console.log('inittt');
+        },
+  toObject: function () {
+        return fabric.util.object.extend(this.callSuper('toObject'), {
+            id: this.id,
+            fill: this.fill,
+            slides: this.slides
+        });
+    },
+  _render: function (ctx) {
+            this.callSuper('_render', ctx);
+        }
+});
 
-//Extend Attributes for Fabric Objects
-// fabric.Object.prototype.id = {}
+//Slider
+fabric.Slider.fromArray = function(elements, callback, options) {
+  new fabric.Image.fromURL(elements[0].src, function(img) {
+    var patternSourceCanvas = new fabric.StaticCanvas();
+    console.log(img);
+    img.setHeight(patternSourceCanvas.height);
+    img.setWidth(patternSourceCanvas.width);
+    patternSourceCanvas.setBackgroundImage(img);
+    patternSourceCanvas.renderAll();
+    console.log(patternSourceCanvas.getElement());
+    var pattern = new fabric.Pattern({
+      source: patternSourceCanvas.getElement(),
+      repeat: 'no-repeat'
+    });
 
-// fabric.Object.prototype.media = {
-//   'slider' : '',
-//   'slides' : [],
-//   'video' : ''
-// }
+    callback && callback(new fabric.Slider({
+      fill: pattern,
+      width: img.width,
+      height: img.height,
+      left: options.left,
+      top: options.top,
+      slides: elements,
+      id: generator.generate(),
+      pattern: pattern,
+      patternSourceCanvas: patternSourceCanvas
+    }));
+  }, null, options && options.crossOrigin);
+}
+
+
+
+
 
 var generator = new IDGenerator();
 

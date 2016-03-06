@@ -1,6 +1,8 @@
 var instantMeta = {
   log: function(obj){
     console.log(obj.toObject());
+    console.log(obj);
+    obj = obj.toObject();
     var width,
         height,
         scaleX,
@@ -38,6 +40,17 @@ var instantMeta = {
     text = obj.text;
     textsize = obj.fontSize;
     fontfamily = obj.fontFamily;
+    switch (type) {
+        case 'image':
+            media = obj.src;
+            break;
+        case 'video':
+            media = obj.media.video;
+            break;
+        case 'slider':
+            media = 'mixture';
+            break;
+    }
     //混合物件 preview
     // if (type === "image") {
     //   if (obj.toObject().media.video != '') {
@@ -64,6 +77,7 @@ var instantMeta = {
     $('.attributes-wrapper .top input').val(top);
     $('.attributes-wrapper .left input').val(left);
     $('.attributes-wrapper .media input').val(media);
+    console.log(media);
     // $('.attributes-wrapper .mediaPreview').html(preview);
     $('.attributes-wrapper .scalex input').val(scaleX);
     $('.attributes-wrapper .scaley input').val(scaleY);

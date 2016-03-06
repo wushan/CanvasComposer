@@ -59,6 +59,7 @@ $('.js-sendToObj').on('click', function(){
 })
 
 function selectionConfirmator(selected){
+  //如選取多個物件
   if ( selected.length > 1) {
     console.log('an array');
     // 取得當前物件
@@ -73,9 +74,11 @@ function selectionConfirmator(selected){
       } else {
         obj.remove();
       }
+      //送出建立新物件要求
       Artboard.addMedia(selected);
     }
     $('#mediaLibrary').removeClass('active');
+  //選取單一物件
   } else if ( selected.length === 1) {
     console.log('single');
     // 取得當前物件
@@ -90,6 +93,7 @@ function selectionConfirmator(selected){
       } else {
         obj.remove();
       }
+      //送出建立新物件要求
       Artboard.addMedia(selected);
     }
     $('#mediaLibrary').removeClass('active');

@@ -11,7 +11,9 @@ function bindEvents(obj) {
       $('.basic-attr').show();
     }
     
-    $('#config').fadeTo('fast',0.9);
+    $('#config').fadeIn('fast').promise().done(function(){
+      $(this).fadeTo('fast',0.9);
+    })
     instantMeta.log(obj);
   });
   //deselect

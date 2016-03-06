@@ -199,7 +199,6 @@ var Multimedia = (function (){
         bindEvents(oImg);
         //Programmatically Select Newly Added Object
         canvas.setActiveObject(oImg);
-        
         //Refresh log
         logObj();
       });
@@ -258,89 +257,89 @@ var Multimedia = (function (){
           canvas.renderAll();
           console.log(this);
           console.log(vw);
-        };
-        //Auto Play Video
-        video.getElement().play();
-        video.toObject = (function(toObject) {
-            return function() {
-              return fabric.util.object.extend(toObject.call(this), {
-                media: {
-                  video: source
-                },
-                link : this.link
-              });
-            };
-          })(video.toObject);
-        //Bind
-        bindEvents(video);
-        //Programmatically Select Newly Added Object
-        canvas.setActiveObject(video);
-        //Refresh log
-        logObj();
+          //Auto Play Video
+          video.getElement().play();
+          video.toObject = (function(toObject) {
+              return function() {
+                return fabric.util.object.extend(toObject.call(this), {
+                  media: {
+                    video: source
+                  },
+                  link : this.link
+                });
+              };
+            })(video.toObject);
+          //Bind
+          bindEvents(video);
+          //Programmatically Select Newly Added Object
+          canvas.setActiveObject(video);
+          //Refresh log
+          logObj();
 
-        fabric.util.requestAnimFrame(function render() {
-          canvas.renderAll();
-          fabric.util.requestAnimFrame(render);
-        });
+          fabric.util.requestAnimFrame(function render() {
+            canvas.renderAll();
+            fabric.util.requestAnimFrame(render);
+          });
+        };
       }
     },
     slider : function(imageset) {
-      var i=0;
-      var counter;
-      var leastTime;
-      var obj;
-      //First Image
+        var i=0;
+        var counter;
+        var leastTime;
+        var obj;
+        //First Image
 
-      //POV
-      new fabric.Slider.fromArray(imageset, function(res){
-       var patternSourceCanvas = res.patternSourceCanvas;
-       var pattern = res.pattern;
-       //已建立 slider 物件
-       console.log(res);
-       console.log(res.toObject());
-       canvas.add(res);
-       canvas.renderAll();
-       // Bind
-       bindEvents(res);
-       //Programmatically Select Newly Added Object
-       // canvas.setActiveObject(res);
-       res.setCoords();
-       //Refresh log
-       logObj();
-       leastTime = res.slides[0].continued*1000;
-       var id = res.id;
-       setTimeout(function(){bgRelacer(i,res,id)}, leastTime);
-       function bgRelacer(i, res, id) {
-
-         i++;
-         if (i === res.slides.length ) {
-           i=0;
-         }
-         obj = findObj(id);
-         new fabric.Image.fromURL(res.slides[i].src, function(img){
-           // patternSourceCanvas = new fabric.StaticCanvas();
-           // console.log(patternSourceCanvas);
-           img.setHeight(patternSourceCanvas.height);
-           img.setWidth(patternSourceCanvas.width);
-
-           patternSourceCanvas.setBackgroundImage(img);
-           patternSourceCanvas.renderAll();
-           // patternSourceCanvas.renderAll();
-           pattern = new fabric.Pattern({
-             source: patternSourceCanvas.getElement(),
-             repeat: 'no-repeat'
-           });
-
-           res.setFill(pattern);
-           canvas.renderAll();
-         })
-         leastTime = res.slides[i].continued*1000;
+        //POV
+        new fabric.Slider.fromArray(imageset, function(res){
+         var patternSourceCanvas = res.patternSourceCanvas;
+         var pattern = res.pattern;
+         //已建立 slider 物件
+         console.log(res);
+         console.log(res.toObject());
+         canvas.add(res);
+         canvas.renderAll();
+         // Bind
+         bindEvents(res);
+         //Programmatically Select Newly Added Object
+         canvas.setActiveObject(res);
+         res.setCoords();
+         //Refresh log
+         logObj();
+         leastTime = res.slides[0].continued*1000;
+         var id = res.id;
          setTimeout(function(){bgRelacer(i,res,id)}, leastTime);
-       }
-    }, {
-     left: 150,
-     top: 100
-    });
+         function bgRelacer(i, res, id) {
+
+           i++;
+           if (i === res.slides.length ) {
+             i=0;
+           }
+           obj = findObj(id);
+           new fabric.Image.fromURL(res.slides[i].src, function(img){
+             // patternSourceCanvas = new fabric.StaticCanvas();
+             // console.log(patternSourceCanvas);
+             img.setHeight(patternSourceCanvas.height);
+             img.setWidth(patternSourceCanvas.width);
+
+             patternSourceCanvas.setBackgroundImage(img);
+             patternSourceCanvas.renderAll();
+             // patternSourceCanvas.renderAll();
+             pattern = new fabric.Pattern({
+               source: patternSourceCanvas.getElement(),
+               repeat: 'no-repeat'
+             });
+
+             res.setFill(pattern);
+             canvas.renderAll();
+           })
+           leastTime = res.slides[i].continued*1000;
+           setTimeout(function(){bgRelacer(i,res,id)}, leastTime);
+         }
+      }, {
+       left: 150,
+       top: 100
+      });
     },
     clock : function() {
       //Add Clock Object
