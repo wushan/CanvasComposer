@@ -1,114 +1,97 @@
 //Media //Bind OnChange to avoid 'undefined'
     $('.js-library').on('click', function(){
       $('#mediaLibrary').addClass('active');
-      selected.length = 0;
       $('#mediaLibrary .selection').empty();
       $('#mediaLibrary .resources a').removeClass('active');
     })
     $('#mediaLibrary .js-close').on('click', function(){
       $('#mediaLibrary').removeClass('active');
     })
-    var selected = [];
-    $('#mediaLibrary .resources').on('click','a',function(){
-      $(this).toggleClass('active');
-      var filename,
-          src,
-          count,
-          continued,
-          resourceid,
-          targetid;
-      
-      src = $(this).attr('data-src');
-      filename = $(this).find('.filename').html();
-      resourceid = $(this).attr('data-resourceid');
-      continued = "1";
 
-      // $('.settings-container .selection li').each(function(){
-      //   targetid = $(this).attr('data-resourceid');
-      //   if ( targetid != undefined ) {
-      //     selected.push(targetid);
-      //     console.log(selected);
-      //   }
-      // })
-      var $item = "<li data-resourceid="+ resourceid +"><div class='order'><div class='continued'><input type='number' value='" + continued + "'></div></div><div class='description'><div class='filename'>" + filename + "</div></div></li>";
-      if (in_array(selected, resourceid)) {
-        $('.settings-container .selection li').each(function(){
-          var targetid = $(this).attr('data-resourceid');
-          if (targetid === resourceid) {
-            //Remove self
-            $(this).remove();
-            //Remove this id in Array
-            var index = getIdx(selected, 'id', targetid);
-            if (index > -1) {
-              selected.splice(index, 1);
-            }
-            
-            console.log(selected);
-          }
-        })
-      } else {
-        $('.settings-container .selection').append($item);
-        var ooo = {'id':resourceid, 'src':src, 'continued': continued};
-        selected.push(ooo);
-        console.log(selected);
+
+//組合已選項目物件
+$('#mediaLibrary .resources').on('click','a',function(){
+  var filename,
+      src,
+      count,
+      continued,
+      resourceid,
+      targetid;
+  var selection = $('.settings-container .selection');
+  src = $(this).attr('data-src');
+  filename = $(this).find('.filename').html();
+  resourceid = $(this).attr('data-resourceid');
+  continued = "1";
+  var $item = "<li data-resourceid="+ resourceid +" data-src=" + src + "><div class='order'><div class='continued'><input type='number' value='" + continued + "'></div></div><div class='description'><div class='filename'>" + filename + "</div></div></li>";
+  var anchor = $(this);
+  if (anchor.hasClass('active')) {
+    selection.children('li').each(function(){
+      if ( resourceid === $(this).attr('data-resourceid') ) {
+        $(this).remove();
+        anchor.removeClass('active');
       }
     })
-    function getIdx(list, key, val){
-      return _.chain(list).pluck(key).indexOf(val).value();
-    }
-    function in_array(array, id) {
-        for(var i=0;i<array.length;i++) {
-          console.log(array[i]);
-            if(array[i].id === id)
-              return true;
-        }
-        return false;
-    }
-    //Send Object to Fabricjs
-    $('.js-sendToObj').on('click', function(){
-      if (selected.length === 1) {
-        var resource = selected[0].src;
-        $('#mediaValue').val(resource);
-        var obj = canvas.getActiveObject();
-        var newImage = resource;
-        console.log(newImage);
-        if (obj == null) {
-          alert('未選取任何物件');
+  } else {
+    selection.append($item);
+    anchor.addClass('active');
+  }
+});
 
-        } else {
-          if (obj._element !== undefined && obj._element.localName === "video") {
-            obj.getElement().pause();
-            obj.remove();
-          } else {
-            obj.remove();
-          }
-          console.log(newImage);
-          Artboard.addMedia(newImage);
-          canvas.renderAll();
-          obj.center();
-          obj.setCoords();
-          logObj();
-        }
-        $(this).parents('#mediaLibrary').removeClass('active');
-      } else if (selected.length > 1){
-        //If Array
-        var obj = canvas.getActiveObject();
-        // var selectedObjs = [];
-        if (obj == null) {
-          alert('未選取任何物件');
+//Send Object to Fabricjs
+$('.js-sendToObj').on('click', function(){
+  var resourceid,
+      src,
+      continued;
+  //先搜集所有內容
+  var selected = [];
+  var selection = $('.settings-container .selection');
 
-        } else {
-          obj.remove();
-        }
-        console.log(selected);
-        Artboard.addMedia(selected);
-        canvas.renderAll();
-        obj.center();
-        obj.setCoords();
-        logObj();
-        $(this).parents('#mediaLibrary').removeClass('active');
-        
+  selection.children('li').each(function(){
+    resourceid = $(this).attr('data-resourceid');
+    src = $(this).attr('data-src');
+    continued = $(this).find('input').val();
+    var collected = {'id':resourceid, 'src':src, 'continued': continued};
+    selected.push(collected);
+    console.log(selected);
+  })
+
+  selectionConfirmator(selected);
+})
+
+function selectionConfirmator(selected){
+  if ( selected.length > 1) {
+    console.log('an array');
+    // 取得當前物件
+    var obj = canvas.getActiveObject();
+    if (obj == null) {
+      alert('未選取任何物件');
+    } else {
+      //如果是影片物件，先停止播放，然後移除自己
+      if (obj._element !== undefined && obj._element.localName === "video") {
+        obj.getElement().pause();
+        obj.remove();
       } else {
-        alert('未選擇任何素材');
+        obj.remove();
       }
-    })
+      Artboard.addMedia(selected);
+    }
+    $('#mediaLibrary').removeClass('active');
+  } else if ( selected.length === 1) {
+    console.log('single');
+    // 取得當前物件
+    var obj = canvas.getActiveObject();
+    if (obj == null) {
+      alert('未選取任何物件');
+    } else {
+      //如果是影片物件，先停止播放，然後移除自己
+      if (obj._element !== undefined && obj._element.localName === "video") {
+        obj.getElement().pause();
+        obj.remove();
+      } else {
+        obj.remove();
+      }
+      Artboard.addMedia(selected);
+    }
+    $('#mediaLibrary').removeClass('active');
+  }
+}

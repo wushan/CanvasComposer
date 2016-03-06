@@ -75,22 +75,23 @@ var Artboard = (function (){
       logObj();
     },
     addMedia : function(objImage) {
-      if (objImage === '' || objImage === undefined) {
-        //Default image
-        objImage = 'images/uploads/abc.png';
-      } else {
-      }
+      // if (objImage === '' || objImage === undefined) {
+      //   //Default image
+      //   objImage = 'images/uploads/abc.png';
+      // } else {
+      // }
 
       //Check if it is an Slide Array
-      if (Object.prototype.toString.call( objImage ) === '[object Array]') {
+      if (objImage.length > 1) {
+        var imageSet = objImage;
         //If objImage is an Array
-        Multimedia.slider(objImage);
-      } else {
+        Multimedia.slider(imageSet);
+      } else if (objImage.length === 1){
         //Add Image or Video ((Single))
         //extension
-        var extension = objImage.split('.').pop();
+        var extension = objImage[0].src.split('.').pop();
         var media;
-        var youtubeId = validateYouTubeUrl(objImage);
+        var youtubeId = validateYouTubeUrl(objImage[0].src);
         if (youtubeId != false) {
           //If It is from Youtube
           var thumbnail = getThumbnails(youtubeId, function(res){
@@ -101,10 +102,10 @@ var Artboard = (function (){
         } else {
           if (extension.match(/^(gif|png|jpg|jpeg|tiff|svg)$/)) {
             //Add Single Image
-            Multimedia.image(objImage);
+            Multimedia.image(objImage[0].src);
           } else if (extension.match(/^(mp4|avi|ogg|ogv|webm)$/)) {
             //Add Single Video
-            Multimedia.video(objImage);
+            Multimedia.video(objImage[0].src);
           } else {
             console.log('不支援此檔案格式，請重試');
           }
@@ -238,9 +239,6 @@ var Multimedia = (function (){
         //Set InitRadius for Videos 16:9
         var vw;
         var vh;
-
-
-
         var video = new fabric.Video(source, {
           media: {
             video: source
@@ -292,48 +290,57 @@ var Multimedia = (function (){
       var leastTime;
       var obj;
       //First Image
-      var slider = new fabric.Slider.fromArray(imageset, function(res){
-        console.log(res);
-        console.log(res.toObject());
-        canvas.add(res);
-        canvas.renderAll();
-        // Bind
-        bindEvents(res);
-        //Programmatically Select Newly Added Object
-        canvas.setActiveObject(res);
-        //Refresh log
-        logObj();
-        leastTime = res.slides[0].continued*1000;
-        var id = res.id;
-        counter = setInterval(function(){bgRelacer(i,res,id)}, leastTime);
 
-      });
+      //POV
+      new fabric.Slider.fromArray(imageset, function(res){
+       var patternSourceCanvas = res.patternSourceCanvas;
+       var pattern = res.pattern;
+       //已建立 slider 物件
+       console.log(res);
+       console.log(res.toObject());
+       canvas.add(res);
+       canvas.renderAll();
+       // Bind
+       bindEvents(res);
+       //Programmatically Select Newly Added Object
+       // canvas.setActiveObject(res);
+       res.setCoords();
+       //Refresh log
+       logObj();
+       leastTime = res.slides[0].continued*1000;
+       var id = res.id;
+       setTimeout(function(){bgRelacer(i,res,id)}, leastTime);
+       function bgRelacer(i, res, id) {
 
-      function bgRelacer(i, res, id) {
-        counter = clearInterval(counter);
-        i++;
-        if (i === res.slides.length ) {
-          i=0;
-        }
-        obj = findObj(id);
-        new fabric.Image.fromURL(obj.slides[i].src, function(img){
-          var patternSourceCanvas = new fabric.StaticCanvas();
-          console.log(img);
-          img.setHeight(patternSourceCanvas.height);
-          img.setWidth(patternSourceCanvas.width);
-          patternSourceCanvas.setBackgroundImage(img);
-          patternSourceCanvas.renderAll();
-          // patternSourceCanvas.renderAll();
-          var pattern = new fabric.Pattern({
-            source: patternSourceCanvas.getElement(),
-            repeat: 'no-repeat'
-          });
-          obj.setFill(pattern);
-          canvas.renderAll();
-        })
-        leastTime = obj.slides[i].continued*1000;
-        counter = setInterval(function(){bgRelacer(i,obj,id)}, leastTime);
-      }
+         i++;
+         if (i === res.slides.length ) {
+           i=0;
+         }
+         obj = findObj(id);
+         new fabric.Image.fromURL(res.slides[i].src, function(img){
+           // patternSourceCanvas = new fabric.StaticCanvas();
+           // console.log(patternSourceCanvas);
+           img.setHeight(patternSourceCanvas.height);
+           img.setWidth(patternSourceCanvas.width);
+
+           patternSourceCanvas.setBackgroundImage(img);
+           patternSourceCanvas.renderAll();
+           // patternSourceCanvas.renderAll();
+           pattern = new fabric.Pattern({
+             source: patternSourceCanvas.getElement(),
+             repeat: 'no-repeat'
+           });
+
+           res.setFill(pattern);
+           canvas.renderAll();
+         })
+         leastTime = res.slides[i].continued*1000;
+         setTimeout(function(){bgRelacer(i,res,id)}, leastTime);
+       }
+    }, {
+     left: 150,
+     top: 100
+    });
     },
     clock : function() {
       //Add Clock Object

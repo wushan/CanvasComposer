@@ -66,7 +66,7 @@ fabric.Slider.fromArray = function(elements, callback, options) {
     img.setWidth(patternSourceCanvas.width);
     patternSourceCanvas.setBackgroundImage(img);
     patternSourceCanvas.renderAll();
-
+    console.log(patternSourceCanvas.getElement());
 		var pattern = new fabric.Pattern({
       source: patternSourceCanvas.getElement(),
       repeat: 'no-repeat'
@@ -76,10 +76,12 @@ fabric.Slider.fromArray = function(elements, callback, options) {
     	fill: pattern,
     	width: img.width,
     	height: img.height,
-    	left: img.left,
-    	top: img.top,
+    	left: options.left,
+    	top: options.top,
     	slides: elements,
-    	id: generator.generate()
+    	id: generator.generate(),
+      pattern: pattern,
+      patternSourceCanvas: patternSourceCanvas
     }));
   }, null, options && options.crossOrigin);
 }
