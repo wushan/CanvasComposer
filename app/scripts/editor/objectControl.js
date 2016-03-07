@@ -292,50 +292,51 @@ var Multimedia = (function (){
 
         //POV
         new fabric.Slider.fromArray(imageset, function(res){
-         var patternSourceCanvas = res.patternSourceCanvas;
-         var pattern = res.pattern;
-         //已建立 slider 物件
-         console.log(res);
-         console.log(res.toObject());
-         canvas.add(res);
-         canvas.renderAll();
-         // Bind
-         bindEvents(res);
-         //Programmatically Select Newly Added Object
-         canvas.setActiveObject(res);
-         res.setCoords();
-         //Refresh log
-         logObj();
-         leastTime = res.slides[0].continued*1000;
-         var id = res.id;
-         setTimeout(function(){bgRelacer(i,res,id)}, leastTime);
-         function bgRelacer(i, res, id) {
+          var patternSourceCanvas = res.patternSourceCanvas;
+          var pattern = res.pattern;
+          //已建立 slider 物件
+          console.log(res);
+          console.log(res.toObject());
+          canvas.add(res);
+          canvas.renderAll();
+          // Bind
+          bindEvents(res);
+          //Programmatically Select Newly Added Object
+          canvas.setActiveObject(res);
+          res.setCoords();
+          //Refresh log
+          logObj();
+          leastTime = res.slides[0].continued*1000;
+          var id = res.id;
+          setTimeout(function(){bgRelacer(i,res,id)}, leastTime);
+          function bgRelacer(i, res, id) {
+            i++;
+            if (i === res.slides.length ) {
+              i=0;
+            }
+            obj = findObj(id);
+            new fabric.Image.fromURL(res.slides[i].src, function(img){
+              // patternSourceCanvas = new fabric.StaticCanvas();
+              // console.log(patternSourceCanvas);
+              img.setHeight(patternSourceCanvas.height);
+              img.setWidth(patternSourceCanvas.width);
 
-           i++;
-           if (i === res.slides.length ) {
-             i=0;
-           }
-           obj = findObj(id);
-           new fabric.Image.fromURL(res.slides[i].src, function(img){
-             // patternSourceCanvas = new fabric.StaticCanvas();
-             // console.log(patternSourceCanvas);
-             img.setHeight(patternSourceCanvas.height);
-             img.setWidth(patternSourceCanvas.width);
+              patternSourceCanvas.setBackgroundImage(img);
+              patternSourceCanvas.renderAll();
+              // patternSourceCanvas.renderAll();
+              console.log(patternSourceCanvas.getElement());
+              pattern = new fabric.Pattern({
+                        source: patternSourceCanvas.getElement(),
+                        repeat: 'no-repeat'
+                      });
 
-             patternSourceCanvas.setBackgroundImage(img);
-             patternSourceCanvas.renderAll();
-             // patternSourceCanvas.renderAll();
-             pattern = new fabric.Pattern({
-               source: patternSourceCanvas.getElement(),
-               repeat: 'no-repeat'
-             });
+              res.setFill(pattern);
+              canvas.renderAll();
+            })
 
-             res.setFill(pattern);
-             canvas.renderAll();
-           })
-           leastTime = res.slides[i].continued*1000;
-           setTimeout(function(){bgRelacer(i,res,id)}, leastTime);
-         }
+            leastTime = res.slides[i].continued*1000;
+            setTimeout(function(){bgRelacer(i,res,id)}, leastTime);
+          }
       }, {
        left: 150,
        top: 100

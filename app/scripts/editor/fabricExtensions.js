@@ -47,8 +47,6 @@ fabric.Video.fromURL = function(url, callback, imgOptions) {
 
 
 fabric.Video.fromObject = function(objects, callback) {
-  // console.log(objects.media.video);
-  // return new fabric.Video(objects.media.video);
   var v = new fabric.Video(objects.media.video, {
     width: objects.width,
     height: objects.height,
@@ -67,7 +65,6 @@ fabric.Video.fromObject = function(objects, callback) {
   //Refresh log
   logObj();
   return v;
-  
 };
 
 //Create Fabric Slider Class
@@ -82,7 +79,9 @@ fabric.Slider = fabric.util.createClass(fabric.Rect, {
         return fabric.util.object.extend(this.callSuper('toObject'), {
             id: this.id,
             fill: this.fill,
-            slides: this.slides
+            slides: this.slides,
+            pattern: this.pattern,
+            patternSourceCanvas: this.patternSourceCanvas
         });
     },
   _render: function (ctx) {
@@ -119,8 +118,37 @@ fabric.Slider.fromArray = function(elements, callback, options) {
   }, null, options && options.crossOrigin);
 }
 
-
-
+fabric.Slider.fromObject = function(objects, callback) {
+  // var pattern = new fabric.Pattern({
+  //       source: objects.patternSourceCanvas,
+  //       repeat: 'no-repeat'
+  //     });
+  new fabric.Image.fromURL(objects.slides[0].src, function(oImg) {
+    var patternSourceCanvas = new fabric.StaticCanvas();
+    oImg.setHeight(patternSourceCanvas.height);
+    oImg.setWidth(patternSourceCanvas.width);
+    patternSourceCanvas.setBackgroundImage(oImg);
+    var pattern = new fabric.Pattern({
+        source: patternSourceCanvas.getElement(),
+        repeat: 'no-repeat'
+      });
+    console.log(patternSourceCanvas);
+    callback && callback(new fabric.Slider({
+      width: objects.width,
+      height: objects.height,
+      scaleX: objects.scaleX,
+      scaleY: objects.scaleY,
+      top: objects.top,
+      left: objects.left,
+      slides: objects.slides,
+      fill: pattern,
+      id: objects.id,
+      pattern: pattern,
+      patternSourceCanvas: patternSourceCanvas
+    }));
+  });
+};
+fabric.Slider.async = true;
 
 
 var generator = new IDGenerator();

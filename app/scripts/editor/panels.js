@@ -64,6 +64,44 @@
       console.log('done');
       console.log(data);
       canvas.loadFromJSON(data, canvas.renderAll.bind(canvas),function(o, object) {
+        console.log(o);
+        console.log(object);
+        if (object.type === 'slider') {
+          var i=0;
+          var leastTime;
+          var patternSourceCanvas = object.patternSourceCanvas;
+          var pattern = object.pattern;
+          leastTime = object.slides[0].continued*1000;
+          var id = object.id;
+          setTimeout(function(){bgRelacer(i,object,id)}, leastTime);
+          function bgRelacer(i, res, id) {
+            i++;
+            if (i === res.slides.length ) {
+              i=0;
+            }
+            new fabric.Image.fromURL(res.slides[i].src, function(img){
+              // patternSourceCanvas = new fabric.StaticCanvas();
+              // console.log(patternSourceCanvas);
+              img.setHeight(patternSourceCanvas.height);
+              img.setWidth(patternSourceCanvas.width);
+
+              patternSourceCanvas.setBackgroundImage(img);
+              patternSourceCanvas.renderAll();
+              // patternSourceCanvas.renderAll();
+              console.log(patternSourceCanvas.getElement());
+              pattern = new fabric.Pattern({
+                        source: patternSourceCanvas.getElement(),
+                        repeat: 'no-repeat'
+                      });
+
+              res.setFill(pattern);
+              canvas.renderAll();
+            })
+
+            leastTime = res.slides[i].continued*1000;
+            setTimeout(function(){bgRelacer(i,res,id)}, leastTime);
+          }
+        }
         bindEvents(object);
       });
     }).fail(function() {

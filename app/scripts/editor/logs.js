@@ -77,7 +77,6 @@ var instantMeta = {
     $('.attributes-wrapper .top input').val(top);
     $('.attributes-wrapper .left input').val(left);
     $('.attributes-wrapper .media input').val(media);
-    console.log(media);
     // $('.attributes-wrapper .mediaPreview').html(preview);
     $('.attributes-wrapper .scalex input').val(scaleX);
     $('.attributes-wrapper .scaley input').val(scaleY);
