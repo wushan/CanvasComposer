@@ -80,8 +80,10 @@ fabric.Slider = fabric.util.createClass(fabric.Rect, {
             id: this.id,
             fill: this.fill,
             slides: this.slides,
+            link: this.link,
             pattern: this.pattern,
-            patternSourceCanvas: this.patternSourceCanvas
+            patternSourceCanvas: this.patternSourceCanvas,
+            filename: this.filename
         });
     },
   _render: function (ctx) {
@@ -96,7 +98,7 @@ fabric.Slider.fromArray = function(elements, callback, options) {
   var extension = firstObj.split('.').pop();
 
   if (extension.match(/^(gif|png|jpg|jpeg|tiff|svg)$/)) {
-    new fabric.Image.fromURL(elements[0].src, function(img) {
+    new fabric.Image.fromURL(firstObj, function(img) {
       var patternSourceCanvas = new fabric.StaticCanvas();
       console.log(img);
       img.setHeight(patternSourceCanvas.height);
@@ -116,9 +118,11 @@ fabric.Slider.fromArray = function(elements, callback, options) {
         left: options.left,
         top: options.top,
         slides: elements,
+        link: options.link,
         id: generator.generate(),
         pattern: pattern,
-        patternSourceCanvas: patternSourceCanvas
+        patternSourceCanvas: patternSourceCanvas,
+        filename: elements[0].filename
       }));
     }, null, options && options.crossOrigin);
   } else if (extension.match(/^(mp4|avi|ogg|ogv|webm)$/)) {
@@ -157,9 +161,11 @@ fabric.Slider.fromArray = function(elements, callback, options) {
         left: options.left,
         top: options.top,
         slides: elements,
+        link: options.link,
         id: generator.generate(),
         pattern: pattern,
-        patternSourceCanvas: patternSourceCanvas
+        patternSourceCanvas: patternSourceCanvas,
+        filename: elements[0].filename
       }));
   } else {
     console.log('不支援此檔案格式，請重試');
@@ -193,10 +199,12 @@ fabric.Slider.fromObject = function(objects, callback) {
         top: objects.top,
         left: objects.left,
         slides: objects.slides,
+        link: objects.link,
         fill: pattern,
         id: objects.id,
         pattern: pattern,
-        patternSourceCanvas: patternSourceCanvas
+        patternSourceCanvas: patternSourceCanvas,
+        filename: objects.slides[0].filename
       }));
     }, null, options && options.crossOrigin);
   } else if (extension.match(/^(mp4|avi|ogg|ogv|webm)$/)) {
@@ -238,37 +246,14 @@ fabric.Slider.fromObject = function(objects, callback) {
       slides: objects.slides,
       fill: pattern,
       id: objects.id,
+      link: objects.link,
       pattern: pattern,
-      patternSourceCanvas: patternSourceCanvas
+      patternSourceCanvas: patternSourceCanvas,
+      filename: objects.slides[0].filename
     }));
   } else {
     console.log('不支援此檔案格式，請重試');
   }
-  ///////////////
-  // new fabric.Image.fromURL(objects.slides[0].src, function(oImg) {
-  //   var patternSourceCanvas = new fabric.StaticCanvas();
-  //   oImg.setHeight(patternSourceCanvas.height);
-  //   oImg.setWidth(patternSourceCanvas.width);
-  //   patternSourceCanvas.setBackgroundImage(oImg);
-  //   var pattern = new fabric.Pattern({
-  //       source: patternSourceCanvas.getElement(),
-  //       repeat: 'no-repeat'
-  //     });
-  //   console.log(patternSourceCanvas);
-  //   callback && callback(new fabric.Slider({
-  //     width: objects.width,
-  //     height: objects.height,
-  //     scaleX: objects.scaleX,
-  //     scaleY: objects.scaleY,
-  //     top: objects.top,
-  //     left: objects.left,
-  //     slides: objects.slides,
-  //     fill: pattern,
-  //     id: objects.id,
-  //     pattern: pattern,
-  //     patternSourceCanvas: patternSourceCanvas
-  //   }));
-  // });
 };
 fabric.Slider.async = true;
 
