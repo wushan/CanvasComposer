@@ -17,3 +17,10 @@ gulp serve
 Screen Shots
 ===========
 ![screenshots](/app/images/screenshots.png)
+
+Hotkeys
+===========
+Delete Object
+```
+command + del
+```
