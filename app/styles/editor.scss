@@ -158,6 +158,9 @@ ul {
 			li {
 				a {
 					background-color: $darkestgray;
+					&.js-save {
+						background-color: $red;
+					}
 				}
 			}
 		}

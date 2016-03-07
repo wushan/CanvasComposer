@@ -25,7 +25,7 @@ var Artboard = (function (){
       //Programmatically Select Newly Added Object
       canvas.setActiveObject(rect);
       //Refresh log
-      logObj();
+      
     },
     addCircle : function(){
       var circle = new fabric.Circle({
@@ -48,7 +48,7 @@ var Artboard = (function (){
       //Programmatically Select Newly Added Object
       canvas.setActiveObject(circle);
       //Refresh log
-      logObj();
+      
     },
     addText : function(){
       var text = new fabric.IText('test',{
@@ -72,7 +72,7 @@ var Artboard = (function (){
       //Programmatically Select Newly Added Object
       canvas.setActiveObject(text);
       //Refresh log
-      logObj();
+      
     },
     addMedia : function(objImage) {
       // if (objImage === '' || objImage === undefined) {
@@ -125,7 +125,7 @@ var Artboard = (function (){
       }
       canvas.clear();
       //Refresh log
-      logObj();
+      
     },
     duplicateObject: function() {
       var obj = canvas.getActiveObject();
@@ -200,7 +200,7 @@ var Multimedia = (function (){
         //Programmatically Select Newly Added Object
         canvas.setActiveObject(oImg);
         //Refresh log
-        logObj();
+        
       });
     },
     video : function(source, youtubeId) {
@@ -229,7 +229,7 @@ var Multimedia = (function (){
           //Programmatically Select Newly Added Object
           canvas.setActiveObject(oImg);
           //Refresh log
-          logObj();
+          
         });
       } else {
         //Add Single Video
@@ -274,7 +274,7 @@ var Multimedia = (function (){
           //Programmatically Select Newly Added Object
           canvas.setActiveObject(video);
           //Refresh log
-          logObj();
+          
 
           fabric.util.requestAnimFrame(function render() {
             canvas.renderAll();
@@ -304,7 +304,7 @@ var Multimedia = (function (){
           canvas.setActiveObject(res);
           res.setCoords();
           //Refresh log
-          logObj();
+          
           leastTime = res.slides[0].continued*1000;
           var id = res.id;
           setTimeout(function(){bgRelacer(i,res,id)}, leastTime);

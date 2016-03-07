@@ -86,7 +86,7 @@ var instantMeta = {
     $('.attributes-wrapper .fontfamily select option[value="' + fontfamily + '"]').attr('selected',true);
     $('#objectColor').spectrum("set", color);
     $('#objectTextColor').spectrum("set", textcolor);
-    logObj();
+
   },
   clean: function(obj){
     $('.attributes-wrapper input').val('');

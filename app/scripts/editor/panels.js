@@ -183,6 +183,10 @@ $('.tools').on('click', 'a', function(){
     case 'js-setting':
       $('#canvassetting').fadeTo('fast',0.9);
       break;
+    case 'js-save':
+      logObj();
+      console.log('1111');
+      break;
   }
 })
 //Top Panel
