@@ -167,16 +167,67 @@ fabric.Slider.fromArray = function(elements, callback, options) {
 }
 
 fabric.Slider.fromObject = function(objects, callback) {
-  new fabric.Image.fromURL(objects.slides[0].src, function(oImg) {
+  //Define if the first Object is Video
+  var firstObj = objects.slides[0].src;
+  var extension = firstObj.split('.').pop();
+
+  if (extension.match(/^(gif|png|jpg|jpeg|tiff|svg)$/)) {
+    new fabric.Image.fromURL(firstObj, function(img) {
+      var patternSourceCanvas = new fabric.StaticCanvas();
+      console.log(img);
+      img.setHeight(patternSourceCanvas.height);
+      img.setWidth(patternSourceCanvas.width);
+      patternSourceCanvas.setBackgroundImage(img);
+      patternSourceCanvas.renderAll();
+      console.log(patternSourceCanvas.getElement());
+      var pattern = new fabric.Pattern({
+        source: patternSourceCanvas.getElement(),
+        repeat: 'no-repeat'
+      });
+
+      callback && callback(new fabric.Slider({
+        width: objects.width,
+        height: objects.height,
+        scaleX: objects.scaleX,
+        scaleY: objects.scaleY,
+        top: objects.top,
+        left: objects.left,
+        slides: objects.slides,
+        fill: pattern,
+        id: objects.id,
+        pattern: pattern,
+        patternSourceCanvas: patternSourceCanvas
+      }));
+    }, null, options && options.crossOrigin);
+  } else if (extension.match(/^(mp4|avi|ogg|ogv|webm)$/)) {
+    //Add Single Video
     var patternSourceCanvas = new fabric.StaticCanvas();
-    oImg.setHeight(patternSourceCanvas.height);
-    oImg.setWidth(patternSourceCanvas.width);
-    patternSourceCanvas.setBackgroundImage(oImg);
+    var vw, vh;
+    var video = new fabric.Video(firstObj, {
+      media: {
+        video: firstObj
+      }
+    });
+    var videoEl = video.getElement();
     var pattern = new fabric.Pattern({
         source: patternSourceCanvas.getElement(),
         repeat: 'no-repeat'
       });
-    console.log(patternSourceCanvas);
+    patternSourceCanvas.add(video);
+    patternSourceCanvas.renderAll();
+    videoEl.onloadeddata = function() {
+      vw = this.videoWidth;
+      vh = this.videoHeight;
+      video.setWidth(patternSourceCanvas.width);
+      video.setHeight(patternSourceCanvas.height);
+      video.center();
+      video.setCoords();
+      canvas.renderAll();
+    };
+    fabric.util.requestAnimFrame(function render() {
+      patternSourceCanvas.renderAll();
+      fabric.util.requestAnimFrame(render);
+    });
     callback && callback(new fabric.Slider({
       width: objects.width,
       height: objects.height,
@@ -190,7 +241,34 @@ fabric.Slider.fromObject = function(objects, callback) {
       pattern: pattern,
       patternSourceCanvas: patternSourceCanvas
     }));
-  });
+  } else {
+    console.log('不支援此檔案格式，請重試');
+  }
+  ///////////////
+  // new fabric.Image.fromURL(objects.slides[0].src, function(oImg) {
+  //   var patternSourceCanvas = new fabric.StaticCanvas();
+  //   oImg.setHeight(patternSourceCanvas.height);
+  //   oImg.setWidth(patternSourceCanvas.width);
+  //   patternSourceCanvas.setBackgroundImage(oImg);
+  //   var pattern = new fabric.Pattern({
+  //       source: patternSourceCanvas.getElement(),
+  //       repeat: 'no-repeat'
+  //     });
+  //   console.log(patternSourceCanvas);
+  //   callback && callback(new fabric.Slider({
+  //     width: objects.width,
+  //     height: objects.height,
+  //     scaleX: objects.scaleX,
+  //     scaleY: objects.scaleY,
+  //     top: objects.top,
+  //     left: objects.left,
+  //     slides: objects.slides,
+  //     fill: pattern,
+  //     id: objects.id,
+  //     pattern: pattern,
+  //     patternSourceCanvas: patternSourceCanvas
+  //   }));
+  // });
 };
 fabric.Slider.async = true;
 
