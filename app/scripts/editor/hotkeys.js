@@ -7,6 +7,7 @@ $(document).keydown(function(e) {
         if (map[8] && map[91]) {
         	e.preventDefault(); e.stopPropagation();
           	Artboard.removeObject();
+            map[8] = false;
         } else
         //BringToFront
         if (map[38] && map[91]){
