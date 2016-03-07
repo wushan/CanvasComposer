@@ -294,6 +294,7 @@ var Multimedia = (function (){
         new fabric.Slider.fromArray(imageset, function(res){
           var patternSourceCanvas = res.patternSourceCanvas;
           var pattern = res.pattern;
+          
           //已建立 slider 物件
           canvas.add(res);
           canvas.renderAll();
