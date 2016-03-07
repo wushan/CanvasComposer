@@ -22,5 +22,35 @@ Hotkeys
 ===========
 Delete Object
 ```
-command + del
+command && del
+```
+
+Send to Bottom
+```
+command && &#8593;
+```
+
+Bring to Front
+```
+command && &#8595;
+```
+
+Bring Forward
+```
+command && +
+```
+
+Send Backward
+```
+command && -
+```
+
+Duplicate
+```
+&#8963; && D
+```
+
+Lock
+```
+&#8984; && L
 ```
