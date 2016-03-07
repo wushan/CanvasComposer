@@ -63,11 +63,9 @@
     }).done(function(data){
       console.log('done');
       console.log(data);
-      canvas.loadFromJSON(data, function(){
-        canvas.renderAll();
-        logObj();
+      canvas.loadFromJSON(data, canvas.renderAll.bind(canvas),function(o, object) {
+        bindEvents(object);
       });
-      
     }).fail(function() {
       console.log( "error" );
     })
