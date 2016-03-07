@@ -1,8 +1,41 @@
 //Media //Bind OnChange to avoid 'undefined'
     $('.js-library').on('click', function(){
       $('#mediaLibrary').addClass('active');
-      $('#mediaLibrary .selection').empty();
-      $('#mediaLibrary .resources a').removeClass('active');
+      //Load Slides form Slider
+      var obj = canvas.getActiveObject();
+      if (obj.type === 'slider') {
+        //Clean up
+        $('#mediaLibrary .selection').empty();
+        $('#mediaLibrary .resources a').removeClass('active');
+        var resourceid,
+            src,
+            continued,
+            filename,
+            targetResource;
+        var selection = $('.settings-container .selection');
+        //push elements back by id
+        for (var i=0; i<obj.slides.length; i++) {
+          resourceid = obj.slides[i].id;
+          src = obj.slides[i].src;
+          continued = obj.slides[i].continued;
+          filename = obj.slides[i].filename;
+          var $item = "<li data-resourceid="+ resourceid +" data-src=" + src + "><div class='order'><div class='continued'><input type='number' value='" + continued + "'></div></div><div class='description'><div class='filename'>" + filename + "</div></div></li>";
+          selection.append($item);
+          $('#mediaLibrary .resources li').each(function(){
+            targetResource = $(this).children('a').attr('data-resourceid');
+            if (resourceid === targetResource) {
+              $(this).children('a').addClass('active');
+            }
+          })
+        }
+
+        
+        // console.log(obj.slides);
+
+      } else {
+        $('#mediaLibrary .selection').empty();
+        $('#mediaLibrary .resources a').removeClass('active');
+      }
     })
     $('#mediaLibrary .js-close').on('click', function(){
       $('#mediaLibrary').removeClass('active');
@@ -21,7 +54,7 @@ $('#mediaLibrary .resources').on('click','a',function(){
   src = $(this).attr('data-src');
   filename = $(this).find('.filename').html();
   resourceid = $(this).attr('data-resourceid');
-  continued = "1";
+  continued = "3"; //Default
   var $item = "<li data-resourceid="+ resourceid +" data-src=" + src + "><div class='order'><div class='continued'><input type='number' value='" + continued + "'></div></div><div class='description'><div class='filename'>" + filename + "</div></div></li>";
   var anchor = $(this);
   if (anchor.hasClass('active')) {
@@ -41,7 +74,8 @@ $('#mediaLibrary .resources').on('click','a',function(){
 $('.js-sendToObj').on('click', function(){
   var resourceid,
       src,
-      continued;
+      continued,
+      filename;
   //先搜集所有內容
   var selected = [];
   var selection = $('.settings-container .selection');
@@ -50,7 +84,8 @@ $('.js-sendToObj').on('click', function(){
     resourceid = $(this).attr('data-resourceid');
     src = $(this).attr('data-src');
     continued = $(this).find('input').val();
-    var collected = {'id':resourceid, 'src':src, 'continued': continued};
+    filename = $(this).find('.filename').html();
+    var collected = {'id':resourceid, 'src':src, 'continued': continued, 'filename': filename};
     selected.push(collected);
     console.log(selected);
   })
