@@ -5,7 +5,8 @@
     "jquery": "~2.1.1",
     "modernizr": "~2.8.1",
     "underscore": "^1.8.3",
-    "fabric.js": "fabric#^1.5.0"
+    "fabric.js": "fabric#^1.5.0",
+    "weyproui": "^0.0.1"
   },
   "devDependencies": {
     "chai": "^3.5.0",
