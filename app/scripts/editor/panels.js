@@ -1,4 +1,5 @@
-//Canvas Panel
+CanvasEditor.attrPanels = function(){
+  //Canvas Panel
   $("#canvasWidth").on("change paste keyup", function() {
      //Refresh Canvas Size
      canvas.setWidth($(this).val());
@@ -338,3 +339,4 @@ $('#linkValue').on('keydown keyup change', function(){
   obj.set('link', val);
   logObj();
 });
+}

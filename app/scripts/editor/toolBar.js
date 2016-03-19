@@ -1,14 +1,14 @@
-(function(){
+CanvasEditor.toolBar = function(){
   //toolBar Actions  
   var actions = {
     addRect:   function (event) {
-                  Artboard.addRect();
+                  CanvasEditor.Artboard.addRect();
                 },
     addCircle: function (event) {
-                  Artboard.addCircle();
+                  CanvasEditor.Artboard.addCircle();
                 },
     addText: function (event) {
-                  Artboard.addText();
+                  CanvasEditor.Artboard.addText();
                 },
     addClock: function(event) {
                 //
@@ -17,7 +17,7 @@
                 //
               },
     disposeAll: function(event) {
-                Artboard.dispose();
+                CanvasEditor.Artboard.dispose();
               },
     artboardSettings: function(event) {
                 $('#canvassetting').fadeTo('fast',0.9);
@@ -40,4 +40,4 @@
     }
   });
 
-}());
+};

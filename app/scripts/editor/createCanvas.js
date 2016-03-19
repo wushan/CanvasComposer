@@ -1,5 +1,6 @@
-//*Setting Up Canvas
-  var canvas = new fabric.Canvas('c', {
+CanvasEditor.createCanvas = function(){
+  //*Setting Up Canvas
+  canvas = new fabric.Canvas('c', {
                 selectionColor: 'blue',
                 selectionLineWidth: 2,
                 width: 800,
@@ -256,3 +257,4 @@
   $(window).resize(function(){
     artboardScale();
   })
+}

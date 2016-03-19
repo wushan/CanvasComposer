@@ -1,9 +1,6 @@
-///////////////////////////////////////
-var initRadius = 100;
 
-var Artboard = (function (){
-  return {
-    addRect : function(){
+CanvasEditor.Artboard = {
+  addRect : function(){
       var rect = new fabric.Rect({
         left: canvas.getWidth()/2-initRadius/2,
         top: canvas.getHeight()/2-initRadius/2,
@@ -85,7 +82,7 @@ var Artboard = (function (){
       if (objImage.length > 1) {
         var imageSet = objImage;
         //If objImage is an Array
-        Multimedia.slider(imageSet);
+        CanvasEditor.Artboard.Multimedia.slider(imageSet);
       } else if (objImage.length === 1){
         //Add Image or Video ((Single))
         //extension
@@ -97,15 +94,15 @@ var Artboard = (function (){
           var thumbnail = getThumbnails(youtubeId, function(res){
             console.log(res);
             //Add Single Image
-            Multimedia.video(res, youtubeId);
+            CanvasEditor.Artboard.Multimedia.video(res, youtubeId);
           });
         } else {
           if (extension.match(/^(gif|png|jpg|jpeg|tiff|svg)$/)) {
             //Add Single Image
-            Multimedia.image(objImage[0].src);
+            CanvasEditor.Artboard.Multimedia.image(objImage[0].src);
           } else if (extension.match(/^(mp4|avi|ogg|ogv|webm)$/)) {
             //Add Single Video
-            Multimedia.video(objImage[0].src);
+            CanvasEditor.Artboard.Multimedia.video(objImage[0].src);
           } else {
             console.log('不支援此檔案格式，請重試');
           }
@@ -170,12 +167,11 @@ var Artboard = (function (){
       canvas.renderAll();
       instantMeta.log(obj);
     }
-  }
-} ());
+}
 
 //Add Media
-var Multimedia = (function (){
-  return {
+CanvasEditor.Artboard.Multimedia = {
+
     image : function(source) {
       //Add Single Image
       var media = new fabric.Image.fromURL(source, function(oImg) {
@@ -212,10 +208,14 @@ var Multimedia = (function (){
             'top': canvas.getHeight()/2-oImg.height/2
 
           });
+          console.log(oImg.toObject());
           media.toObject = (function(toObject) {
             return function() {
               return fabric.util.object.extend(toObject.call(this), {
-                link: this.link
+                link: this.link,
+                media: {
+                  video: this.video
+                }
               });
             };
           })(media.toObject);
@@ -400,5 +400,5 @@ var Multimedia = (function (){
     iframe : function() {
       //Get Screen Shot Only
     }
-  }
-} ());
+
+};

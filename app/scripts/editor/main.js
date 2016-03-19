@@ -1,36 +1,59 @@
-(function() {
-	var canvasEditor = $('#canvaseditor');
+//全域
+var canvas,
+	grid,
+	threshold,
+	initRadius = 100;
+//區域
+var CanvasEditor = {
+	init: function(){
+		console.log(this);
+		this.loadView();
+		$(document).on("files-loaded", function () {
+		    CanvasEditor.createCanvas();
+		    CanvasEditor.toolBar();
+		    CanvasEditor.HotKeys();
+		    CanvasEditor.attrPanels();
+		    CanvasEditor.MediaLibrary();
 
-	//Generate View Components
-	var templates = (function ($, host) {
-	    // begin to load external templates from a given path and inject them into the DOM
-	    return {
-	        // use jQuery $.get to load the templates asynchronously
-	        load: function (templateArray, target, event) {
-	            var defferArray = [];
-	            $.each(templateArray, function (idx, url) {
-	                var loader = $.get(url)
-	                    .success(function (data) {
-	                    // on success, add the template to the targeted DOM element
-	                    $(target).append(data);
-	                })
-	                defferArray.push(loader);
-	            })
+		})
+	},
+	save: function(){
+		//整合logController.js
+	}
+};
 
-	            $.when.apply(null, defferArray).done(function () {
-	                $(host).trigger(event);
-	            });
-	        }
-	    };
-	})(jQuery, document);
+function getThumbnails(id , callback) {
+  var url = "https://www.googleapis.com/youtube/v3/videos?id=" + id + "&part=snippet&key=AIzaSyCjiWPLJdE-QbakmKin__3rDqOKLgKyCRY"
+  $.getJSON(url,function(){
+    console.log('success');
+  }).done(function(res){
+    console.log(res);
+    var thumbnails;
+    if (res.items[0].snippet.thumbnails.standard.url != '') {
+      thumbnails = res.items[0].snippet.thumbnails.standard.url;
+    } else {
+      thumbnails = res.items[0].snippet.thumbnails.default.url;
+    }
+    return callback(thumbnails);
+  }).fail(function(error){
+    console.log(error);
+  })
+}
 
-	$(document).on("files-loaded", function () {
-	    canvasEditor.append("<p>All done!</p>");
-	})
-	
-	$(function () {
-	    var templateArray = ["layouts/sidebar.html", "layouts/artboard.html"]
-	    templates.load(templateArray, canvasEditor, "files-loaded");
-	});
 
-}());
+
+function validateYouTubeUrl(url) {
+    if (url != undefined || url != '') {        
+        var regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=|\?v=)([^#\&\?]*).*/;
+        var match = url.match(regExp);
+        var mp4,
+            webm;
+        if (match && match[2].length == 11) {
+            return match[2]; 
+        } else {
+            return false;
+        }
+    }
+}
+// CanvasEditor.init();
+// CanvasEditor.loadView();
