@@ -6,33 +6,36 @@ block content
     #canvaseditor
       .row
         #sidebar
-          ul.tools
-            li
-              a.js-add-rect(href="javascript:;" title="新增矩形")
-                i.fa.fa-object-group.fa-lg
-            li
-              a.js-add-circle(href="javascript:;" title="新增圓形") 
-                i.fa.fa-circle-thin.fa-lg
-            li
-              a.js-add-text(href="javascript:;" title="新增文字") 
-                i.fa.fa-font.fa-lg
-            li
-              a.js-add-clock(href="javascript:;" title="新增時鐘") 
-                i.fa.fa-clock-o.fa-lg
+          .widget-block
+            .widget-title.centered 工具
+            .widget-content
+              ul.tools
+                li
+                  a.full.btn.basic.js-add-rect(href="javascript:;" title="新增矩形", data-action='addRect')
+                    i.fa.fa-object-group.fa-lg
+                li
+                  a.full.btn.basic.js-add-circle(href="javascript:;" title="新增圓形", data-action='addCircle')
+                    i.fa.fa-circle-thin.fa-lg
+                li
+                  a.full.btn.basic.js-add-text(href="javascript:;" title="新增文字", data-action='addText')
+                    i.fa.fa-font.fa-lg
+                li
+                  a.full.btn.basic.js-add-clock(href="javascript:;" title="新增時鐘", data-action='addClock')
+                    i.fa.fa-clock-o.fa-lg
 
-          ul.tools.overall
-            li
-              a(href="javascript:;" title="鎖定所有物件")
-                i.fa.fa-lock.fa-lg
-            li
-              a.js-dispose(href="javascript:;" title="清除所有物件")
-                i.fa.fa-eraser.fa-lg
-            li
-              a.js-setting(href="javascript:;" title="版面設定")
-                i.fa.fa-cogs.fa-lg
-            li
-              a.js-save(href="javascript:;" title="儲存")
-                i.fa.fa-share-square-o.fa-lg
+              ul.tools.overall
+                li
+                  a.full.btn.basic(href="javascript:;" title="鎖定所有物件", data-action='lockAll')
+                    i.fa.fa-lock.fa-lg
+                li
+                  a.full.btn.basic.js-dispose(href="javascript:;" title="清除所有物件", data-action='disposeAll')
+                    i.fa.fa-eraser.fa-lg
+                li
+                  a.full.btn.basic.js-setting(href="javascript:;" title="版面設定", data-action='artboardSettings')
+                    i.fa.fa-cogs.fa-lg
+                li
+                  a.full.btn.basic.js-save(href="javascript:;" title="儲存", data-action='saveState')
+                    i.fa.fa-share-square-o.fa-lg
           
         #artboard
           #canvassetting
@@ -87,124 +90,125 @@ block content
                 .tag.height <span>600</span>
 
         #config(style='display: none;')
-          .panels
-            .attributes-wrapper.panel
-              .title
-                h3 物件屬性
-              .attributes-inner      
-                .block.attr.type
-                  .controlgroup
-                    label Type
-                    .controls
-                      input(type='text' readonly)
-                .block.attr.width
-                  .controlgroup
-                    label Width
-                    .controls
-                      input.objectSize#objectWidth(type='number')
-                .block.attr.height
-                  .controlgroup
-                    label Height
-                    .controls
-                      input.objectSize#objectHeight(type='number')
-                .block.attr.radius
-                  .controlgroup
-                    label Radius
-                    .controls
-                      input#objectRadius(type='text')
-                
-                .block.attr.top
-                  .controlgroup
-                    label Top
-                    .controls
-                      input#objectTop(type='text')
-                .block.attr.left
-                  .controlgroup
-                    label Left
-                    .controls
-                      input#objectLeft(type='text')
-                .block.attr.angle
-                  .controlgroup
-                    label Angle
-                    .controls
-                      input#objectAngle(type='text')
-                .block.attr.scalex
-                  .controlgroup
-                    label ScaleX
-                    .controls
-                      input#objectScaleX(type='text')
-                .block.attr.scaley
-                  .controlgroup
-                    label ScaleY
-                    .controls
-                      input#objectScaleY(type='text')
-                .block.attr.color
-                  .controlgroup
-                    label BGColor
-                    .controls
-                      input#objectColor(type='text')
-                
-              .row
-                .block.attr.text.text-attr
-                  .controlgroup
-                    label Text
-                    .controls
-                      input#objectInput(type='text')
-                .block.attr.fontfamily.text-attr
-                  .controlgroup
-                    label Font-family
-                    .controls
-                      select#objectFontFamily
-                        option(value='Arial') Arial
-                        option(value='Helvetica') Helvetica
-                        option(value='Roboto') Roboto
-                        option(value='Times New Roman') Times New Roman
-                        option(value='Times') Times
-              .attributes-inner-text
-                .block.attr.color.text-attr
-                  .controlgroup
-                    label Text Color
-                    .controls
-                      input#objectTextColor(type='text')
-                .block.attr.fontsize.text-attr
-                  .controlgroup
-                    label Font-size
-                    .controls
-                      select#objectFontSize
-                        option(value='14') 14
-                        option(value='18') 18
-                        option(value='24') 24
-                        option(value='30') 30
-                        option(value='36') 36
-                        option(value='48') 48
-                        option(value='56') 56
-                        option(value='64') 64
-                        option(value='72') 72
-                        option(value='144') 144
-              .row
-                .block.attr.media
-                  .controlgroup
-                    label Media
-                    .controls.richcontrol
-                      a.js-library(href="javascript:;")
-                        i.fa.fa-cloud-upload.fa-2x
-                      input#mediaValue(type='text' readonly)
-                    .mediaPreview
-              .row
-                .block.attr.link
-                  .controlgroup
-                    label Inbound Links
-                    .controls.richcontrol
-                      a.js-inbounds(href="javascript:;")
-                        i.fa.fa-link.fa-2x
-                      input#linkValue(type='text')
-      #console
-        .shapeobj
-          h3 Shape Objects
-          .content
-        .canvasobj
-          h3 Canvas Object
-          .content
+          .widget-block
+            .widget-title 屬性
+            .widget-content
+              .panels
+                .attributes-wrapper.panel
+                  .attributes-inner      
+                    .block.attr.type
+                      .controlgroup
+                        label Type
+                        .controls
+                          input(type='text' readonly)
+                    .block.attr.width
+                      .controlgroup
+                        label Width
+                        .controls
+                          input.objectSize#objectWidth(type='number')
+                    .block.attr.height
+                      .controlgroup
+                        label Height
+                        .controls
+                          input.objectSize#objectHeight(type='number')
+                    .block.attr.radius
+                      .controlgroup
+                        label Radius
+                        .controls
+                          input#objectRadius(type='text')
+                    
+                    .block.attr.top
+                      .controlgroup
+                        label Top
+                        .controls
+                          input#objectTop(type='text')
+                    .block.attr.left
+                      .controlgroup
+                        label Left
+                        .controls
+                          input#objectLeft(type='text')
+                    .block.attr.angle
+                      .controlgroup
+                        label Angle
+                        .controls
+                          input#objectAngle(type='text')
+                    .block.attr.scalex
+                      .controlgroup
+                        label ScaleX
+                        .controls
+                          input#objectScaleX(type='text')
+                    .block.attr.scaley
+                      .controlgroup
+                        label ScaleY
+                        .controls
+                          input#objectScaleY(type='text')
+                    .block.attr.color
+                      .controlgroup
+                        label BGColor
+                        .controls
+                          input#objectColor(type='text')
+                    
+                  .row
+                    .block.attr.text.text-attr
+                      .controlgroup
+                        label Text
+                        .controls
+                          input#objectInput(type='text')
+                    .block.attr.fontfamily.text-attr
+                      .controlgroup
+                        label Font-family
+                        .controls
+                          select#objectFontFamily
+                            option(value='Arial') Arial
+                            option(value='Helvetica') Helvetica
+                            option(value='Roboto') Roboto
+                            option(value='Times New Roman') Times New Roman
+                            option(value='Times') Times
+                  .attributes-inner-text
+                    .block.attr.color.text-attr
+                      .controlgroup
+                        label Text Color
+                        .controls
+                          input#objectTextColor(type='text')
+                    .block.attr.fontsize.text-attr
+                      .controlgroup
+                        label Font-size
+                        .controls
+                          select#objectFontSize
+                            option(value='14') 14
+                            option(value='18') 18
+                            option(value='24') 24
+                            option(value='30') 30
+                            option(value='36') 36
+                            option(value='48') 48
+                            option(value='56') 56
+                            option(value='64') 64
+                            option(value='72') 72
+                            option(value='144') 144
+                  .row
+                    .block.attr.media
+                      .controlgroup
+                        label Media
+                        .controls.richcontrol
+                          a.js-library(href="javascript:;")
+                            i.fa.fa-cloud-upload.fa-2x
+                          input#mediaValue(type='text' readonly)
+                        .mediaPreview
+                  .row
+                    .block.attr.link
+                      .controlgroup
+                        label Inbound Links
+                        .controls.richcontrol
+                          input#linkValue(type='text')
+                          a.js-inbounds(href="javascript:;")
+                            i.fa.fa-link.fa-2x
+      //- #console
+      //-   .shapeobj
+      //-     h3 Shape Objects
+      //-     .content
+      //-   .canvasobj
+      //-     h3 Canvas Object
+      //-     .content
 
       #context-menu.context-menu
         ul.context-menu__items

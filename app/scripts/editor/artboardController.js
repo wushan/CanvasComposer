@@ -51,7 +51,7 @@ var Artboard = (function (){
       
     },
     addText : function(){
-      var text = new fabric.IText('test',{
+      var text = new fabric.IText('預設文字',{
         //options
         left: 200,
         top: 200,

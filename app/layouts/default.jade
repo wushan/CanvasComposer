@@ -16,6 +16,10 @@ html.no-js
     // endbower
     // endbuild
 
+    // build:css styles/weyproui.css
+    link(rel='stylesheet' href='../bower_components/weyproui/dist/styles/weyproui.css')
+    // endbuild
+
     // build:css styles/editor.css
     link(rel='stylesheet' href='styles/editor.css')
     // endbuild
@@ -58,6 +62,8 @@ html.no-js
 
       
       script(src='scripts/editor/panels.js')
+      script(src='scripts/editor/toolBar.js')
+        
       script(src='scripts/editor/bindEvents.js')
       script(src='scripts/editor/medialibrary.js')
       script(src='scripts/editor/hotkeys.js')

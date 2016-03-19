@@ -164,31 +164,7 @@
     })
   }
 
-//ArtBoard Panel
-$('.tools').on('click', 'a', function(){
-  var className = $(this).attr('class');
-  switch(className){
-    case 'js-add-rect':
-      Artboard.addRect();
-      break;
-    case 'js-add-circle':
-      Artboard.addCircle();
-      break;
-    case 'js-add-text':
-      Artboard.addText();
-      break;
-    case 'js-dispose':
-      Artboard.dispose();
-      break;
-    case 'js-setting':
-      $('#canvassetting').fadeTo('fast',0.9);
-      break;
-    case 'js-save':
-      logObj();
-      console.log('1111');
-      break;
-  }
-})
+
 //Top Panel
 $('.objectControl').on('click', 'button', function(){
   var className = $(this).attr('class');
