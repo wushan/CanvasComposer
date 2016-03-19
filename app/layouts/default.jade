@@ -24,10 +24,6 @@ html.no-js
     link(rel='stylesheet' href='styles/editor.css')
     // endbuild
 
-    // build:js scripts/vendor/modernizr.js
-    script(src='../bower_components/modernizr/modernizr.js')
-    // endbuild
-
   body
     | <!--[if lt IE 10]>
     |   <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
@@ -55,6 +51,7 @@ html.no-js
       script(src='../bower_components/underscore/underscore-min.js')
       script(src='scripts/vendor/spectrum.js')
       script(src='scripts/lib/Sortable.min.js')
+      script(src='scripts/editor/main.js')
       script(src='scripts/editor/youtubeDecoder.js')
       script(src='scripts/editor/contextMenu.js')
       script(src='scripts/editor/fabricExtensions.js')
@@ -63,7 +60,7 @@ html.no-js
       
       script(src='scripts/editor/panels.js')
       script(src='scripts/editor/toolBar.js')
-        
+
       script(src='scripts/editor/bindEvents.js')
       script(src='scripts/editor/medialibrary.js')
       script(src='scripts/editor/hotkeys.js')

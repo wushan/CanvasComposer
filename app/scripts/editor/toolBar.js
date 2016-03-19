@@ -1,8 +1,5 @@
 (function(){
-  //toolBar Actions
-
-  //Init toolBar Component
-
+  //toolBar Actions  
   var actions = {
     addRect:   function (event) {
                   Artboard.addRect();

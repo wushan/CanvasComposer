@@ -1,0 +1,31 @@
+#sidebar(draggable="true")
+  .widget-block
+    .widget-title.centered 工具
+    .widget-content
+      ul.tools
+        li
+          a.full.btn.basic.js-add-rect(href="javascript:;" title="新增矩形", data-action='addRect')
+            i.fa.fa-object-group.fa-lg
+        li
+          a.full.btn.basic.js-add-circle(href="javascript:;" title="新增圓形", data-action='addCircle')
+            i.fa.fa-circle-thin.fa-lg
+        li
+          a.full.btn.basic.js-add-text(href="javascript:;" title="新增文字", data-action='addText')
+            i.fa.fa-font.fa-lg
+        li
+          a.full.btn.basic.js-add-clock(href="javascript:;" title="新增時鐘", data-action='addClock')
+            i.fa.fa-clock-o.fa-lg
+
+      ul.tools.overall
+        li
+          a.full.btn.basic(href="javascript:;" title="鎖定所有物件", data-action='lockAll')
+            i.fa.fa-lock.fa-lg
+        li
+          a.full.btn.basic.js-dispose(href="javascript:;" title="清除所有物件", data-action='disposeAll')
+            i.fa.fa-eraser.fa-lg
+        li
+          a.full.btn.basic.js-setting(href="javascript:;" title="版面設定", data-action='artboardSettings')
+            i.fa.fa-cogs.fa-lg
+        li
+          a.full.btn.basic.js-save(href="javascript:;" title="儲存", data-action='saveState')
+            i.fa.fa-share-square-o.fa-lg

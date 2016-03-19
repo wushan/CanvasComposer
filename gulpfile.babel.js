@@ -64,7 +64,7 @@ gulp.task('lint', lint('app/scripts/**/*.js'));
 gulp.task('lint:test', lint('test/spec/**/*.js', testLintOptions));
 
 gulp.task('views', () => {
-  return gulp.src('app/*.jade')
+  return gulp.src(['app/*.jade','app/**/*.jade'])
     .pipe($.jade({pretty: true}))
     .pipe(gulp.dest('.tmp'))
     .pipe(reload({stream: true}));
