@@ -4,152 +4,114 @@ block pagetitle
 block content
   #main
     #canvaseditor
-    #console
-      .shapeobj
-        h3 Shape Objects
-        .content
-      .canvasobj
-        h3 Canvas Object
-        .content
+      #mediaLibrary
+        .mediaLibrary-inner
+          .library-container
+            a.close-btn.js-close(href="javascript:;")
+              i.fa.fa-times.fa-lg
+            h2 Demo Image Resouces
+            ul.resources
+              li
+                a(href="javascript:;" data-src="http://twimg.edgesuite.net/appledaily/images/RnewsRecommend_1456107806.jpg" data-resourceid="1")
+                  .thumbnail
+                    i.fa.fa-check-circle-o
+                    img(src="http://twimg.edgesuite.net/appledaily/images/RnewsRecommend_1456107806.jpg")
+                  .filename RnewsRecommend_1456107806.jpg
+              li
+                a(href="javascript:;" data-src="http://twimg.edgesuite.net/www/extfile/specialtopic/a0c140339379e5c6b2f9c9c447d1a2a9.jpg" data-resourceid="2")
+                  .thumbnail
+                    i.fa.fa-check-circle-o
+                    img(src="http://twimg.edgesuite.net/www/extfile/specialtopic/a0c140339379e5c6b2f9c9c447d1a2a9.jpg")
+                  .filename a0c140339379e5c6b2f9c9c447d1a2a9.jpg
+              li
+                a(href="javascript:;" data-src="https://imageoptim.com/ImageOptim-yosemite.png" data-resourceid="3")
+                  .thumbnail
+                    i.fa.fa-check-circle-o
+                    img(src="https://imageoptim.com/ImageOptim-yosemite.png")
+                  .filename ImageOptim-yosemite.png
+              li
+                a(href="javascript:;" data-src="https://i.stack.imgur.com/LFaq6.jpg" data-resourceid="4")
+                  .thumbnail
+                    i.fa.fa-check-circle-o
+                    img(src="https://i.stack.imgur.com/LFaq6.jpg")
+                  .filename LFaq6.jpg
+              li
+                a(href="javascript:;" data-src="http://192.241.236.31/test4.smartadmin/img/splash/iphone.png" data-resourceid="5")
+                  .thumbnail
+                    i.fa.fa-check-circle-o
+                    img(src="http://192.241.236.31/test4.smartadmin/img/splash/iphone.png")
+                  .filename iphone.png
+              li
+                a(href="javascript:;" data-src="http://butlercountyhs.org/Graphics/Dogs/ButlerHumaneSociety3.png" data-resourceid="6")
+                  .thumbnail
+                    i.fa.fa-check-circle-o
+                    img(src="http://butlercountyhs.org/Graphics/Dogs/ButlerHumaneSociety3.png")
+                  .filename ButlerHumaneSociety3.png
+              li
+                a(href="javascript:;" data-src="https://img.buzzfeed.com/buzzfeed-static/static/2014-08/12/11/enhanced/webdr06/anigif_enhanced-buzz-24560-1407856404-48.gif" data-resourceid="7")
+                  .thumbnail
+                    i.fa.fa-check-circle-o
+                    img(src="https://img.buzzfeed.com/buzzfeed-static/static/2014-08/12/11/enhanced/webdr06/anigif_enhanced-buzz-24560-1407856404-48.gif")
+                  .filename anigif_enhanced-buzz-24560-1407856404-48.gif 
+              li
+                a(href="javascript:;" data-src="http://stories.gettyimages.com/wp-content/uploads/2015/08/GettyImages-557187411-11.jpg" data-resourceid="8")
+                  .thumbnail
+                    i.fa.fa-check-circle-o
+                    img(src="http://stories.gettyimages.com/wp-content/uploads/2015/08/GettyImages-557187411-11.jpg")
+                  .filename GettyImages-557187411-11.jpg
+              li
+                a(href="javascript:;" data-src="images/uploads/slide-same-1.jpg" data-resourceid="9")
+                  .thumbnail
+                    i.fa.fa-check-circle-o
+                    img(src="images/uploads/slide-same-1.jpg")
+                  .filename slider-same-1.jpg
+              li
+                a(href="javascript:;" data-src="images/uploads/slide-same-2.jpg" data-resourceid="10")
+                  .thumbnail
+                    i.fa.fa-check-circle-o
+                    img(src="images/uploads/slide-same-2.jpg")
+                  .filename slider-same-2.jpg
+              li
+                a(href="javascript:;" data-src="images/uploads/slide-same-3.jpg" data-resourceid="11")
+                  .thumbnail
+                    i.fa.fa-check-circle-o
+                    img(src="images/uploads/slide-same-3.jpg")
+                  .filename slider-same-3.jpg
 
-    #context-menu.context-menu
-      ul.context-menu__items
-        li.context-menu__item
-          a.context-menu__link(href='#', data-action='layertop')
-            i.fa.fa-angle-double-up
-            |  移至頂層 ( &#8984;&nbsp;&#8593; )
-        li.context-menu__item
-          a.context-menu__link(href='#', data-action='layerup')
-            i.fa.fa-angle-up
-            |  上移一層 ( &#8984;&nbsp;+ )
-        li.context-menu__item
-          a.context-menu__link(href='#', data-action='layerdown')
-            i.fa.fa-angle-down
-            |  下移一層 ( &#8984;&nbsp;- )
-        li.context-menu__item
-          a.context-menu__link(href='#', data-action='layerbottom')
-            i.fa.fa-angle-double-down
-            |  移至底層 ( &#8984;&nbsp;&#8595; )
-        li.context-menu__item
-          a.context-menu__link(href='#', data-action='duplicate')
-            i.fa.fa-times
-            |  Duplicate ( &#8963;&nbsp;D )
-        li.context-menu__item
-          a.context-menu__link(href='#', data-action='lock')
-            i.fa.fa-times
-            |  鎖定/解鎖 ( &#8984;&nbsp;L )
-        li.context-menu__item
-          a.context-menu__link(href='#', data-action='delete')
-            i.fa.fa-times
-            |  刪除物件 ( &#8984;&nbsp;Delete )
- 
-
-    #mediaLibrary
-      .mediaLibrary-inner
-        .library-container
-          a.close-btn.js-close(href="javascript:;")
-            i.fa.fa-times.fa-lg
-          h2 Demo Image Resouces
-          ul.resources
-            li
-              a(href="javascript:;" data-src="http://twimg.edgesuite.net/appledaily/images/RnewsRecommend_1456107806.jpg" data-resourceid="1")
-                .thumbnail
-                  i.fa.fa-check-circle-o
-                  img(src="http://twimg.edgesuite.net/appledaily/images/RnewsRecommend_1456107806.jpg")
-                .filename RnewsRecommend_1456107806.jpg
-            li
-              a(href="javascript:;" data-src="http://twimg.edgesuite.net/www/extfile/specialtopic/a0c140339379e5c6b2f9c9c447d1a2a9.jpg" data-resourceid="2")
-                .thumbnail
-                  i.fa.fa-check-circle-o
-                  img(src="http://twimg.edgesuite.net/www/extfile/specialtopic/a0c140339379e5c6b2f9c9c447d1a2a9.jpg")
-                .filename a0c140339379e5c6b2f9c9c447d1a2a9.jpg
-            li
-              a(href="javascript:;" data-src="https://imageoptim.com/ImageOptim-yosemite.png" data-resourceid="3")
-                .thumbnail
-                  i.fa.fa-check-circle-o
-                  img(src="https://imageoptim.com/ImageOptim-yosemite.png")
-                .filename ImageOptim-yosemite.png
-            li
-              a(href="javascript:;" data-src="https://i.stack.imgur.com/LFaq6.jpg" data-resourceid="4")
-                .thumbnail
-                  i.fa.fa-check-circle-o
-                  img(src="https://i.stack.imgur.com/LFaq6.jpg")
-                .filename LFaq6.jpg
-            li
-              a(href="javascript:;" data-src="http://192.241.236.31/test4.smartadmin/img/splash/iphone.png" data-resourceid="5")
-                .thumbnail
-                  i.fa.fa-check-circle-o
-                  img(src="http://192.241.236.31/test4.smartadmin/img/splash/iphone.png")
-                .filename iphone.png
-            li
-              a(href="javascript:;" data-src="http://butlercountyhs.org/Graphics/Dogs/ButlerHumaneSociety3.png" data-resourceid="6")
-                .thumbnail
-                  i.fa.fa-check-circle-o
-                  img(src="http://butlercountyhs.org/Graphics/Dogs/ButlerHumaneSociety3.png")
-                .filename ButlerHumaneSociety3.png
-            li
-              a(href="javascript:;" data-src="https://img.buzzfeed.com/buzzfeed-static/static/2014-08/12/11/enhanced/webdr06/anigif_enhanced-buzz-24560-1407856404-48.gif" data-resourceid="7")
-                .thumbnail
-                  i.fa.fa-check-circle-o
-                  img(src="https://img.buzzfeed.com/buzzfeed-static/static/2014-08/12/11/enhanced/webdr06/anigif_enhanced-buzz-24560-1407856404-48.gif")
-                .filename anigif_enhanced-buzz-24560-1407856404-48.gif 
-            li
-              a(href="javascript:;" data-src="http://stories.gettyimages.com/wp-content/uploads/2015/08/GettyImages-557187411-11.jpg" data-resourceid="8")
-                .thumbnail
-                  i.fa.fa-check-circle-o
-                  img(src="http://stories.gettyimages.com/wp-content/uploads/2015/08/GettyImages-557187411-11.jpg")
-                .filename GettyImages-557187411-11.jpg
-            li
-              a(href="javascript:;" data-src="images/uploads/slide-same-1.jpg" data-resourceid="9")
-                .thumbnail
-                  i.fa.fa-check-circle-o
-                  img(src="images/uploads/slide-same-1.jpg")
-                .filename slider-same-1.jpg
-            li
-              a(href="javascript:;" data-src="images/uploads/slide-same-2.jpg" data-resourceid="10")
-                .thumbnail
-                  i.fa.fa-check-circle-o
-                  img(src="images/uploads/slide-same-2.jpg")
-                .filename slider-same-2.jpg
-            li
-              a(href="javascript:;" data-src="images/uploads/slide-same-3.jpg" data-resourceid="11")
-                .thumbnail
-                  i.fa.fa-check-circle-o
-                  img(src="images/uploads/slide-same-3.jpg")
-                .filename slider-same-3.jpg
-
-          h2 Demo Video Resouces
-          ul.resources
-            li
-              a(href="javascript:;" data-src="http://www.quirksmode.org/html5/videos/big_buck_bunny.mp4" data-resourceid="12")
-                .thumbnail
-                  i.fa.fa-check-circle-o
-                  img(src="http://www.quirksmode.org/html5/videos/big_buck_bunny.mp4")
-                .filename xxx
-            li
-              a(href="javascript:;" data-src="http://download.wavetlan.com/SVV/Media/HTTP/H264/Talkinghead_Media/H264_test1_Talkinghead_mp4_480x360.mp4" data-resourceid="13")
-                .thumbnail
-                  i.fa.fa-check-circle-o
-                  img(src="http://download.wavetlan.com/SVV/Media/HTTP/H264/Talkinghead_Media/H264_test1_Talkinghead_mp4_480x360.mp4")
-                .filename xxx
-            li
-              a(href="javascript:;" data-src="images/uploads/small.webm" data-resourceid="14")
-                .thumbnail
-                  i.fa.fa-check-circle-o
-                  img(src="images/uploads/small.webm")
-                .filename xxx
-            li
-              a(href="javascript:;" data-src="https://www.youtube.com/watch?v=4XpDdIISlYo" data-resourceid="4XpDdIISlYo")
-                .thumbnail
-                  i.fa.fa-check-circle-o
-                  img(src="http://lorempixel.com/400/200")
-                .filename xxx
-        .settings-container
-          //- p Insert Image/Videos from left
-          ol.selection#selectionOrder
-            li Insert Image/Videos from left
-          a.js-sendToObj(href="javascript:;") 置入選取物件
+            h2 Demo Video Resouces
+            ul.resources
+              li
+                a(href="javascript:;" data-src="http://www.quirksmode.org/html5/videos/big_buck_bunny.mp4" data-resourceid="12")
+                  .thumbnail
+                    i.fa.fa-check-circle-o
+                    img(src="http://www.quirksmode.org/html5/videos/big_buck_bunny.mp4")
+                  .filename xxx
+              li
+                a(href="javascript:;" data-src="http://download.wavetlan.com/SVV/Media/HTTP/H264/Talkinghead_Media/H264_test1_Talkinghead_mp4_480x360.mp4" data-resourceid="13")
+                  .thumbnail
+                    i.fa.fa-check-circle-o
+                    img(src="http://download.wavetlan.com/SVV/Media/HTTP/H264/Talkinghead_Media/H264_test1_Talkinghead_mp4_480x360.mp4")
+                  .filename xxx
+              li
+                a(href="javascript:;" data-src="images/uploads/small.webm" data-resourceid="14")
+                  .thumbnail
+                    i.fa.fa-check-circle-o
+                    img(src="images/uploads/small.webm")
+                  .filename xxx
+              li
+                a(href="javascript:;" data-src="https://www.youtube.com/watch?v=4XpDdIISlYo" data-resourceid="4XpDdIISlYo")
+                  .thumbnail
+                    i.fa.fa-check-circle-o
+                    img(src="http://lorempixel.com/400/200")
+                  .filename xxx
+          .settings-container
+            //- p Insert Image/Videos from left
+            ol.selection#selectionOrder
+              li Insert Image/Videos from left
+            a.js-sendToObj(href="javascript:;") 置入選取物件
   
 block pagescripts
   script.
-    CanvasEditor.init();
+    CanvasEditor.init({
+      'some': 'jsonobject'
+    });

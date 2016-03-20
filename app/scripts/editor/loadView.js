@@ -26,7 +26,7 @@ CanvasEditor.loadView = function(){
 	
 	
 	$(function () {
-	    var templateArray = ["layouts/sidebar.html", "layouts/artboard.html", "layouts/config.html"]
+	    var templateArray = ["layouts/sidebar.html", "layouts/artboard.html", "layouts/config.html", "layouts/console.html", "layouts/contextmenu.html"]
 	    templates.load(templateArray, wrapper, "files-loaded");
 	});
 }

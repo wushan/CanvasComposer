@@ -5,12 +5,18 @@ var canvas,
 	initRadius = 100;
 //區域
 var CanvasEditor = {
-	init: function(){
+	init: function(data){
 		console.log(this);
 		this.loadView();
 		$(document).on("files-loaded", function () {
-		    CanvasEditor.createCanvas();
+			if (data != undefined && typeof data ==='object') {
+				console.log('something there');
+			} else {
+				console.log(data);
+			}
+		    CanvasEditor.initCanvas.init();
 		    CanvasEditor.toolBar();
+		    CanvasEditor.Contextmenu();
 		    CanvasEditor.HotKeys();
 		    CanvasEditor.attrPanels();
 		    CanvasEditor.MediaLibrary();

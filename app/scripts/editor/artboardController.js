@@ -72,12 +72,6 @@ CanvasEditor.Artboard = {
       
     },
     addMedia : function(objImage) {
-      // if (objImage === '' || objImage === undefined) {
-      //   //Default image
-      //   objImage = 'images/uploads/abc.png';
-      // } else {
-      // }
-
       //Check if it is an Slide Array
       if (objImage.length > 1) {
         var imageSet = objImage;

@@ -10,6 +10,7 @@
 	display: none;
 	word-break: break-all;
 	text-align: center;
+	z-index: 3;
 	&:before {
 		content: '';
 		height: 100%;

@@ -1,5 +1,4 @@
-(function() {
-  
+CanvasEditor.Contextmenu = function(){
   "use strict";
 
   //////////////////////////////////////////////////////////////////////////////
@@ -222,10 +221,10 @@
     var obj = canvas.getActiveObject();
     switch(action){
       case 'delete':
-        Artboard.removeObject();
+        CanvasEditor.Artboard.removeObject();
         break;
       case 'duplicate':
-        Artboard.duplicateObject();
+        CanvasEditor.Artboard.duplicateObject();
         break;
       case 'layertop':
         obj.bringToFront();
@@ -243,7 +242,7 @@
         obj.sendToBack();
         break;
       case 'lock':
-        Artboard.lockObject();
+        CanvasEditor.Artboard.lockObject();
         break;
     }
     
@@ -254,5 +253,4 @@
    * Run the app.
    */
   init();
-
-})();
+}

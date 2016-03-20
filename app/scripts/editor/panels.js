@@ -1,11 +1,36 @@
 CanvasEditor.attrPanels = function(){
+  function drag_start(event) {
+      var style = window.getComputedStyle(event.target, null);
+      event.dataTransfer.setData("text/plain",
+      (parseInt(style.getPropertyValue("left"),10) - event.clientX) + ',' + (parseInt(style.getPropertyValue("top"),10) - event.clientY));
+  } 
+  function drag_over(event) { 
+      event.preventDefault(); 
+      return false; 
+  } 
+  function drop(event) { 
+      console.log(event);
+      var offset = event.dataTransfer.getData("text/plain").split(',');
+      var dm = document.getElementById('config');
+      dm.style.left = (event.clientX + parseInt(offset[0],10)) + 'px';
+      dm.style.top = (event.clientY + parseInt(offset[1],10)) + 'px';
+      console.log(dm);
+      event.preventDefault();
+      return false;
+  }
+
+  var dm = document.getElementById('config'); 
+  dm.addEventListener('dragstart',drag_start,false); 
+  document.body.addEventListener('dragover',drag_over,false); 
+  document.body.addEventListener('drop',drop,false);
+
   //Canvas Panel
   $("#canvasWidth").on("change paste keyup", function() {
      //Refresh Canvas Size
      canvas.setWidth($(this).val());
      canvas.renderAll();
      //Fit Artboard
-     artboardScale();
+     CanvasEditor.initCanvas.fit();
      //Set Canvas tip tags
     $(".sizeTag .tag.width span").html($(this).val());
   });
@@ -15,7 +40,7 @@ CanvasEditor.attrPanels = function(){
      canvas.setHeight($(this).val());
      canvas.renderAll();
      //Fit Artboard
-     artboardScale();
+     CanvasEditor.initCanvas.fit();
      //Set Canvas tip tags
     $(".sizeTag .tag.height span").html($(this).val());
   });
@@ -30,7 +55,7 @@ CanvasEditor.attrPanels = function(){
     canvas.setHeight(presetHeight);
     canvas.renderAll();
     //Fit Artboard
-    artboardScale();
+    CanvasEditor.initCanvas.fit();
     //Set Canvas tip tags
     $(".sizeTag .tag.width span").html(presetWidth);
     $(".sizeTag .tag.height span").html(presetHeight);
@@ -45,7 +70,7 @@ CanvasEditor.attrPanels = function(){
         var confirmation = confirm("讀取預設版型會移除目前畫面中的所有物件，是否確定讀取？");
         var confirmationBtn;
         if (confirmation == true) {
-            Artboard.dispose();
+            CanvasEditor.Artboard.dispose();
             loadPresetsFromJSON($(this).attr('data-src'));
         } else {
             return;
@@ -57,7 +82,7 @@ CanvasEditor.attrPanels = function(){
       alert('Error loading preset.');
     }
   })
-
+  //從 **.json 檔案讀取
   function loadPresetsFromJSON(src) {
     $.getJSON(src, function(data){
       console.log('success');
@@ -171,10 +196,10 @@ $('.objectControl').on('click', 'button', function(){
   var className = $(this).attr('class');
   switch(className){
     case 'js-delete':
-      Artboard.removeObject();
+      CanvasEditor.Artboard.removeObject();
       break;
     case 'js-reset':
-      Artboard.reset();
+      CanvasEditor.Artboard.reset();
       break;
   }
 })
