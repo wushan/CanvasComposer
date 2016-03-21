@@ -3,6 +3,7 @@ var canvas,
 	grid,
 	threshold,
 	initRadius = 100;
+  
 //區域
 var CanvasEditor = {
 	init: function(data){

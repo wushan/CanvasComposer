@@ -21,14 +21,22 @@
 	&.active {
 		display: block;
 	}
+	#selectionOrder {
+		cursor: pointer;
+		.controlgroup {
+			margin: 0;
+		}
+	}
 	.mediaLibrary-inner {
 		margin: auto;
-		background-color: $white;
+		// background-color: $smokygray;
 		width: 80%;
 		height: 80%;
 		display: inline-block;
 		vertical-align: middle;
 		position: relative;
+		padding: 1em;
+		box-sizing: border-box;
 		@extend .clr;
 		.close-btn {
 			color: $white;
@@ -36,116 +44,126 @@
 			bottom: 100%;
 			right: 0;
 		}
+		.grid {
+			height: 100%;
+		}
 		.library-container {
-			@include span(9 of 12);
-			box-sizing: border-box;
-			padding: 1em;
+			height: 100%;
+			overflow: scroll;
+			// @include span(9 of 12);
+			// box-sizing: border-box;
+			// padding: 1em;
 		}
 		.settings-container {
-			@include span(3 of 12 last);
-			background-color: $smokygray;
+			// @include span(3 of 12 last);
+			// background-color: $smokygray;
 			.selection {
-				margin: 1em;
-				padding: 0;
-				list-style-position: inside;
-				// border: 6px solid $darkgray;
-				box-shadow: 0 0 0 5px rgba($gray,.5);
-				border-radius: 6px;
-				li {
-					background-color: $white;
-					box-sizing: border-box;
-					padding: .5em;
-					text-align: left;
-					display: block;
-					// box-shadow: inset 0 0px 3px -3px rgba($black,.33);
-					border-bottom: 1px solid $gray;
-					@extend .clr;
-					&:hover, &:active, &.active {
-						color: $white;
-						background-color: $blue;
-					}
-					&:first-child {
-						box-shadow: none;
-						border-radius: 6px 6px 0 0;
-					}
-					&:last-child {
-						border-radius: 0 0 6px 6px;
-					}
-					&:nth-child(2n) {
-						// background-color: $smokygray;
-					}
-					.order {
-						text-align: center;
-						width: 65px;
-						float: left;
-						.continued {
-							width: 100%;
-							font-size: .8em;
-						}
-					}
-					.description {
-						margin-left: 70px;
-						line-height: 30px;
-					}
-					.filename {
-						font-size: .8em;
-						overflow-x: scroll;
-						white-space: nowrap;
-						padding-left: .5em;
-						width: 100%;
-					}
+				height: 400px;
+				overflow: scroll;
+				.thumbnail {
+					height: 34px;
+					border: 1px solid $gray;
+					border-radius: 3px;
+					overflow: hidden;
+					width: 100%;
+					background-position: center;
+					background-size: cover;
 				}
+				// margin: 1em;
+				// padding: 0;
+				// list-style-position: inside;
+				// // border: 6px solid $darkgray;
+				// box-shadow: 0 0 0 5px rgba($gray,.5);
+				// border-radius: 6px;
+				// li {
+				// 	background-color: $white;
+				// 	box-sizing: border-box;
+				// 	padding: .5em;
+				// 	text-align: left;
+				// 	display: block;
+				// 	// box-shadow: inset 0 0px 3px -3px rgba($black,.33);
+				// 	border-bottom: 1px solid $gray;
+				// 	@extend .clr;
+				// 	&:hover, &:active, &.active {
+				// 		color: $white;
+				// 		background-color: $blue;
+				// 	}
+				// 	&:first-child {
+				// 		box-shadow: none;
+				// 		border-radius: 6px 6px 0 0;
+				// 	}
+				// 	&:last-child {
+				// 		border-radius: 0 0 6px 6px;
+				// 	}
+				// 	&:nth-child(2n) {
+				// 		// background-color: $smokygray;
+				// 	}
+				// 	.order {
+				// 		text-align: center;
+				// 		width: 65px;
+				// 		float: left;
+				// 		.continued {
+				// 			width: 100%;
+				// 			font-size: .8em;
+				// 		}
+				// 	}
+				// 	.description {
+				// 		margin-left: 70px;
+				// 		line-height: 30px;
+				// 	}
+				// 	.filename {
+				// 		font-size: .8em;
+				// 		overflow-x: scroll;
+				// 		white-space: nowrap;
+				// 		padding-left: .5em;
+				// 		width: 100%;
+				// 	}
+				// }
 			}
 		}
 	}
 	.resources {
-		margin: 0;
-		padding: 0;
-		list-style-type: none;
-		@extend .clr;
-		li {
-			@include gallery(2 of 12);
-			margin-bottom: .5em;
-			a {
-				display: block;
-				color: $darkgray;
-				@extend .transition;
-				font-size: .8em;
+		height: 400px;
+		overflow: scroll;
+		&.gallery {
+			margin: 0;
+		}
+		a {
+			display: block;
+			color: $darkgray;
+			@extend .transition;
+			font-size: .8em;
+			.thumbnail {
+				background-color: $smokygray;
+				box-sizing: border-box;
+				border: 3px solid $smokygray;
+				height: 60px;
+				overflow: hidden;
+				margin-bottom: .5em;
+			}
+			i {
+				// display: none;
+				font-size: 1.6em;
+			}
+			&:hover,&.active {
 				.thumbnail {
-					background-color: $black;
-					height: 100px;
-					overflow: hidden;
-					box-sizing: border-box;
-					border: 3px solid $smokygray;
-				}
-				i {
-					display: none;
-					font-size: 1.6em;
-				}
-				&:hover,&.active {
-					.thumbnail {
-						border-color: $blue;
-						position: relative;
-						img {
-							filter: brightness(50%);
-						}
-						i {
-							display: inline-block;
-							position: absolute;
-							left: .5em;
-							top: .5em;
-							z-index: 2;
-						}
+					border-color: $blue;
+					position: relative;
+					img {
+						filter: brightness(50%);
+					}
+					i {
+						display: inline-block;
+						position: absolute;
+						left: .5em;
+						top: .5em;
+						z-index: 2;
 					}
 				}
-				&.active {
-					position: relative;
-					color: $blue;
-				}
 			}
-			img {
-				height: 100%;
-				width: auto;
+			&.active {
+				position: relative;
+				color: $blue;
 			}
 		}
 	}

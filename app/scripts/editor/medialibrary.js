@@ -20,7 +20,8 @@ CanvasEditor.MediaLibrary = function(){
           src = obj.slides[i].src;
           continued = obj.slides[i].continued;
           filename = obj.slides[i].filename;
-          var $item = "<li data-resourceid="+ resourceid +" data-src=" + src + "><div class='order'><div class='continued'><input type='number' value='" + continued + "'></div></div><div class='description'><div class='filename'>" + filename + "</div></div></li>";
+          // var $item = "<li data-resourceid="+ resourceid +" data-src=" + src + "><div class='order'><div class='continued'><input type='number' value='" + continued + "'></div></div><div class='description'><div class='filename'>" + filename + "</div></div></li>";
+          var $item = "<li data-resourceid="+ resourceid +" data-src=" + src + "><div class='controlgroup'><label>持續時間：</label><div class='controls'><div class='row'><div class='grid g-9-12'><div class='order'><div class='continued'><input type='number' value='" + continued + "'></div></div></div><div class='grid g-3-12'><div class='thumbnail' style='background-image: url(" + src + ");' title='" + filename + "'></div></div></div></div></div></li>";
           selection.append($item);
           $('#mediaLibrary .resources li').each(function(){
             targetResource = $(this).children('a').attr('data-resourceid');
@@ -53,10 +54,10 @@ $('#mediaLibrary .resources').on('click','a',function(){
       targetid;
   var selection = $('.settings-container .selection');
   src = $(this).attr('data-src');
-  filename = $(this).find('.filename').html();
+  filename = $(this).attr('title');
   resourceid = $(this).attr('data-resourceid');
   continued = "3"; //Default
-  var $item = "<li data-resourceid="+ resourceid +" data-src=" + src + "><div class='order'><div class='continued'><input type='number' value='" + continued + "'></div></div><div class='description'><div class='filename'>" + filename + "</div></div></li>";
+  var $item = "<li data-resourceid="+ resourceid +" data-src=" + src + "><div class='controlgroup'><label>持續時間：</label><div class='controls'><div class='row'><div class='grid g-9-12'><div class='order'><div class='continued'><input type='number' value='" + continued + "'></div></div></div><div class='grid g-3-12'><div class='thumbnail' style='background-image: url(" + src + ");' title='" + filename + "'></div></div></div></div></div></li>";
   var anchor = $(this);
   if (anchor.hasClass('active')) {
     selection.children('li').each(function(){

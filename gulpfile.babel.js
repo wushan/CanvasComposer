@@ -71,7 +71,7 @@ gulp.task('views', () => {
 });
 
 gulp.task('html', ['views', 'styles', 'scripts'], () => {
-  return gulp.src(['app/*.html', '.tmp/*.html'])
+  return gulp.src(['app/*.html', '.tmp/*.html', '.tmp/**/*.html'])
     .pipe($.useref({searchPath: ['.tmp', 'app', '.']}))
     .pipe($.if('*.js', $.uglify()))
     .pipe($.if('*.css', $.cssnano()))
