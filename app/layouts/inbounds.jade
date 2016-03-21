@@ -1,0 +1,22 @@
+include mixin/_mixin
+#inboundlist
+	.inboundlist-inner
+		a.close-btn.js-close(href="javascript:;")
+			i.fa.fa-times.fa-lg
+		.widget-block
+			.widget-title 節目列表
+			.widget-content
+				table.rowed.table-hover.list-table.data-tables.normal
+					thead
+						tr.centered
+							th ID
+							th 節目名稱
+							th 選擇
+					tbody
+						each i in Array(15)
+							tr
+								td.centered 01
+								td
+									+lipsum(1,'sentences')
+								td.centered
+									a.btn.edit(href='javascript:;', data-rel='get-the-program-id-for-inbound-linking') 連結此節目

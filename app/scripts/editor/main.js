@@ -12,6 +12,7 @@ var CanvasEditor = {
 		$(document).on("files-loaded", function () {
 			if (data != undefined && typeof data ==='object') {
 				console.log('something there');
+        //讀取
 			} else {
 				console.log(data);
 			}
@@ -21,6 +22,7 @@ var CanvasEditor = {
 		    CanvasEditor.HotKeys();
 		    CanvasEditor.attrPanels();
 		    CanvasEditor.MediaLibrary();
+        CanvasEditor.inboundLinks();
 
 		})
 	},

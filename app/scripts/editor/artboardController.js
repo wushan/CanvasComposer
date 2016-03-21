@@ -85,10 +85,10 @@ CanvasEditor.Artboard = {
         var youtubeId = validateYouTubeUrl(objImage[0].src);
         if (youtubeId != false) {
           //If It is from Youtube
-          var thumbnail = getThumbnails(youtubeId, function(res){
-            console.log(res);
+          var thumbnail = getThumbnails(youtubeId, function(thumb){
+            console.log(thumb);
             //Add Single Image
-            CanvasEditor.Artboard.Multimedia.video(res, youtubeId);
+            CanvasEditor.Artboard.Multimedia.video(thumb, youtubeId);
           });
         } else {
           if (extension.match(/^(gif|png|jpg|jpeg|tiff|svg)$/)) {
@@ -196,7 +196,7 @@ CanvasEditor.Artboard.Multimedia = {
     video : function(source, youtubeId) {
       if ( youtubeId != undefined ) {
         console.log(source);
-        var media = new fabric.Video.fromURL(source, function(oImg) {
+        var media = new fabric.Video.fromURL(source, youtubeId , function(oImg) {
           oImg.set({
             'left': canvas.getWidth()/2-oImg.width/2,
             'top': canvas.getHeight()/2-oImg.height/2
@@ -208,7 +208,8 @@ CanvasEditor.Artboard.Multimedia = {
               return fabric.util.object.extend(toObject.call(this), {
                 link: this.link,
                 media: {
-                  video: this.video
+                  video: this.video,
+                  youtubeId: youtubeId
                 }
               });
             };

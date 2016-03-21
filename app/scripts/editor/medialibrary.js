@@ -33,7 +33,6 @@ CanvasEditor.MediaLibrary = function(){
 
         
         // console.log(obj.slides);
-
       } else {
         $('#mediaLibrary .selection').empty();
         $('#mediaLibrary .resources a').removeClass('active');

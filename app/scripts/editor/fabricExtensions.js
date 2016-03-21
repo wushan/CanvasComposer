@@ -7,28 +7,35 @@ fabric.Video = fabric.util.createClass(fabric.Image, {
             options || (options = {});
             this.callSuper('initialize', options);
             console.log('inittt');
+            if (typeof element === 'object') {
+              console.log('this is an object');
+              this._initElement(element, options);
+              this._initConfig(options);
+            } else {
+              var videoEl = document.createElement("video");
+              videoEl.loop = true;
+              videoEl.controls = true;
+              console.log(videoEl);
+              console.log(element);
+              videoEl.innerHTML = '<source src="'+ element +'">';
+              console.log(videoEl);
+              this._initElement(videoEl, options);
+              this._initConfig(options);
 
-            var videoEl = document.createElement("video");
-            videoEl.loop = true;
-            videoEl.controls = true;
-            console.log(videoEl);
-            console.log(element);
-            videoEl.innerHTML = '<source src="'+ element +'">';
-
-            this._initElement(videoEl, options);
-            this._initConfig(options);
-
-            //Auto Play Video
-            videoEl.play();
-            fabric.util.requestAnimFrame(function render() {
-              canvas.renderAll();
-              fabric.util.requestAnimFrame(render);
-            });
+              //Auto Play Video
+              videoEl.play();
+              fabric.util.requestAnimFrame(function render() {
+                canvas.renderAll();
+                fabric.util.requestAnimFrame(render);
+              });
+            }
+            
         },
   toObject: function () {
         return fabric.util.object.extend(this.callSuper('toObject'), {
             media: {
-              video: this.media.video
+              video: this.media.video,
+              youtubeId: this.media.youtubeId
             },
             link: this.link
         });
@@ -39,9 +46,14 @@ fabric.Video = fabric.util.createClass(fabric.Image, {
 });
 
 //Video
-fabric.Video.fromURL = function(url, callback, imgOptions) {
+fabric.Video.fromURL = function(url, youtubeId, callback, imgOptions) {
     fabric.util.loadImage(url, function(img) {
-      callback && callback(new fabric.Video(img, imgOptions));
+      callback && callback(new fabric.Video(img,{
+        media: {
+          video: url,
+          youtubeId: youtubeId
+        }
+      }, imgOptions));
     }, null, imgOptions && imgOptions.crossOrigin);
   };
 
@@ -55,7 +67,8 @@ fabric.Video.fromObject = function(objects, callback) {
     top: objects.top,
     left: objects.left,
     media: {
-      video: objects.media.video
+      video: objects.media.video,
+      youtubeId: objects.media.youtubeId
     }
   });
   //Bind

@@ -1,0 +1,44 @@
+#inboundlist {
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	margin: auto;
+	background-color: rgba($black, .8);
+	display: none;
+	word-break: break-all;
+	text-align: center;
+	z-index: 3;
+	&:before {
+		content: '';
+		height: 100%;
+		width: 0;
+		display: inline-block;
+		vertical-align: middle;
+	}
+	&.active {
+		display: block;
+	}
+	.inboundlist-inner {
+		margin: auto;
+		width: 80%;
+		height: 80%;
+		display: inline-block;
+		vertical-align: middle;
+		position: relative;
+		padding: 1em;
+		box-sizing: border-box;
+		@extend .clr;
+		.widget-block {
+			height: 100%;
+			overflow: scroll;
+		}
+		.close-btn {
+			color: $white;
+			position: absolute;
+			bottom: 100%;
+			right: 0;
+		}
+	}
+}
