@@ -317,7 +317,7 @@ function findObj(id) {
 
 //Create Fabric Slider Class
 fabric.Clock = fabric.util.createClass(fabric.Text, {
-  type: 'slider',
+  type: 'clock',
   initialize: function (options) {
             options || (options = {});
             this.callSuper('initialize', options);

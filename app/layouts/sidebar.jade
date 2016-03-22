@@ -15,6 +15,30 @@
         li
           a.full.btn.basic.js-add-clock(href="javascript:;" title="新增時鐘", data-action='addClock')
             i.fa.fa-clock-o.fa-lg
+        li
+          a.full.btn.basic(href="javascript:;" title="新增天氣", data-action='addWeather')
+            i.fa.fa-sun-o.fa-lg
+          ul
+            li
+              .widget-block
+                .widget-content
+                  .controlgroup
+                    label 分類：
+                    .controls
+                      .select-wrapper
+                        select#weatherCate
+                          option 類別
+                  .controlgroup
+                    label 城市：
+                    .controls
+                      .select-wrapper
+                        select#weatherCity
+                          option(value='2306179') 台北市
+                          option(value='2306181') 台中市
+                          option(value='2306180') 高雄市
+                  .call-action
+                    a.btn.basic.full(href='javascript:;') 置入
+
 
       ul.tools.overall
         li

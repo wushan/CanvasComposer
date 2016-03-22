@@ -13,6 +13,14 @@ CanvasEditor.toolBar = function(){
     addClock: function(event) {
                 CanvasEditor.Artboard.Multimedia.clock();
               },
+    addWeather: function(event) {
+                //Trigger Submenu
+                $(this).siblings('ul').addClass('active');
+                $(this).siblings('ul').on('click','a', function(){
+                  var location = $('#weatherCity option:selected').val();
+                  CanvasEditor.Artboard.Multimedia.weather(location);
+                });
+              },
     lockAll: function(event) {
                 //
               },

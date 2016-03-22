@@ -393,14 +393,7 @@ CanvasEditor.Artboard.Multimedia = {
       //Add Clock Object
       Date.prototype.timeNow = function(){ return ((this.getHours() < 10)?"0":"") + ((this.getHours()>12)?(this.getHours()-12):this.getHours()) +":"+ ((this.getMinutes() < 10)?"0":"") + this.getMinutes() +":"+ ((this.getSeconds() < 10)?"0":"") + this.getSeconds() + ((this.getHours()>12)?('PM'):'AM'); };
 
-      var text = new fabric.Text(new Date().timeNow(),{
-        //options
-        left: 200,
-        top: 200,
-        lockScalingX: true,
-        lockScalingY: true,
-        fontSize: '36'
-      })
+      var text = new fabric.Clock(new Date().timeNow())
       
       text.toObject = (function(toObject) {
         return function() {
@@ -409,13 +402,71 @@ CanvasEditor.Artboard.Multimedia = {
           });
         };
       })(text.toObject);
+
       canvas.add(text);
       //Bind
       bindEvents(text);
       //Programmatically Select Newly Added Object
       canvas.setActiveObject(text);
       //Refresh log
+      // setTimeout(function(){bgRelacer(i,res,id)}, leastTime);
+      setInterval(function(){text.setText(new Date().timeNow());canvas.renderAll();}, 1000);
 
+    },
+    weather: function(location) {
+      Weather.translate(location, function(res){
+        var conditionText = res.conditionText;
+        var conditionImg = res.conditionImg;
+        var temp = res.temp;
+        var city = res.city;
+        var country = res.country;
+        console.log(conditionText);
+        
+        var fImg = new fabric.Image.fromURL( 'images/components/conditions/svg/'+conditionImg, function(oImg) {
+          oImg.set({
+            'left': 70,
+            'top': 80
+
+          });
+          oImg.scaleToWidth(80);
+          var fText = new fabric.Text(conditionText, {
+            left: 0,
+            top: 100,
+            fontSize: '36',
+            fontFamily: 'Noto Sans'
+          });
+          var fTemp = new fabric.Text(temp, {
+            left: 0,
+            top: 150,
+            fontSize: '60',
+            fontFamily: 'Open Sans',
+            fontWeight: 300
+          });
+          var fLocation = new fabric.Text(city + ',' + country, {
+            left: 0,
+            top: 220,
+            fontSize: '18',
+            fontFamily: 'Open Sans'
+          });
+          // fLocation.scaleToWidth(fTemp.getWidth());
+          // console.log(fLocation.getWidth());
+          // console.log(fTemp.getWidth());
+          // fText.scaleToWidth(fTemp.getWidth()/fText.getWidth());
+          fLocation.scaleToWidth(fTemp.getWidth()/fLocation.getWidth());
+          // console.log(fLocation.getWidth());
+
+          var weather = new fabric.Group([ fText,fTemp,fLocation,oImg], {
+            left: 150,
+            top: 100
+          });
+          canvas.add(weather);
+          //Bind
+          bindEvents(weather);
+          //Programmatically Select Newly Added Object
+          canvas.setActiveObject(weather);
+        });
+        
+      });
     },
     iframe : function() {
       //Get Screen Shot Only

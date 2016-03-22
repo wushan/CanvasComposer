@@ -139,7 +139,7 @@ ul {
 		@extend .transition;
 		li {
 			margin-bottom: .5em;
-			
+			position: relative;
 		}
 		&.overall {
 			border-top: 1px solid $gray;
@@ -150,6 +150,39 @@ ul {
 					&.js-save {
 						background-color: $red;
 					}
+				}
+			}
+		}
+		ul {
+			position: absolute;
+			left: calc( 100% + 25px );
+			top: 0;
+			margin: 0;
+			padding: 0;
+			width: 200px;
+			list-style-type: none;
+			display: none;
+			&.active {
+				display: block;
+			}
+			&:after {
+				content: '';
+				width: 0;
+				height: 0;
+				border-style: solid;
+				border-width: 5px 6px 5px 0;
+				border-color: transparent $white transparent transparent;
+				display: block;
+				position: absolute;
+				top: 15px;
+				right: 100%;
+			}
+			.controlgroup {
+				label {
+					width: 50px;
+				}
+				.controls {
+					margin-left: 55px;
 				}
 			}
 		}
