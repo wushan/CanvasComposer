@@ -11,7 +11,7 @@ CanvasEditor.toolBar = function(){
                   CanvasEditor.Artboard.addText();
                 },
     addClock: function(event) {
-                //
+                CanvasEditor.Artboard.Multimedia.clock();
               },
     lockAll: function(event) {
                 //

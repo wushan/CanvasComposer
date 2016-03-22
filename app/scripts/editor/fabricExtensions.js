@@ -313,3 +313,22 @@ function findObj(id) {
 }
 // findObj();
 
+
+
+//Create Fabric Slider Class
+fabric.Clock = fabric.util.createClass(fabric.Text, {
+  type: 'slider',
+  initialize: function (options) {
+            options || (options = {});
+            this.callSuper('initialize', options);
+            console.log('inittt');
+        },
+  toObject: function () {
+        return fabric.util.object.extend(this.callSuper('toObject'), {
+            city: this.city
+        });
+    },
+  _render: function (ctx) {
+            this.callSuper('_render', ctx);
+        }
+});

@@ -391,6 +391,31 @@ CanvasEditor.Artboard.Multimedia = {
     },
     clock : function() {
       //Add Clock Object
+      Date.prototype.timeNow = function(){ return ((this.getHours() < 10)?"0":"") + ((this.getHours()>12)?(this.getHours()-12):this.getHours()) +":"+ ((this.getMinutes() < 10)?"0":"") + this.getMinutes() +":"+ ((this.getSeconds() < 10)?"0":"") + this.getSeconds() + ((this.getHours()>12)?('PM'):'AM'); };
+
+      var text = new fabric.Text(new Date().timeNow(),{
+        //options
+        left: 200,
+        top: 200,
+        lockScalingX: true,
+        lockScalingY: true,
+        fontSize: '36'
+      })
+      
+      text.toObject = (function(toObject) {
+        return function() {
+          return fabric.util.object.extend(toObject.call(this), {
+            link: this.link
+          });
+        };
+      })(text.toObject);
+      canvas.add(text);
+      //Bind
+      bindEvents(text);
+      //Programmatically Select Newly Added Object
+      canvas.setActiveObject(text);
+      //Refresh log
+
     },
     iframe : function() {
       //Get Screen Shot Only
