@@ -15,11 +15,8 @@ CanvasEditor.toolBar = function(){
               },
     addWeather: function(event) {
                 //Trigger Submenu
-                $(this).siblings('ul').addClass('active');
-                $(this).siblings('ul').on('click','a', function(){
-                  var location = $('#weatherCity option:selected').val();
-                  CanvasEditor.Artboard.Multimedia.weather(location);
-                });
+                var sub = $(this).siblings('ul');
+                sub.toggleClass('active');
               },
     lockAll: function(event) {
                 //
@@ -28,12 +25,21 @@ CanvasEditor.toolBar = function(){
                 CanvasEditor.Artboard.dispose();
               },
     artboardSettings: function(event) {
-                $('#canvassetting').fadeTo('fast',0.9);
+                $('#canvassetting').fadeIn();
+                $(document).mouseup(function (e)
+                  {
+                      var container = $(".canvasconfig-wrapper");
+
+                      if (!container.is(e.target) // if the target of the click isn't the container...
+                          && container.has(e.target).length === 0) // ... nor a descendant of the container
+                      {
+                          container.parent().hide();
+                      }
+                  });
               },
     saveState: function(event) {
-                logObj();
+                CanvasEditor.save();
               } 
-
   };
 
   $("a[data-action]").on("click", function (event) {
@@ -46,6 +52,14 @@ CanvasEditor.toolBar = function(){
     if( typeof actions[action] === "function" ) {
       actions[action].call(this, event);
     }
+  });
+
+  $("a[data-action=addWeather]").siblings('ul').on('click','a', function(){
+    var location = $('#weatherCity option:selected').val();
+    console.log(location);
+    CanvasEditor.Artboard.Multimedia.weather(location);
+    //Deactive myself
+    $(this).parents('ul').removeClass('active');
   });
 
 };

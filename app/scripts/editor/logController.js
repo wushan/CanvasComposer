@@ -1,7 +1,5 @@
 var instantMeta = {
   log: function(obj){
-    console.log(obj.toObject());
-    console.log(obj);
     obj = obj.toObject();
     var width,
         height,
@@ -93,14 +91,4 @@ var instantMeta = {
     $('.attributes-wrapper .mediaPreview').empty();
     console.log('clean');
   }
-}
-// function instantMeta(obj) {
-  
-// }
-
-function logObj() {
-  $('#console .shapeobj .content').html(JSON.stringify(canvas.toJSON()));
-  $('#console .canvasobj .content').html(JSON.stringify(canvas));
-
-  // fabric.log(canvas.toJSON());
 }

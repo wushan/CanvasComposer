@@ -24,171 +24,7 @@ CanvasEditor.attrPanels = function(){
   document.body.addEventListener('dragover',drag_over,false); 
   document.body.addEventListener('drop',drop,false);
 
-  //Canvas Panel
-  $("#canvasWidth").on("change paste keyup", function() {
-     //Refresh Canvas Size
-     canvas.setWidth($(this).val());
-     canvas.renderAll();
-     //Fit Artboard
-     CanvasEditor.initCanvas.fit();
-     //Set Canvas tip tags
-    $(".sizeTag .tag.width span").html($(this).val());
-  });
-
-  $("#canvasHeight").on("change paste keyup", function() {
-     //Refresh Canvas Size
-     canvas.setHeight($(this).val());
-     canvas.renderAll();
-     //Fit Artboard
-     CanvasEditor.initCanvas.fit();
-     //Set Canvas tip tags
-    $(".sizeTag .tag.height span").html($(this).val());
-  });
-
-  $("#canvas-select").change(function(){
-    //Refresh Canvas Size
-    var presetWidth = $('#canvas-select option:selected').attr('data-width'),
-        presetHeight = $('#canvas-select option:selected').attr('data-height');
-    $("#widthValue").val(presetWidth);
-    $("#heightValue").val(presetHeight);
-    canvas.setWidth(presetWidth);
-    canvas.setHeight(presetHeight);
-    canvas.renderAll();
-    //Fit Artboard
-    CanvasEditor.initCanvas.fit();
-    //Set Canvas tip tags
-    $(".sizeTag .tag.width span").html(presetWidth);
-    $(".sizeTag .tag.height span").html(presetHeight);
-  });
-
-  $(".layoutpresets").on('click', 'a', function(){
-    if ($(this).attr('data-src') != '' || $(this).attr('data-src') != undefined) {
-      $(this).parent().siblings().children('a').removeClass('active');
-      $(this).addClass('active');
-      //Check if there is already an object exist
-      if (canvas._objects.length > 0) {
-        var confirmation = confirm("讀取預設版型會移除目前畫面中的所有物件，是否確定讀取？");
-        var confirmationBtn;
-        if (confirmation == true) {
-            CanvasEditor.Artboard.dispose();
-            loadPresetsFromJSON($(this).attr('data-src'));
-        } else {
-            return;
-        }
-      } else {
-        loadPresetsFromJSON($(this).attr('data-src'));
-      }
-    } else {
-      alert('Error loading preset.');
-    }
-  })
-  //從 **.json 檔案讀取
-  function loadPresetsFromJSON(src) {
-    $.getJSON(src, function(data){
-      console.log('success');
-    }).done(function(data){
-      console.log('done');
-      console.log(data);
-      canvas.loadFromJSON(data, canvas.renderAll.bind(canvas),function(o, object) {
-        console.log(o);
-        console.log(object);
-        canvas.renderAll();
-        if (object.type === 'slider') {
-          var i=0;
-          var leastTime;
-          var patternSourceCanvas = object.patternSourceCanvas;
-          var pattern = object.pattern;
-          leastTime = object.slides[0].continued*1000;
-          var id = object.id;
-          setTimeout(function(){bgRelacer(i,object,id)}, leastTime);
-          function bgRelacer(i, res, id) {
-            i++;
-            if (i === res.slides.length ) {
-              i=0;
-            }
-            //Next
-            var extension = res.slides[i].src.split('.').pop();
-            if (extension.match(/^(gif|png|jpg|jpeg|tiff|svg)$/)) {
-              new fabric.Image.fromURL(res.slides[i].src, function(img){
-                img.setHeight(patternSourceCanvas.height);
-                img.setWidth(patternSourceCanvas.width);
-                for (var x=0; x<patternSourceCanvas._objects.length; x++) {
-                  // obj = canvas._objects[i];
-                  if (patternSourceCanvas._objects[x]._element !== undefined && patternSourceCanvas._objects[x]._element.localName === "video") {
-                    patternSourceCanvas._objects[x].getElement().pause();
-                  } else {
-                    console.log( 'error' );
-                  }
-                }
-                patternSourceCanvas.clear();
-                patternSourceCanvas.setBackgroundImage(img);
-                patternSourceCanvas.renderAll();
-                // patternSourceCanvas.renderAll();
-                pattern = new fabric.Pattern({
-                          source: patternSourceCanvas.getElement(),
-                          repeat: 'no-repeat'
-                        });
-
-                res.setFill(pattern);
-                canvas.renderAll();
-              })
-
-              leastTime = res.slides[i].continued*1000;
-              setTimeout(function(){bgRelacer(i,res,id)}, leastTime);
-            } else if (extension.match(/^(mp4|avi|ogg|ogv|webm)$/)) {
-              //Add Single Video
-              var vw, vh;
-              var video = new fabric.Video(res.slides[i].src, {
-                media: {
-                  video: res.slides[i].src
-                }
-              });
-              var videoEl = video.getElement();
-              for (var x=0; x<patternSourceCanvas._objects.length; x++) {
-                // obj = canvas._objects[i];
-                if (patternSourceCanvas._objects[x]._element !== undefined && patternSourceCanvas._objects[x]._element.localName === "video") {
-                  patternSourceCanvas._objects[x].getElement().pause();
-                } else {
-                  console.log( 'error' );
-                }
-              }
-              patternSourceCanvas.clear();
-              patternSourceCanvas.add(video);
-              console.log(patternSourceCanvas.getContext());
-              patternSourceCanvas.renderAll();
-              // patternSourceCanvas.renderAll();
-              
-              
-              console.log(videoEl);
-              console.log(video);
-              videoEl.onloadeddata = function() {
-                vw = this.videoWidth;
-                vh = this.videoHeight;
-                video.setWidth(patternSourceCanvas.width);
-                video.setHeight(patternSourceCanvas.height);
-                video.center();
-                video.setCoords();
-                canvas.renderAll();
-              };
-              fabric.util.requestAnimFrame(function render() {
-                patternSourceCanvas.renderAll();
-                fabric.util.requestAnimFrame(render);
-              });
-
-              leastTime = res.slides[i].continued*1000;
-              setTimeout(function(){bgRelacer(i,res,id)}, leastTime);
-            } else {
-              console.log('不支援此檔案格式，請重試');
-            }
-            
-          }
-        }
-        bindEvents(object);
-      });
-    }).fail(function() {
-      console.log( "error" );
-    })
-  }
+  
 
 
 //Top Panel
@@ -219,7 +55,6 @@ $('.objectSize').on("change", function() {
   obj.setScaleY(objectScaleY);
   obj.setCoords();
   canvas.renderAll();
-  logObj();
 });
 
 //Scale
@@ -256,9 +91,7 @@ $('#objectColor').spectrum({
       } else {
         obj.setFill(color);
       }
-      // obj.backgroundColor(color);
       canvas.renderAll();
-      logObj();
       $('#objectColor').spectrum("hide");
     },
     palette: [
@@ -310,7 +143,6 @@ $('#objectTextColor').spectrum({
       }
       // obj.backgroundColor(color);
       canvas.renderAll();
-      logObj();
       $('#objectTextColor').spectrum("hide");
     },
     palette: [
@@ -362,6 +194,5 @@ $('#linkValue').on('keydown keyup change', function(){
   var obj = canvas.getActiveObject();
   var val = $(this).val();
   obj.set('link', val);
-  logObj();
 });
 }

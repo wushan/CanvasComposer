@@ -1,13 +1,15 @@
 extends layouts/default
 block pagetitle
-  title Canvas Editor
+	title Canvas Editor
 block content
-  #main
-    #canvaseditor
-  
+	#main
+		#canvaseditor
+
 block pagescripts
-  script.
-    CanvasEditor.init({
-    //可傳入json 物件
-      'xx': 'xx'
-    });
+	script.
+		var data = {};
+		CanvasEditor.init('new',{
+			//可傳入json 物件
+			'width': '300',
+			'height': '300'
+		});

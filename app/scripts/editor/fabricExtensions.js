@@ -76,7 +76,6 @@ fabric.Video.fromObject = function(objects, callback) {
   //Programmatically Select Newly Added Object
   canvas.setActiveObject(v);
   //Refresh log
-  logObj();
   return v;
 };
 
@@ -185,7 +184,7 @@ fabric.Slider.fromArray = function(elements, callback, options) {
   }
 }
 
-fabric.Slider.fromObject = function(objects, callback) {
+fabric.Slider.fromObject = function(objects, callback, options) {
   //Define if the first Object is Video
   var firstObj = objects.slides[0].src;
   var extension = firstObj.split('.').pop();
@@ -304,28 +303,20 @@ function findObj(id) {
 			console.log(canvas._objects[i]);
 		}
 	}
-	// var i=0;
-	// while (i<canvas._objects.length && canvas._objects[i].id === id) {
-	// 	console.log(canvas._objects[i]);
-	// 	i++;
-	// }
-	// console.log(canvas);
 }
-// findObj();
-
 
 
 //Create Fabric Slider Class
 fabric.Clock = fabric.util.createClass(fabric.Text, {
   type: 'clock',
-  initialize: function (options) {
+  initialize: function (text, options) {
             options || (options = {});
-            this.callSuper('initialize', options);
+            this.callSuper('initialize', text, options);
             console.log('inittt');
         },
   toObject: function () {
         return fabric.util.object.extend(this.callSuper('toObject'), {
-            city: this.city
+            
         });
     },
   _render: function (ctx) {

@@ -173,6 +173,26 @@ CanvasEditor.Artboard.Multimedia = {
           'left': canvas.getWidth()/2-oImg.width/2,
           'top': canvas.getHeight()/2-oImg.height/2
         });
+        //Scale Superlarge Elements to fit the Current Canvas Size
+        //Do Some Math
+        var ratioW = oImg.getWidth()/canvas.getWidth();
+        var ratioH = oImg.getHeight()/canvas.getHeight();
+        if (ratioW >= ratioH) {
+          if (ratioW > 1) {
+            oImg.scaleToWidth(canvas.getWidth());   
+          } else {
+            return;
+          }
+        } else {
+          if (ratioH > 1) {
+            oImg.scaleToHeight(canvas.getHeight());
+          } else {
+            return;
+          }
+        }
+        // if (oImg.getWidth()/canvas.getWidth()) {
+        //   oImg.scaleToWidth(canvas.getWidth());
+        // }
         canvas.add(oImg);
         oImg.center();
         oImg.setCoords();
@@ -393,24 +413,28 @@ CanvasEditor.Artboard.Multimedia = {
       //Add Clock Object
       Date.prototype.timeNow = function(){ return ((this.getHours() < 10)?"0":"") + ((this.getHours()>12)?(this.getHours()-12):this.getHours()) +":"+ ((this.getMinutes() < 10)?"0":"") + this.getMinutes() +":"+ ((this.getSeconds() < 10)?"0":"") + this.getSeconds() + ((this.getHours()>12)?('PM'):'AM'); };
 
-      var text = new fabric.Clock(new Date().timeNow())
+      var clock = new fabric.Clock(new Date().timeNow(),{
+        fontSize: '36',
+        fontFamily: 'open-sans',
+        fontWeight: 400
+      });
       
-      text.toObject = (function(toObject) {
+      clock.toObject = (function(toObject) {
         return function() {
           return fabric.util.object.extend(toObject.call(this), {
             link: this.link
           });
         };
-      })(text.toObject);
+      })(clock.toObject);
 
-      canvas.add(text);
+      canvas.add(clock);
       //Bind
-      bindEvents(text);
+      bindEvents(clock);
       //Programmatically Select Newly Added Object
-      canvas.setActiveObject(text);
+      canvas.setActiveObject(clock);
       //Refresh log
       // setTimeout(function(){bgRelacer(i,res,id)}, leastTime);
-      setInterval(function(){text.setText(new Date().timeNow());canvas.renderAll();}, 1000);
+      setInterval(function(){clock.setText(new Date().timeNow());canvas.renderAll();}, 1000);
 
     },
     weather: function(location) {
@@ -423,36 +447,37 @@ CanvasEditor.Artboard.Multimedia = {
         console.log(conditionText);
         
         var fImg = new fabric.Image.fromURL( 'images/components/conditions/svg/'+conditionImg, function(oImg) {
+          oImg.scaleToWidth(60);
           oImg.set({
-            'left': 70,
-            'top': 80
+            'left': 0,
+            'top': 30
 
           });
-          oImg.scaleToWidth(80);
+          
           var fText = new fabric.Text(conditionText, {
-            left: 0,
-            top: 100,
-            fontSize: '36',
-            fontFamily: 'Noto Sans'
+            left: 70,
+            top: 50,
+            fontSize: '18',
+            fontFamily: 'open-sans'
           });
           var fTemp = new fabric.Text(temp, {
             left: 0,
-            top: 150,
+            top: 90,
             fontSize: '60',
-            fontFamily: 'Open Sans',
+            fontFamily: 'open-sans',
             fontWeight: 300
           });
-          var fLocation = new fabric.Text(city + ',' + country, {
+          var fLocation = new fabric.Text(city, {
             left: 0,
-            top: 220,
+            top: 0,
             fontSize: '18',
-            fontFamily: 'Open Sans'
+            fontFamily: 'open-sans'
           });
           // fLocation.scaleToWidth(fTemp.getWidth());
           // console.log(fLocation.getWidth());
           // console.log(fTemp.getWidth());
           // fText.scaleToWidth(fTemp.getWidth()/fText.getWidth());
-          fLocation.scaleToWidth(fTemp.getWidth()/fLocation.getWidth());
+          // fLocation.scaleToWidth(fTemp.getWidth()/fLocation.getWidth());
           // console.log(fLocation.getWidth());
 
           var weather = new fabric.Group([ fText,fTemp,fLocation,oImg], {
@@ -460,8 +485,16 @@ CanvasEditor.Artboard.Multimedia = {
             top: 100
           });
           canvas.add(weather);
+          // canvas.add(fText);
+          // canvas.add(fTemp);
+          // canvas.add(fLocation);
+          // canvas.add(oImg);
           //Bind
           bindEvents(weather);
+          // bindEvents(fText);
+          // bindEvents(fTemp);
+          // bindEvents(fLocation);
+          // bindEvents(oImg);
           //Programmatically Select Newly Added Object
           canvas.setActiveObject(weather);
         });

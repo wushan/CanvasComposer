@@ -6,7 +6,7 @@ var Weather = {
 		$.getJSON(url, function(json) {
 		  var conditionText = conditionTextDic[json.query.results.channel.item.condition.code.toString()];
 		  var conditionImg = conditionImgDic[json.query.results.channel.item.condition.code.toString()];
-		  var temp = Math.round((json.query.results.channel.item.condition.temp - 32)*5/9) + "℃";
+		  var temp = Math.round((json.query.results.channel.item.condition.temp - 32)*5/9) + "°C";
 		  var city = json.query.results.channel.location.city;
 		  var country = json.query.results.channel.location.country;
 			callback && callback({conditionText, conditionImg, temp, city, country});
@@ -93,14 +93,14 @@ var Weather = {
 			"24":"有風",
 			"25":"冷",
 			"26":"多雲",
-			"27":"晴間多雲（夜）",
-			"28":"晴間多雲（日）",
-			"29":"晴間多雲（夜）",
-			"30":"晴間多雲（日）",
+			"27":"晴間多雲",
+			"28":"晴間多雲",
+			"29":"晴間多雲",
+			"30":"晴間多雲",
 			"31":"清晰的（夜）",
 			"32":"晴朗",
-			"33":"晴朗（夜）",
-			"34":"晴朗（日）",
+			"33":"晴朗",
+			"34":"晴朗",
 			"35":"雨和冰雹",
 			"36":"炎熱",
 			"37":"雷陣雨",

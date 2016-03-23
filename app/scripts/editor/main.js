@@ -6,28 +6,31 @@ var canvas,
   
 //區域
 var CanvasEditor = {
-	init: function(data){
+	init: function(data, options){
 		console.log(this);
 		this.loadView();
 		$(document).on("files-loaded", function () {
-			if (data != undefined && typeof data ==='object') {
-				console.log('something there');
+			if (typeof data === 'object') {
+        CanvasEditor.initCanvas.initWithData(data, options);
         //讀取
-			} else {
-				console.log(data);
+			} else if (data === 'new'){
+				CanvasEditor.initCanvas.init();
 			}
-		    CanvasEditor.initCanvas.init();
 		    CanvasEditor.toolBar();
 		    CanvasEditor.Contextmenu();
 		    CanvasEditor.HotKeys();
 		    CanvasEditor.attrPanels();
+        CanvasEditor.canvasPanels();
 		    CanvasEditor.MediaLibrary();
         CanvasEditor.inboundLinks();
+        // CanvasEditor.Load();
 
 		})
 	},
 	save: function(){
 		//整合logController.js
+    var currentCanvas = JSON.stringify(canvas);
+    console.log(currentCanvas);
 	}
 };
 

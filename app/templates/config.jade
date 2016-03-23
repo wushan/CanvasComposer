@@ -1,0 +1,114 @@
+#config(style='display: none;', draggable="true" )
+  .widget-block
+    .widget-title 屬性
+    .widget-content
+      .panels
+        .attributes-wrapper.panel
+          .attributes-inner      
+            .block.attr.type
+              .controlgroup
+                label Type
+                .controls
+                  input(type='text' readonly)
+            .block.attr.width
+              .controlgroup
+                label Width
+                .controls
+                  input.objectSize#objectWidth(type='number')
+            .block.attr.height
+              .controlgroup
+                label Height
+                .controls
+                  input.objectSize#objectHeight(type='number')
+            .block.attr.radius
+              .controlgroup
+                label Radius
+                .controls
+                  input#objectRadius(type='text')
+            
+            .block.attr.top
+              .controlgroup
+                label Top
+                .controls
+                  input#objectTop(type='text')
+            .block.attr.left
+              .controlgroup
+                label Left
+                .controls
+                  input#objectLeft(type='text')
+            .block.attr.angle
+              .controlgroup
+                label Angle
+                .controls
+                  input#objectAngle(type='text')
+            .block.attr.scalex
+              .controlgroup
+                label ScaleX
+                .controls
+                  input#objectScaleX(type='text')
+            .block.attr.scaley
+              .controlgroup
+                label ScaleY
+                .controls
+                  input#objectScaleY(type='text')
+            .block.attr.color
+              .controlgroup
+                label BGColor
+                .controls
+                  input#objectColor(type='text')
+            
+          .row
+            .block.attr.text.text-attr
+              .controlgroup
+                label Text
+                .controls
+                  input#objectInput(type='text')
+            .block.attr.fontfamily.text-attr
+              .controlgroup
+                label Fonts
+                .controls
+                  .select-wrapper
+                    select#objectFontFamily
+                      option(value='Arial') Arial
+                      option(value='Helvetica') Helvetica
+                      option(value='Roboto') Roboto
+                      option(value='Times New Roman') Times New Roman
+                      option(value='Times') Times
+          .attributes-inner-text
+            .block.attr.color.text-attr
+              .controlgroup
+                label Text Color
+                .controls
+                  input#objectTextColor(type='text')
+            .block.attr.fontsize.text-attr
+              .controlgroup
+                label Font-size
+                .controls
+                  select#objectFontSize
+                    option(value='14') 14
+                    option(value='18') 18
+                    option(value='24') 24
+                    option(value='30') 30
+                    option(value='36') 36
+                    option(value='48') 48
+                    option(value='56') 56
+                    option(value='64') 64
+                    option(value='72') 72
+                    option(value='144') 144
+          .row
+            .block.attr.media
+              .controlgroup
+                label Media
+                .controls.rich-control
+                  a.js-library(href="javascript:;")
+                    i.fa.fa-cloud-upload.fa-2x
+                  input#mediaValue(type='text' readonly)
+                .mediaPreview
+          .row
+            .block.attr.link
+              .controlgroup
+                label Links
+                .controls.rich-control
+                  input#linkValue(type='text')
+                  a.js-inbounds(href="javascript:;")
+                    i.fa.fa-link.fa-2x
