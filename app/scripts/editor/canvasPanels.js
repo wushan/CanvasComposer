@@ -1,11 +1,11 @@
-CanvasEditor.canvasPanels = function(){
+CanvasComposer.canvasPanels = function(){
   //Canvas Panel
   $("#canvasWidth").on("change paste keyup", function() {
      //Refresh Canvas Size
      canvas.setWidth($(this).val());
      canvas.renderAll();
      //Fit Artboard
-     CanvasEditor.initCanvas.fit();
+     CanvasComposer.initCanvas.fit();
      //Set Canvas tip tags
     $(".sizeTag .tag.width span").html($(this).val());
   });
@@ -15,7 +15,7 @@ CanvasEditor.canvasPanels = function(){
      canvas.setHeight($(this).val());
      canvas.renderAll();
      //Fit Artboard
-     CanvasEditor.initCanvas.fit();
+     CanvasComposer.initCanvas.fit();
      //Set Canvas tip tags
     $(".sizeTag .tag.height span").html($(this).val());
   });
@@ -30,7 +30,7 @@ CanvasEditor.canvasPanels = function(){
     canvas.setHeight(presetHeight);
     canvas.renderAll();
     //Fit Artboard
-    CanvasEditor.initCanvas.fit();
+    CanvasComposer.initCanvas.fit();
     //Set Canvas tip tags
     $(".sizeTag .tag.width span").html(presetWidth);
     $(".sizeTag .tag.height span").html(presetHeight);
@@ -45,8 +45,8 @@ CanvasEditor.canvasPanels = function(){
         var confirmation = confirm("讀取預設版型會移除目前畫面中的所有物件，是否確定讀取？");
         var confirmationBtn;
         if (confirmation == true) {
-            CanvasEditor.Artboard.dispose();
-            CanvasEditor.Load.FromPresets($(this).attr('data-src'), function(res){
+            CanvasComposer.Artboard.dispose();
+            CanvasComposer.Load.FromPresets($(this).attr('data-src'), function(res){
               console.log(res);
               $('#canvassetting').fadeOut('fast');
             });
@@ -54,7 +54,7 @@ CanvasEditor.canvasPanels = function(){
             return;
         }
       } else {
-        CanvasEditor.Load.FromPresets($(this).attr('data-src'), function(res){
+        CanvasComposer.Load.FromPresets($(this).attr('data-src'), function(res){
           console.log(res);
           $('#canvassetting').fadeOut('fast');
         });

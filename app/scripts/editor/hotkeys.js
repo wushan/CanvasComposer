@@ -1,4 +1,4 @@
-CanvasEditor.HotKeys = function(){
+CanvasComposer.HotKeys = function(){
     //Keyboard
     var map = {8: false, 91: false, 187: false, 189: false, 40: false, 38:false, 68:false, 17:false, 76:false};
     $(document).keydown(function(e) {
@@ -7,7 +7,7 @@ CanvasEditor.HotKeys = function(){
             //Delete
             if (map[8] && map[91]) {
                 e.preventDefault(); e.stopPropagation();
-                CanvasEditor.Artboard.removeObject();
+                CanvasComposer.Artboard.removeObject();
                 map[8] = false;
             } else
             //BringToFront
@@ -41,13 +41,13 @@ CanvasEditor.HotKeys = function(){
             //Duplicate
             if (map[68] && map[17]){
                 e.preventDefault(); e.stopPropagation();
-                CanvasEditor.Artboard.duplicateObject();
+                CanvasComposer.Artboard.duplicateObject();
                 map[68] = false;
             } else
             //Lock
             if (map[76] && map[91]){
                 e.preventDefault(); e.stopPropagation();
-                CanvasEditor.Artboard.lockObject();
+                CanvasComposer.Artboard.lockObject();
                 map[76] = false;
             }
             

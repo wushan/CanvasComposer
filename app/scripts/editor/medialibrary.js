@@ -1,4 +1,4 @@
-CanvasEditor.MediaLibrary = function(){
+CanvasComposer.MediaLibrary = function(){
   //Media //Bind OnChange to avoid 'undefined'
     $('.js-library').on('click', function(){
       $('#mediaLibrary').addClass('active');
@@ -111,7 +111,7 @@ function selectionConfirmator(selected){
         obj.remove();
       }
       //送出建立新物件要求
-      CanvasEditor.Artboard.addMedia(selected);
+      CanvasComposer.Artboard.addMedia(selected);
     }
     $('#mediaLibrary').removeClass('active');
   //選取單一物件
@@ -130,7 +130,7 @@ function selectionConfirmator(selected){
         obj.remove();
       }
       //送出建立新物件要求
-      CanvasEditor.Artboard.addMedia(selected);
+      CanvasComposer.Artboard.addMedia(selected);
     }
     $('#mediaLibrary').removeClass('active');
   }

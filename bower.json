@@ -6,7 +6,7 @@
     "modernizr": "~3.3.1",
     "underscore": "^1.8.3",
     "fabric.js": "fabric#^1.5.0",
-    "weyproui": "^0.0.3",
+    "weyproui": "^0.0.4",
     "bourbon": "^4.2.6"
   },
   "devDependencies": {

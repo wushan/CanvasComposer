@@ -1,4 +1,4 @@
-CanvasEditor.Contextmenu = function(){
+CanvasComposer.Contextmenu = function(){
   "use strict";
 
   //////////////////////////////////////////////////////////////////////////////
@@ -221,10 +221,10 @@ CanvasEditor.Contextmenu = function(){
     var obj = canvas.getActiveObject();
     switch(action){
       case 'delete':
-        CanvasEditor.Artboard.removeObject();
+        CanvasComposer.Artboard.removeObject();
         break;
       case 'duplicate':
-        CanvasEditor.Artboard.duplicateObject();
+        CanvasComposer.Artboard.duplicateObject();
         break;
       case 'layertop':
         obj.bringToFront();
@@ -242,7 +242,7 @@ CanvasEditor.Contextmenu = function(){
         obj.sendToBack();
         break;
       case 'lock':
-        CanvasEditor.Artboard.lockObject();
+        CanvasComposer.Artboard.lockObject();
         break;
     }
     

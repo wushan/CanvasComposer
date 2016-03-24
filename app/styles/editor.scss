@@ -1,13 +1,9 @@
+@import "bower_components/weyproui/dist/styles/weyproui";
+
 // Moduels
   //Susy + BreakPoint
   @import "bower_components/susy/sass/susy";
   @import "bower_components/breakpoint-sass/stylesheets/breakpoint";
-
-  //Normalize
-  // @import "normalize";
-
-  //Susy Global
-  // @import "lib/susy_global";
 
 //Vars
 @import "lib/var/var";

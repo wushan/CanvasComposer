@@ -1,4 +1,4 @@
-CanvasEditor.inboundLinks = function() {
+CanvasComposer.inboundLinks = function() {
 	var inboundList = $('#inboundlist');
 
 	$('.js-inbounds').on('click', function(){

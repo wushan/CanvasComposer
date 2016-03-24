@@ -1,5 +1,5 @@
 
-CanvasEditor.Artboard = {
+CanvasComposer.Artboard = {
   addRect : function(){
       var rect = new fabric.Rect({
         left: canvas.getWidth()/2-initRadius/2,
@@ -76,7 +76,7 @@ CanvasEditor.Artboard = {
       if (objImage.length > 1) {
         var imageSet = objImage;
         //If objImage is an Array
-        CanvasEditor.Artboard.Multimedia.slider(imageSet);
+        CanvasComposer.Artboard.Multimedia.slider(imageSet);
       } else if (objImage.length === 1){
         //Add Image or Video ((Single))
         //extension
@@ -88,15 +88,15 @@ CanvasEditor.Artboard = {
           var thumbnail = getThumbnails(youtubeId, function(thumb){
             console.log(thumb);
             //Add Single Image
-            CanvasEditor.Artboard.Multimedia.video(thumb, youtubeId);
+            CanvasComposer.Artboard.Multimedia.video(thumb, youtubeId);
           });
         } else {
           if (extension.match(/^(gif|png|jpg|jpeg|tiff|svg)$/)) {
             //Add Single Image
-            CanvasEditor.Artboard.Multimedia.image(objImage[0].src);
+            CanvasComposer.Artboard.Multimedia.image(objImage[0].src);
           } else if (extension.match(/^(mp4|avi|ogg|ogv|webm)$/)) {
             //Add Single Video
-            CanvasEditor.Artboard.Multimedia.video(objImage[0].src);
+            CanvasComposer.Artboard.Multimedia.video(objImage[0].src);
           } else {
             console.log('不支援此檔案格式，請重試');
           }
@@ -164,7 +164,7 @@ CanvasEditor.Artboard = {
 }
 
 //Add Media
-CanvasEditor.Artboard.Multimedia = {
+CanvasComposer.Artboard.Multimedia = {
 
     image : function(source) {
       //Add Single Image

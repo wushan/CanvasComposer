@@ -5,33 +5,43 @@ var canvas,
 	initRadius = 100;
   
 //區域
-var CanvasEditor = {
+var CanvasComposer = {
 	init: function(data, options){
 		console.log(this);
 		this.loadView();
 		$(document).on("files-loaded", function () {
 			if (typeof data === 'object') {
-        CanvasEditor.initCanvas.initWithData(data, options);
+        CanvasComposer.initCanvas.initWithData(data, options);
         //讀取
 			} else if (data === 'new'){
-				CanvasEditor.initCanvas.init();
+				CanvasComposer.initCanvas.init();
 			}
-		    CanvasEditor.toolBar();
-		    CanvasEditor.Contextmenu();
-		    CanvasEditor.HotKeys();
-		    CanvasEditor.attrPanels();
-        CanvasEditor.canvasPanels();
-		    CanvasEditor.MediaLibrary();
-        CanvasEditor.inboundLinks();
-        // CanvasEditor.Load();
+		    CanvasComposer.toolBar();
+		    CanvasComposer.Contextmenu();
+		    CanvasComposer.HotKeys();
+		    CanvasComposer.attrPanels();
+        CanvasComposer.canvasPanels();
+		    CanvasComposer.MediaLibrary();
+        CanvasComposer.inboundLinks();
+        // CanvasComposer.Load();
 
 		})
 	},
-	save: function(){
-		//整合logController.js
-    var currentCanvas = JSON.stringify(canvas);
-    console.log(currentCanvas);
-	}
+	Save: {
+    toObj: function(){
+      var currentCanvas = JSON.stringify(canvas);
+      console.log(currentCanvas);
+    },
+    toPng: function(){
+      var png = canvas.toDataURL('png');
+      window.open(png);
+    },
+    toSvg: function(){
+      var svg = canvas.toSVG({suppressPreamble: true});
+      console.log(svg);
+      
+    }
+  }
 };
 
 function getThumbnails(id , callback) {
@@ -67,5 +77,5 @@ function validateYouTubeUrl(url) {
         }
     }
 }
-// CanvasEditor.init();
-// CanvasEditor.loadView();
+// CanvasComposer.init();
+// CanvasComposer.loadView();

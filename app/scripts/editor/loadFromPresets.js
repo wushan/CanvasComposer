@@ -1,4 +1,4 @@
-CanvasEditor.Load = {
+CanvasComposer.Load = {
   FromPresets : function(src, callback){
     $.getJSON(src, function(data){
       console.log('success');

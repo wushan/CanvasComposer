@@ -1,4 +1,4 @@
-CanvasEditor.attrPanels = function(){
+CanvasComposer.attrPanels = function(){
   function drag_start(event) {
       var style = window.getComputedStyle(event.target, null);
       event.dataTransfer.setData("text/plain",
@@ -32,10 +32,10 @@ $('.objectControl').on('click', 'button', function(){
   var className = $(this).attr('class');
   switch(className){
     case 'js-delete':
-      CanvasEditor.Artboard.removeObject();
+      CanvasComposer.Artboard.removeObject();
       break;
     case 'js-reset':
-      CanvasEditor.Artboard.reset();
+      CanvasComposer.Artboard.reset();
       break;
   }
 })

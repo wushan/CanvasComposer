@@ -10,17 +10,7 @@ html.no-js
     link(rel='apple-touch-icon' href='apple-touch-icon.png')
     // Place favicon.ico and apple-touch-icon.png in the root directory
 
-    // build:css styles/vendor.css
-    // bower:css
-
-    // endbower
-    // endbuild
-
-    // build:css styles/weyproui.css
-    link(rel='stylesheet' href='../bower_components/weyproui/dist/styles/weyproui.css')
-    // endbuild
-
-    // build:css styles/editor.css
+    // build:css styles/CanvasComposer.css
     link(rel='stylesheet' href='styles/editor.css')
     // endbuild
 
@@ -43,18 +33,18 @@ html.no-js
       // endbower
       // endbuild
 
-      // build:js scripts/fabric.min.js
+      //- // build:js scripts/fabric.min.js
+      //- script(src='../bower_components/fabric.js/dist/fabric.js')
+      //- // endbuild
+      //- // build:js scripts/underscore.js
+      //- script(src='../bower_components/underscore/underscore.js')
+      //- // endbuild
       script(src='../bower_components/fabric.js/dist/fabric.js')
-      // endbuild
-    
-      // build:js scripts/editor.js
-
-      script(src='../bower_components/underscore/underscore.js')
-      script(src='scripts/vendor/spectrum.js')
-      script(src='scripts/lib/Sortable.min.js')
-
+      // build:js scripts/CanvasComposer.js
+      //- script(src='../bower_components/fabric.js/dist/fabric.js')
+      //- script(src='../bower_components/underscore/underscore.js')
       script(src='scripts/editor/fabricExtensions.js')
-      script(src='scripts/editor/main.js')
+      script(src='scripts/CanvasComposer.js')
       script(src='scripts/editor/loadView.js')
       script(src='scripts/editor/createCanvas.js')
       script(src='scripts/editor/canvasPanels.js')
@@ -65,16 +55,14 @@ html.no-js
       script(src='scripts/editor/contextMenu.js')
       script(src='scripts/editor/loadFromPresets.js')
       script(src='scripts/editor/youtubeDecoder.js')
-      
       script(src='scripts/editor/bindEvents.js')
       script(src='scripts/editor/medialibrary.js')
       script(src='scripts/editor/inboundLink.js')
       script(src='scripts/editor/logController.js')
       script(src='scripts/editor/weatherapi.js')
-
-      
-
-      script(src='scripts/miscellaneous.js')
+      script(src='scripts/editor/fontHandler.js')
+      script(src='scripts/vendor/spectrum.js')
+      script(src='scripts/lib/Sortable.min.js')
       //- script(src='../bower_components/weyproui/dist/scripts/main.js')
       // endbuild
     block pagescripts

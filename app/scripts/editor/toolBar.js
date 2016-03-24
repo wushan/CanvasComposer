@@ -1,17 +1,17 @@
-CanvasEditor.toolBar = function(){
+CanvasComposer.toolBar = function(){
   //toolBar Actions  
   var actions = {
     addRect:   function (event) {
-                  CanvasEditor.Artboard.addRect();
+                  CanvasComposer.Artboard.addRect();
                 },
     addCircle: function (event) {
-                  CanvasEditor.Artboard.addCircle();
+                  CanvasComposer.Artboard.addCircle();
                 },
     addText: function (event) {
-                  CanvasEditor.Artboard.addText();
+                  CanvasComposer.Artboard.addText();
                 },
     addClock: function(event) {
-                CanvasEditor.Artboard.Multimedia.clock();
+                CanvasComposer.Artboard.Multimedia.clock();
               },
     addWeather: function(event) {
                 //Trigger Submenu
@@ -22,7 +22,7 @@ CanvasEditor.toolBar = function(){
                 //
               },
     disposeAll: function(event) {
-                CanvasEditor.Artboard.dispose();
+                CanvasComposer.Artboard.dispose();
               },
     artboardSettings: function(event) {
                 $('#canvassetting').fadeIn();
@@ -38,7 +38,7 @@ CanvasEditor.toolBar = function(){
                   });
               },
     saveState: function(event) {
-                CanvasEditor.save();
+                CanvasComposer.Save.toSvg();
               } 
   };
 
@@ -57,7 +57,7 @@ CanvasEditor.toolBar = function(){
   $("a[data-action=addWeather]").siblings('ul').on('click','a', function(){
     var location = $('#weatherCity option:selected').val();
     console.log(location);
-    CanvasEditor.Artboard.Multimedia.weather(location);
+    CanvasComposer.Artboard.Multimedia.weather(location);
     //Deactive myself
     $(this).parents('ul').removeClass('active');
   });

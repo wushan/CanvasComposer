@@ -1,4 +1,4 @@
-CanvasEditor.loadView = function(){
+CanvasComposer.loadView = function(){
 	var wrapper = $('#canvaseditor');
 	//Generate View Components
 	var templates = (function ($, host) {

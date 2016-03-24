@@ -4,6 +4,7 @@ var Weather = {
 		var location = loc;
 		var url = 'https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20weather.forecast%20where%20woeid%20%3D%20' + location + '&format=json&callback=?';
 		$.getJSON(url, function(json) {
+			console.log(json);
 		  var conditionText = conditionTextDic[json.query.results.channel.item.condition.code.toString()];
 		  var conditionImg = conditionImgDic[json.query.results.channel.item.condition.code.toString()];
 		  var temp = Math.round((json.query.results.channel.item.condition.temp - 32)*5/9) + "°C";

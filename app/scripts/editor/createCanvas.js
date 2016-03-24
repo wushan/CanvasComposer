@@ -1,4 +1,4 @@
-CanvasEditor.initCanvas = {
+CanvasComposer.initCanvas = {
   init: function(){
     //*Setting Up Canvas
     canvas = new fabric.Canvas('c', {
@@ -233,7 +233,7 @@ CanvasEditor.initCanvas = {
     // } else {
     //   console.log(data);
     // }
-    CanvasEditor.Load.FromJSON(data, function(res){
+    CanvasComposer.Load.FromJSON(data, function(res){
       console.log(res);
     })
 
@@ -474,7 +474,7 @@ CanvasEditor.initCanvas = {
     //天才
     function resizedw(){
     // Haven't resized in 100ms!
-      CanvasEditor.initCanvas.fit();
+      CanvasComposer.initCanvas.fit();
     }
 
     var doit;
