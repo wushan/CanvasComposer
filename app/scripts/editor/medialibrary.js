@@ -131,6 +131,7 @@ function selectionConfirmator(selected){
       }
       //送出建立新物件要求
       CanvasComposer.Artboard.addMedia(selected);
+      console.log(selected);
     }
     $('#mediaLibrary').removeClass('active');
   }

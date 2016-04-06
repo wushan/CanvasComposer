@@ -94,6 +94,7 @@ CanvasComposer.Artboard = {
           if (extension.match(/^(gif|png|jpg|jpeg|tiff|svg)$/)) {
             //Add Single Image
             CanvasComposer.Artboard.Multimedia.image(objImage[0].src);
+            console.log(objImage[0].src);
           } else if (extension.match(/^(mp4|avi|ogg|ogv|webm)$/)) {
             //Add Single Video
             CanvasComposer.Artboard.Multimedia.video(objImage[0].src);
@@ -165,10 +166,10 @@ CanvasComposer.Artboard = {
 
 //Add Media
 CanvasComposer.Artboard.Multimedia = {
-
     image : function(source) {
       //Add Single Image
       var media = new fabric.Image.fromURL(source, function(oImg) {
+        console.log(oImg);
         oImg.set({
           'left': canvas.getWidth()/2-oImg.width/2,
           'top': canvas.getHeight()/2-oImg.height/2
@@ -181,13 +182,13 @@ CanvasComposer.Artboard.Multimedia = {
           if (ratioW > 1) {
             oImg.scaleToWidth(canvas.getWidth());   
           } else {
-            return;
+            //
           }
         } else {
           if (ratioH > 1) {
             oImg.scaleToHeight(canvas.getHeight());
           } else {
-            return;
+            //
           }
         }
         // if (oImg.getWidth()/canvas.getWidth()) {
@@ -205,6 +206,7 @@ CanvasComposer.Artboard.Multimedia = {
         })(oImg.toObject);
         // console.log(media);
         canvas.renderAll();
+
         //Bind
         bindEvents(oImg);
         //Programmatically Select Newly Added Object
