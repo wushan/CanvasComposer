@@ -3,11 +3,11 @@
 		#canvas.task
 			canvas#c
 			.objectControl
-				button.js-reset(title="原始比例")
+				a.btn.js-reset(href='javascript:;', title="原始比例", data-action='reset')
 					i.fa.fa-crosshairs
 
-				button.js-delete
-					i.fa.fa-trash(title="刪除")
+				a.btn.js-delete(href='javascript:;', title="刪除", data-action='delete')
+					i.fa.fa-trash
 
 			.sizeTag
 				.tag.width<span>800</span>

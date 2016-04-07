@@ -21,6 +21,13 @@ CanvasComposer.toolBar = function(){
     lockAll: function(event) {
                 //
               },
+    reset: function(event) {
+                CanvasComposer.Artboard.reset();
+              },
+    delete: function(event) {
+                event.preventDefault(); event.stopPropagation();
+                CanvasComposer.Artboard.removeObject();
+              },
     disposeAll: function(event) {
                 CanvasComposer.Artboard.dispose();
               },
@@ -38,7 +45,9 @@ CanvasComposer.toolBar = function(){
                   });
               },
     saveState: function(event) {
-                CanvasComposer.Save.toSvg();
+                // CanvasComposer.Save.toSvg();
+                // CanvasComposer.Save.toPng();
+                CanvasComposer.Save.toObj();
               } 
   };
 

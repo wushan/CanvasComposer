@@ -26,13 +26,24 @@
 									.controls
 										input#canvasHeight(type="number" value="600")
 					.row.layoutpresets
-						.block
-							a(href="javascript:;" data-src="scripts/presets/800x600/a.json") Shapes 1
-						.block
-							a(href="javascript:;" data-src="scripts/presets/800x600/b.json") Shapes 2
-						.block
-							a(href="javascript:;" data-src="scripts/presets/800x600/c.json") Videos
-						.block
-							a(href="javascript:;" data-src="scripts/presets/800x600/d.json") Sliders
-						.block
-							a(href="javascript:;" data-src="scripts/presets/800x600/e.json") Group
+						each i in new Array(10)
+							.block
+								a(href="javascript:;" data-src="scripts/presets/800x600/a.json")
+									img(src='http://unsplash.it/400/300')
+									span Shapes 1
+							.block
+								a(href="javascript:;" data-src="scripts/presets/800x600/b.json")
+									img(src='http://unsplash.it/400/300')
+									span Shapes 2
+							.block
+								a(href="javascript:;" data-src="scripts/presets/800x600/c.json")
+									img(src='http://unsplash.it/400/300')
+									span Videos
+							.block
+								a(href="javascript:;" data-src="scripts/presets/800x600/d.json")
+									img(src='http://unsplash.it/400/300')
+									span Sliders
+							.block
+								a(href="javascript:;" data-src="scripts/presets/800x600/e.json")
+									img(src='http://unsplash.it/400/300')
+									span Group

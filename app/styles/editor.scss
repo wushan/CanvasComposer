@@ -159,12 +159,14 @@
 		}
 		.layoutpresets {
 			@extend .clr;
+			height: 20vh;
+			overflow-y: scroll;
 			background-color: $darkgray;
 			.block {
 				text-align: center;
 				@include gallery(6 of 12 .5);
 				background-color: $black;
-				// margin-bottom: .5em;
+				margin-bottom: .5em;
 				a {
 					border: 2px solid transparent;
 					display: block;
@@ -176,6 +178,7 @@
 						opacity: 1;
 					}
 				}
+				
 			}
 		}
 	}
@@ -255,13 +258,13 @@ ul {
 	height: 100%;
 	text-align: center;
 	font-size: 0;
-	&:before {
-		content: '';
-		width: 0;
-		height: 100%;
-		display: inline-block;
-		vertical-align: middle;
-	}
+	// &:before {
+	// 	content: '';
+	// 	width: 0;
+	// 	height: 100%;
+	// 	display: inline-block;
+	// 	vertical-align: middle;
+	// }
 	#canvas {
 		display: inline-block;
 		vertical-align: middle;
@@ -276,14 +279,16 @@ ul {
 		opacity: 0;
 		position: absolute;
 		font-size: 1rem;
-		background-color: $black;
-		bottom: 100%;
-		left: 0;
-		padding: .5em;
+		left: .2em;
+		top: -40px;
+		box-sizing: borde-box;
 		z-index: 2;
 		&.active {
-			bottom: calc( 100% - 43px );
 			opacity: 1;
+			top: .2em;
+		}
+		.btn {
+			padding: .2em 1em;
 		}
 	}
 	&:hover {
