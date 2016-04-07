@@ -1,13 +1,16 @@
-This is 'Not' Ready for Use
+CanvasComposer
 =================
+###Instructions
+https://www.gitbook.com/book/wushan/canvascomposer
+
+###Live Demo
+http://wushan.github.io/CanvasComposer
+
+###Contribute
 if you're interest in this, build it by your self.
 
 ```bash
-npm install
-```
-
-```bash
-bower install
+npm install && bower install
 ```
 
 ```bash
@@ -17,40 +20,3 @@ gulp serve
 Screen Shots
 ===========
 ![screenshots](/app/images/screenshots.png)
-
-Hotkeys
-===========
-Delete Object
-```
-command && del
-```
-
-Send to Bottom
-```
-command && &#8593;
-```
-
-Bring to Front
-```
-command && &#8595;
-```
-
-Bring Forward
-```
-command && +
-```
-
-Send Backward
-```
-command && -
-```
-
-Duplicate
-```
-&#8963; && D
-```
-
-Lock
-```
-&#8984; && L
-```
