@@ -159,7 +159,7 @@
 		}
 		.layoutpresets {
 			@extend .clr;
-			height: 20vh;
+			height: 40vh;
 			overflow-y: scroll;
 			background-color: $darkgray;
 			.block {
@@ -257,7 +257,9 @@ ul {
 .canvas-wrapper {
 	height: 100%;
 	text-align: center;
-	font-size: 0;
+	display: flex;
+	align-items:center;
+	justify-content:center;
 	// &:before {
 	// 	content: '';
 	// 	width: 0;
