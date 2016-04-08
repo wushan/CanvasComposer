@@ -432,41 +432,46 @@ CanvasComposer.initCanvas = {
     // canvas.wrapperEl.style.transform = "scale(.8)";
     var artboardScale = (function(){
       var aspectRatio = canvas.width/canvas.height;
+      //Ratio = Canvas 寬(實際px) 與 artboard 寬的比值
       var ratioW = canvas.width/container.clientWidth,
           ratioH = canvas.height/container.clientHeight;
 
-      console.log('W:' + ratioW);
-      console.log('H:' + ratioH);
+      console.log('Canvas 實際寬度是視窗寬度的: ' + ratioW + ' 倍');
+      console.log('Canvas 實際高度是視窗寬度的: ' + ratioH + ' 倍');
       var motive;
+      //若寬度比值大於或等於高度比值 (代表此矩形為橫式或正方形)
       if (ratioW >= ratioH) {
+        //橫式或正方形情況下，Canvas 實際寬度大於視窗寬度 (必須 scale 縮減)
         if (ratioW > 1) {
           ratioW = container.clientWidth/canvas.width;
-          motive = ratioW*ratioW;
+          //再縮減 80% 以避免 canvas 貼邊。
+          motive = ratioW*0.8;
           console.log(ratioW);
           if (motive > 1) {
             motive = 1;
           }
           paintArea.style.transform = "scale(" + motive + ")";
-          paintArea.style.transformOrigin = "25% 25%";
+          // paintArea.style.transformOrigin = "25% 25%";
         } else {
           motive = 1;
           paintArea.style.transform = "scale(" + motive + ")";
-          paintArea.style.transformOrigin = "25% 25%";
+          // paintArea.style.transformOrigin = "25% 25%";
         }
       } else if (ratioW < ratioH){
         if (ratioH > 1) {
           ratioH = container.clientHeight/canvas.height;
-          motive = ratioH*ratioH;
+          //再縮減 80% 以避免 canvas 貼邊。
+          motive = ratioH*0.8;
           console.log(ratioH);
           if (motive > 1) {
             motive = 1;
           }
           paintArea.style.transform = "scale(" + motive + ")";
-          paintArea.style.transformOrigin = "45% 25%";
+          // paintArea.style.transformOrigin = "45% 25%";
         } else {
           motive = 1;
           paintArea.style.transform = "scale(" + motive + ")";
-          paintArea.style.transformOrigin = "25% 25%";
+          // paintArea.style.transformOrigin = "25% 25%";
         }
       }
     }());
