@@ -48,6 +48,8 @@ CanvasComposer.toolBar = function(){
                 // CanvasComposer.Save.toSvg();
                 // CanvasComposer.Save.toPng();
                 CanvasComposer.Save.toObj();
+                // Alert after save
+                
               } 
   };
 
