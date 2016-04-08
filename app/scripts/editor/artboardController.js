@@ -24,144 +24,182 @@ CanvasComposer.Artboard = {
       //Refresh log
       
     },
-    addCircle : function(){
-      var circle = new fabric.Circle({
-        left: canvas.getWidth()/2-initRadius/2,
-        top: canvas.getHeight()/2-initRadius/2,
-        fill: '#'+Math.floor(Math.random()*16777215).toString(16),
-        radius: initRadius/2
-      });
-      circle.toObject = (function(toObject) {
-        return function() {
-          return fabric.util.object.extend(toObject.call(this), {
-            link: this.link
-          });
-        };
-      })(circle.toObject);
-      circle.perPixelTargetFind = true;
-      canvas.add(circle);
-      //Bind
-      bindEvents(circle);
-      //Programmatically Select Newly Added Object
-      canvas.setActiveObject(circle);
-      //Refresh log
-      
-    },
-    addText : function(){
-      var text = new fabric.IText('預設文字',{
-        //options
-        left: 200,
-        top: 200,
-        lockScalingX: true,
-        lockScalingY: true,
-        fontSize: '36'
-      })
-      text.toObject = (function(toObject) {
-        return function() {
-          return fabric.util.object.extend(toObject.call(this), {
-            link: this.link
-          });
-        };
-      })(text.toObject);
-      canvas.add(text);
-      //Bind
-      bindEvents(text);
-      //Programmatically Select Newly Added Object
-      canvas.setActiveObject(text);
-      //Refresh log
-      
-    },
-    addMedia : function(objImage) {
-      //Check if it is an Slide Array
-      if (objImage.length > 1) {
-        var imageSet = objImage;
-        //If objImage is an Array
-        CanvasComposer.Artboard.Multimedia.slider(imageSet);
-      } else if (objImage.length === 1){
-        //Add Image or Video ((Single))
-        //extension
-        var extension = objImage[0].src.split('.').pop();
-        var media;
-        var youtubeId = validateYouTubeUrl(objImage[0].src);
-        if (youtubeId != false) {
-          //If It is from Youtube
-          var thumbnail = getThumbnails(youtubeId, function(thumb){
-            console.log(thumb);
-            //Add Single Image
-            CanvasComposer.Artboard.Multimedia.video(thumb, youtubeId);
-          });
-        } else {
-          if (extension.match(/^(gif|png|jpg|jpeg|tiff|svg)$/)) {
-            //Add Single Image
-            CanvasComposer.Artboard.Multimedia.image(objImage[0].src);
-            console.log(objImage[0].src);
-          } else if (extension.match(/^(mp4|avi|ogg|ogv|webm)$/)) {
-            //Add Single Video
-            CanvasComposer.Artboard.Multimedia.video(objImage[0].src);
-          } else {
-            console.log('不支援此檔案格式，請重試');
-          }
-        }
-      }
-    },
-    dispose : function() {
-      // canvas.deactivateAllWithDispatch();
-      var obj;
-      for (var i=0; i<canvas._objects.length; i++) {
-        // obj = canvas._objects[i];
-        if (canvas._objects[i]._element !== undefined && canvas._objects[i]._element.localName === "video") {
-          canvas._objects[i].getElement().pause();
-        } else {
-          console.log( 'error' );
-        }
-      }
-      canvas.clear();
-      //Refresh log
-      
-    },
-    duplicateObject: function() {
-      var obj = canvas.getActiveObject();
-      canvas.add(obj.clone());
-      canvas.renderAll();
-    },
-    lockObject: function() {
-      var obj = canvas.getActiveObject();
-      if (obj.lockMovementY === true) {
-        obj.lockMovementY = false;
-        obj.lockMovementX = false;
-        obj.lockRotation = false;
-        obj.lockScalingX = false;
-        obj.lockScalingY = false;
-      } else {
-        obj.lockMovementY = true;
-        obj.lockMovementX = true;
-        obj.lockRotation = true;
-        obj.lockScalingX = true;
-        obj.lockScalingY = true;
-      }
-    },
-    removeObject: function() {
-      var obj = canvas.getActiveObject();
-      if (obj._element !== undefined && obj._element.localName === "video") {
-        obj.getElement().pause();
-        obj.remove();
-      } else {
-        obj.remove();
-      }
+  addCircle : function(){
+    var circle = new fabric.Circle({
+      left: canvas.getWidth()/2-initRadius/2,
+      top: canvas.getHeight()/2-initRadius/2,
+      fill: '#'+Math.floor(Math.random()*16777215).toString(16),
+      radius: initRadius/2
+    });
+    circle.toObject = (function(toObject) {
+      return function() {
+        return fabric.util.object.extend(toObject.call(this), {
+          link: this.link
+        });
+      };
+    })(circle.toObject);
+    circle.perPixelTargetFind = true;
+    canvas.add(circle);
+    //Bind
+    bindEvents(circle);
+    //Programmatically Select Newly Added Object
+    canvas.setActiveObject(circle);
+    //Refresh log
+    
+  },
+  addText : function(){
+    var text = new fabric.IText('預設文字',{
+      //options
+      left: 200,
+      top: 200,
+      lockScalingX: true,
+      lockScalingY: true,
+      fontSize: '36'
+    })
+    text.toObject = (function(toObject) {
+      return function() {
+        return fabric.util.object.extend(toObject.call(this), {
+          link: this.link
+        });
+      };
+    })(text.toObject);
+    canvas.add(text);
+    //Bind
+    bindEvents(text);
+    //Programmatically Select Newly Added Object
+    canvas.setActiveObject(text);    
+  },
+  addMarquee: function(str){
+    // var str = [{string:'台灣人瘋臉書，你知道全台最有人氣粉絲團是哪位嗎？', leastTime: '6', transitionType: 'default', transitionPeriod: '2'}, {string:'具惠善安宰賢姊弟戀達陣！下月完婚(4551)', leastTime: '6', transitionType: 'default', transitionPeriod: '2'}, {string:'安海瑟威當媽媽已1周　產下健康男嬰(20213)', leastTime: '6', transitionType: 'default', transitionPeriod: '2'}];
+    //Always Create Text Object from first string.
+    var i = 0;
+    var text = new fabric.Marquee(str[i].string,{
+      //options
+      left: canvas.getWidth()/2,
+      top: canvas.getHeight()/2,
+      lockScalingX: true,
+      lockScalingY: true,
+      fontSize: '24'
+    })
+    text.toObject = (function(toObject) {
+      return function() {
+        return fabric.util.object.extend(toObject.call(this), {
+          link: this.link,
+          marquee: str
+        });
+      };
+    })(text.toObject);
+    canvas.add(text);
+    //Bind
+    bindEvents(text);
+    //Programmatically Select Newly Added Object
+    canvas.setActiveObject(text);
 
-    },
-    reset : function() {
-      // var size = canvas.getActiveObject().getOriginalSize();
-      var obj = canvas.getActiveObject();
-      // reset to original size
-      obj.setScaleX('1');
-      obj.setScaleY('1');
-      //align to center of the canvas
-      obj.center();
-      obj.setCoords();
+    //Transition
+    setTimeout(function(){marquee(str,i);},str[i].leastTime*1000);
+
+    function marquee(str, i) {
+      if (i >= str.length-1) {
+        i = 0;
+      } else {
+        i++;
+      }
+      text.setText(str[i].string);
       canvas.renderAll();
-      instantMeta.log(obj);
+      setTimeout(function(){marquee(str,i);},str[i].leastTime*1000);
     }
+  },
+  addMedia : function(objImage) {
+    //Check if it is an Slide Array
+    if (objImage.length > 1) {
+      var imageSet = objImage;
+      //If objImage is an Array
+      CanvasComposer.Artboard.Multimedia.slider(imageSet);
+    } else if (objImage.length === 1){
+      //Add Image or Video ((Single))
+      //extension
+      var extension = objImage[0].src.split('.').pop();
+      var media;
+      var youtubeId = validateYouTubeUrl(objImage[0].src);
+      if (youtubeId != false) {
+        //If It is from Youtube
+        var thumbnail = getThumbnails(youtubeId, function(thumb){
+          console.log(thumb);
+          //Add Single Image
+          CanvasComposer.Artboard.Multimedia.video(thumb, youtubeId);
+        });
+      } else {
+        if (extension.match(/^(gif|png|jpg|jpeg|tiff|svg)$/)) {
+          //Add Single Image
+          CanvasComposer.Artboard.Multimedia.image(objImage[0].src);
+          console.log(objImage[0].src);
+        } else if (extension.match(/^(mp4|avi|ogg|ogv|webm)$/)) {
+          //Add Single Video
+          CanvasComposer.Artboard.Multimedia.video(objImage[0].src);
+        } else {
+          console.log('不支援此檔案格式，請重試');
+        }
+      }
+    }
+  },
+  dispose : function() {
+    // canvas.deactivateAllWithDispatch();
+    var obj;
+    for (var i=0; i<canvas._objects.length; i++) {
+      // obj = canvas._objects[i];
+      if (canvas._objects[i]._element !== undefined && canvas._objects[i]._element.localName === "video") {
+        canvas._objects[i].getElement().pause();
+      } else {
+        console.log( 'error' );
+      }
+    }
+    canvas.clear();
+    //Refresh log
+    
+  },
+  duplicateObject: function() {
+    var obj = canvas.getActiveObject();
+    canvas.add(obj.clone());
+    canvas.renderAll();
+  },
+  lockObject: function() {
+    var obj = canvas.getActiveObject();
+    if (obj.lockMovementY === true) {
+      obj.lockMovementY = false;
+      obj.lockMovementX = false;
+      obj.lockRotation = false;
+      obj.lockScalingX = false;
+      obj.lockScalingY = false;
+    } else {
+      obj.lockMovementY = true;
+      obj.lockMovementX = true;
+      obj.lockRotation = true;
+      obj.lockScalingX = true;
+      obj.lockScalingY = true;
+    }
+  },
+  removeObject: function() {
+    var obj = canvas.getActiveObject();
+    if (obj._element !== undefined && obj._element.localName === "video") {
+      obj.getElement().pause();
+      obj.remove();
+    } else {
+      obj.remove();
+    }
+
+  },
+  reset : function() {
+    // var size = canvas.getActiveObject().getOriginalSize();
+    var obj = canvas.getActiveObject();
+    // reset to original size
+    obj.setScaleX('1');
+    obj.setScaleY('1');
+    //align to center of the canvas
+    obj.center();
+    obj.setCoords();
+    canvas.renderAll();
+    instantMeta.log(obj);
+  }
 }
 
 //Add Media

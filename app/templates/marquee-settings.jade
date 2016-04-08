@@ -1,0 +1,85 @@
+#marquee-settings
+	.marquee-settings-inner
+		.widget-block
+			.widget-title 建立跑馬燈
+			.widget-content
+				.controlgroup
+					label 來源：
+					.controls
+						.select-wrapper
+							select#marquee-source
+								option(value="fromrss") RSS 目錄
+								option(value="fromcustom") 自訂字串
+				.datas
+					#fromrss.marquee-form.active
+						.row
+							.grid.g-3-12
+								.controlgroup
+									label RSS 來源：
+									.controls
+										.select-wrapper
+											select.marquee-rsssource
+												each i in new Array(20)
+													option RSS 名稱
+							.grid.g-3-12
+								.controlgroup
+									label 持續時間：
+									.controls
+										input.marquee-leasttime(type='number', placeholder='3')
+							.grid.g-3-12
+								.controlgroup
+									label 切換特效：
+									.controls
+										.select-wrapper
+											select.marquee-type
+												option 預設
+												option 隨機
+												option 由右至左
+												option 由左至右
+												option 由上至下
+												option 由下至上
+												option 淡入淡出
+							.grid.g-3-12
+								.controlgroup
+									label 特效時間：
+									.controls
+										input.marquee-transitionperiod(type='number', placeholder='3')
+					#fromcustom.marquee-form
+						.button-group.right
+							a.btn.basic.js-addRow(href="javascript:;")
+								i.fa.fa-plus
+							a.btn.delete.js-removeRow(href="javascript:;")
+								i.fa.fa-times
+						.string-list-wrapper
+							.string-item.row
+								.grid.g-3-12
+									.controlgroup
+										label 字串：
+										.controls
+											input.marquee-string(type='text', placeholder='字串')
+								.grid.g-3-12
+									.controlgroup
+										label 持續時間：
+										.controls
+											input.marquee-leasttime(type='number', placeholder='3')
+								.grid.g-3-12
+									.controlgroup
+										label 切換特效：
+										.controls
+											.select-wrapper
+												select.marquee-type
+													option 預設
+													option 隨機
+													option 由右至左
+													option 由左至右
+													option 由上至下
+													option 由下至上
+													option 淡入淡出
+								.grid.g-3-12
+									.controlgroup
+										label 特效時間：
+										.controls
+											input.marquee-transitionperiod(type='number', placeholder='3')
+						
+				.call-action.centered
+					a.btn.basic.js-sendToMarquee(href="javascript:;") 建立跑馬燈

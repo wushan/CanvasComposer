@@ -13,7 +13,7 @@ var CanvasComposer = {
 			if (typeof data === 'object') {
         CanvasComposer.initCanvas.initWithData(data, options);
         //讀取
-			} else if (data === 'new'){
+			} else if (data == 'new'){
 				CanvasComposer.initCanvas.init();
 			}
 		    CanvasComposer.toolBar();
@@ -23,6 +23,7 @@ var CanvasComposer = {
         CanvasComposer.canvasPanels();
 		    CanvasComposer.MediaLibrary();
         CanvasComposer.inboundLinks();
+        CanvasComposer.Marquee();
         // CanvasComposer.Load();
 
 		})

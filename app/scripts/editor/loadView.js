@@ -26,7 +26,7 @@ CanvasComposer.loadView = function(){
 	
 	
 	$(function () {
-	    var templateArray = ["templates/sidebar.html", "templates/artboard.html", "templates/config.html", "templates/contextmenu.html", "templates/library.html", "templates/inbounds.html", "templates/canvassettings.html"]
+	    var templateArray = ["templates/sidebar.html", "templates/artboard.html", "templates/config.html", "templates/contextmenu.html", "templates/library.html", "templates/inbounds.html", "templates/canvassettings.html", "templates/marquee-settings.html"]
 	    templates.load(templateArray, wrapper, "files-loaded");
 	});
 }

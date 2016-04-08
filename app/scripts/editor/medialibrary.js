@@ -1,4 +1,4 @@
-CanvasComposer.MediaLibrary = (function(){
+CanvasComposer.MediaLibrary = function(){
 	var mediaLibrary = $("#mediaLibrary");
 	//MediaLibrary
 	$('.js-library').on('click', function(){
@@ -151,4 +151,4 @@ CanvasComposer.MediaLibrary = (function(){
 			mediaLibrary.removeClass('active');
 		}
 	}
-}();
+};

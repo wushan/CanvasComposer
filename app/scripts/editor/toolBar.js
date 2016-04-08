@@ -10,6 +10,10 @@ CanvasComposer.toolBar = function(){
     addText: function (event) {
                   CanvasComposer.Artboard.addText();
                 },
+    addMarquee: function (event) {
+                  //Trigger Settings
+                  $('#marquee-settings').addClass('active');
+                },
     addClock: function(event) {
                 CanvasComposer.Artboard.Multimedia.clock();
               },

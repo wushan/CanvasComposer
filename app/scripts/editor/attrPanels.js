@@ -85,7 +85,7 @@ $('#objectColor').spectrum({
     },
     change: function(color) {
       var obj = canvas.getActiveObject();
-      if (obj.type === "i-text") {
+      if (obj.type === "i-text" || obj.type === "marquee") {
         obj.setTextBackgroundColor(color);
         console.log(color);
       } else {
@@ -136,7 +136,7 @@ $('#objectTextColor').spectrum({
     },
     change: function(color) {
       var obj = canvas.getActiveObject();
-      if (obj.type === "i-text") {
+      if (obj.type === "i-text" || obj.type === "marquee") {
         obj.setFill(color);
       } else {
         //

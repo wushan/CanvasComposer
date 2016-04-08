@@ -306,7 +306,7 @@ function findObj(id) {
 }
 
 
-//Create Fabric Slider Class
+//Create Fabric Clock Class
 fabric.Clock = fabric.util.createClass(fabric.Text, {
   type: 'clock',
   initialize: function (text, options) {
@@ -317,6 +317,25 @@ fabric.Clock = fabric.util.createClass(fabric.Text, {
   toObject: function () {
         return fabric.util.object.extend(this.callSuper('toObject'), {
             
+        });
+    },
+  _render: function (ctx) {
+            this.callSuper('_render', ctx);
+        }
+});
+
+//Create Fabric Marquee Class
+fabric.Marquee = fabric.util.createClass(fabric.Text, {
+  type: 'marquee',
+  initialize: function (text, options) {
+            options || (options = {});
+            this.callSuper('initialize', text, options);
+            console.log('inittt');
+        },
+  toObject: function () {
+        return fabric.util.object.extend(this.callSuper('toObject'), {
+            link: this.link,
+            marquee: this.marquee
         });
     },
   _render: function (ctx) {
