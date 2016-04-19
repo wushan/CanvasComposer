@@ -3,7 +3,7 @@ function bindEvents(obj) {
     console.log('selected');
     $('.objectControl').addClass('active');
     //Determine which Config Panel Should be shown
-    if (obj.type === 'i-text' || obj.type === 'clock' || obj.type === "marquee") {
+    if (obj.type === 'textbox' || obj.type === 'i-text' || obj.type === 'clock' || obj.type === "marquee") {
       $('.text-attr').show();
       $('.basic-attr').hide();
     } else {

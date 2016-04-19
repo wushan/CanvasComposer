@@ -24,6 +24,15 @@
 		display: inline-block;
 		vertical-align: middle;
 		width: 80%;
+		position: relative;
+		padding: 1em;
+		box-sizing: border-box;
+		.close-btn {
+			color: $white;
+			position: absolute;
+			bottom: 100%;
+			right: 0;
+		}
 	}
 }
 #fromrss, #fromcustom {

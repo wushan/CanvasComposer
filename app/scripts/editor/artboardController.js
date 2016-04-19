@@ -54,6 +54,10 @@ CanvasComposer.Artboard = {
       top: 200,
       lockScalingX: true,
       lockScalingY: true,
+      lockSkewingX: true,
+      lockSkewingY: true,
+      lockScalingFlip: true,
+      lockUniScaling: true,
       fontSize: '36'
     })
     text.toObject = (function(toObject) {
@@ -143,14 +147,11 @@ CanvasComposer.Artboard = {
     }
   },
   dispose : function() {
-    // canvas.deactivateAllWithDispatch();
     var obj;
     for (var i=0; i<canvas._objects.length; i++) {
       // obj = canvas._objects[i];
       if (canvas._objects[i]._element !== undefined && canvas._objects[i]._element.localName === "video") {
         canvas._objects[i].getElement().pause();
-      } else {
-        console.log( 'error' );
       }
     }
     canvas.clear();
@@ -179,13 +180,43 @@ CanvasComposer.Artboard = {
     }
   },
   removeObject: function() {
-    var obj = canvas.getActiveObject();
-    if (obj._element !== undefined && obj._element.localName === "video") {
-      obj.getElement().pause();
-      obj.remove();
-    } else {
-      obj.remove();
-    }
+
+      if(canvas.getActiveGroup()){
+        canvas.getActiveGroup().forEachObject(function(o){
+          if (o._element !== undefined && o._element.localName === "video") {
+            o.getElement().pause();
+            canvas.remove(o);
+          } else {
+            canvas.remove(o);
+          }
+        });
+        canvas.discardActiveGroup().renderAll();
+      } else {
+        var singleObj = canvas.getActiveObject();
+        if (singleObj._element !== undefined && singleObj._element.localName === "video") {
+            singleObj.getElement().pause();
+            canvas.remove(singleObj);
+          } else {
+            canvas.remove(singleObj);
+          }
+        
+      };
+
+
+    // var obj = canvas.getActiveObject();
+    // console.log('oooooooooo');
+    // console.log(obj);
+    // if ( obj == null ) {
+    //   obj = canvas.getActiveGroup();
+    //   console.log(obj);
+    //   obj.remove();
+    // }
+    // if (obj._element !== undefined && obj._element.localName === "video") {
+    //   obj.getElement().pause();
+    //   obj.remove();
+    // } else {
+    //   obj.remove();
+    // }
 
   },
   reset : function() {
