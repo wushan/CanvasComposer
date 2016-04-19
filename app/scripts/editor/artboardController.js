@@ -6,7 +6,9 @@ CanvasComposer.Artboard = {
         top: canvas.getHeight()/2-initRadius/2,
         fill: '#'+Math.floor(Math.random()*16777215).toString(16),
         width: initRadius,
-        height: initRadius
+        height: initRadius,
+        padding: 0,
+        strokeWidth: 0
       });
       rect.toObject = (function(toObject) {
         return function() {
@@ -257,13 +259,13 @@ CanvasComposer.Artboard.Multimedia = {
         var ratioH = oImg.getHeight()/canvas.getHeight();
         if (ratioW >= ratioH) {
           if (ratioW > 1) {
-            oImg.scaleToWidth(canvas.getWidth());   
+            oImg.scaleToWidth(canvas.getWidth()*0.9); //Decrese 10%   
           } else {
             //
           }
         } else {
           if (ratioH > 1) {
-            oImg.scaleToHeight(canvas.getHeight());
+            oImg.scaleToHeight(canvas.getHeight()*0.9); //Decrese 10%
           } else {
             //
           }
