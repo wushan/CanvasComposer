@@ -14,10 +14,10 @@ CanvasComposer.initCanvas = {
     //     canvas.add(new fabric.Line([ 0, i * grid, canvas.width, i * grid], { stroke: '#ccc', selectable: false }));
     // }
 
-    canvas.on('object:moving', snapMoveToGrid);
-    canvas.on('object:scaling', snapScaleToGrid);
-    canvas.on('object:moving', fixBoundaries);
-    canvas.on('object:scaling', fixBoundaries);
+    // canvas.on('object:moving', snapMoveToGrid);
+    // canvas.on('object:scaling', snapScaleToGrid);
+    // canvas.on('object:moving', fixBoundaries);
+    // canvas.on('object:scaling', fixBoundaries);
 
     function roundToGrid(value) {
        return Math.round(value / grid) * grid;  
