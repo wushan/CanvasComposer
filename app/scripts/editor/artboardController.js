@@ -48,17 +48,14 @@ CanvasComposer.Artboard = {
     
   },
   addText : function(){
-    var text = new fabric.IText('預設文字',{
+    var text = new fabric.Textbox('預設文字',{
       //options
       left: 200,
       top: 200,
-      lockScalingX: true,
-      lockScalingY: true,
-      lockSkewingX: true,
-      lockSkewingY: true,
-      lockScalingFlip: true,
-      lockUniScaling: true,
-      fontSize: '36'
+      width: 300,
+      height: 300,
+      fontSize: 24,
+      hasControl: true
     })
     text.toObject = (function(toObject) {
       return function() {
@@ -85,6 +82,17 @@ CanvasComposer.Artboard = {
       lockScalingY: true,
       fontSize: '24'
     })
+    text.setControlsVisibility({
+      bl: false,
+      br: false,
+      mb: false,
+      ml: false,
+      mr: false,
+      mt: false,
+      tl: false,
+      tr: false,
+      mtr: true
+    });
     text.toObject = (function(toObject) {
       return function() {
         return fabric.util.object.extend(toObject.call(this), {
