@@ -1,60 +1,131 @@
-#sidebar(draggable="true")
-	.widget-block
-		.widget-title.centered 工具
-		.widget-content
-			ul.tools
+#sidebar
+	ul.tools
+		li
+			a.full.btn.basic.js-add-rect(href="javascript:;" title="新增矩形", data-action='addRect')
+				i.fa.fa-object-group.fa-lg
+		li
+			a.full.btn.basic.js-add-circle(href="javascript:;" title="新增圓形", data-action='addCircle')
+				i.fa.fa-circle-thin.fa-lg
+		li
+			a.full.btn.basic.js-add-text(href="javascript:;" title="新增文字", data-action='addText')
+				i.fa.fa-font.fa-lg
+		li
+			a.full.btn.basic.js-add-text(href="javascript:;" title="新增跑馬燈", data-action='addMarquee')
+				i.fa.fa-text-width.fa-lg
+		li
+			a.full.btn.basic.js-add-clock(href="javascript:;" title="新增時鐘", data-action='addClock')
+				i.fa.fa-clock-o.fa-lg
+		li
+			a.full.btn.basic(href="javascript:;" title="新增天氣", data-action='addWeather')
+				i.fa.fa-cloud.fa-lg
+			ul
 				li
-					a.full.btn.basic.js-add-rect(href="javascript:;" title="新增矩形", data-action='addRect')
-						i.fa.fa-object-group.fa-lg
-				li
-					a.full.btn.basic.js-add-circle(href="javascript:;" title="新增圓形", data-action='addCircle')
-						i.fa.fa-circle-thin.fa-lg
-				li
-					a.full.btn.basic.js-add-text(href="javascript:;" title="新增文字", data-action='addText')
-						i.fa.fa-font.fa-lg
-				li
-					a.full.btn.basic.js-add-text(href="javascript:;" title="新增跑馬燈", data-action='addMarquee')
-						i.fa.fa-text-width.fa-lg
-				li
-					a.full.btn.basic.js-add-clock(href="javascript:;" title="新增時鐘", data-action='addClock')
-						i.fa.fa-clock-o.fa-lg
-				li
-					a.full.btn.basic(href="javascript:;" title="新增天氣", data-action='addWeather')
-						i.fa.fa-cloud.fa-lg
-					ul
-						li
-							.widget-block
-								.widget-content
+					.widget-block
+						.widget-content
+							.controlgroup
+								label 分類：
+								.controls
+									.select-wrapper
+										select#weatherCate
+											option 類別
+							.controlgroup
+								label 城市：
+								.controls
+									.select-wrapper
+										select#weatherCity
+											option(value='2151330') 北京
+											option(value='2306179') 台北市
+											option(value='2306181') 台中市
+											option(value='2306180') 高雄市
+							.call-action
+								a.btn.basic.full(href='javascript:;') 置入
+		//- li
+		//- 	a.full.btn.basic(href="javascript:;" title="鎖定所有物件", data-action='lockAll')
+		//- 		i.fa.fa-lock.fa-lg
+		li
+			a.full.btn.delete.js-dispose(href="javascript:;" title="清除所有物件", data-action='disposeAll')
+				i.fa.fa-eraser.fa-lg
+	
+	ul.tools
+		li
+			a.full.btn.edit.js-setting(href="javascript:;" title="版面設定", data-action='artboardSettings')
+				i.fa.fa-cogs.fa-lg
+			#canvassetting
+				.canvasconfig-wrapper
+					
+					.canvasconfig-inner
+						.row
+							.block.sizepresets
+								.controlgroup
+									label Presets
+									.controls
+										select#canvas-select
+											option(data-width="800" data-height="600") 800*600
+											option(data-width="1024" data-height="768") 1024*768
+											option(data-width="768" data-height="1024") 768*1024
+											option(data-width="800" data-height="800") 800*800
+							.block.sizeinput
+								.block
 									.controlgroup
-										label 分類：
+										label Width
 										.controls
-											.select-wrapper
-												select#weatherCate
-													option 類別
+											input#canvasWidth(type="number" value="800")
+								.block
 									.controlgroup
-										label 城市：
+										label Height
 										.controls
-											.select-wrapper
-												select#weatherCity
-													option(value='2151330') 北京
-													option(value='2306179') 台北市
-													option(value='2306181') 台中市
-													option(value='2306180') 高雄市
-									.call-action
-										a.btn.basic.full(href='javascript:;') 置入
-				//- li
-				//- 	a.full.btn.basic(href="javascript:;" title="鎖定所有物件", data-action='lockAll')
-				//- 		i.fa.fa-lock.fa-lg
+											input#canvasHeight(type="number" value="600")
+						.row.layoutpresets
+							.block
+								a(href="javascript:;" data-src="scripts/presets/800x600/loveintheair.json")
+									.thumbnail
+										img(src='images/presets/loveintheair.png')
+									.name.
+										I love my dog
+							.block
+								a(href="javascript:;" data-src="scripts/presets/800x600/stb.json")
+									.thumbnail
+										img(src='images/presets/stb.png')
+									.name.
+										Strawberry
+							.block
+								a(href="javascript:;" data-src="scripts/presets/800x600/a.json")
+									.thumbnail
+										img(src='http://unsplash.it/400/300')
+									.name.
+										Shapes 1
+							.block
+								a(href="javascript:;" data-src="scripts/presets/800x600/b.json")
+									.thumbnail
+										img(src='http://unsplash.it/400/300')
+									.name.
+										Shapes 2
+							.block
+								a(href="javascript:;" data-src="scripts/presets/800x600/c.json")
+									.thumbnail
+										img(src='http://unsplash.it/400/300')
+									.name.
+										Videos
+							.block
+								a(href="javascript:;" data-src="scripts/presets/800x600/d.json")
+									.thumbnail
+										img(src='http://unsplash.it/400/300')
+									.name.
+										Sliders
+							.block
+								a(href="javascript:;" data-src="scripts/presets/800x600/e.json")
+									.thumbnail
+										img(src='http://unsplash.it/400/300')
+									.name.
+										Group
+		li
+			a.full.btn.edit.js-save(href="javascript:;" title="儲存", data-action='saveState')
+				i.fa.fa-floppy-o.fa-lg
+			ul
 				li
-					a.full.btn.delete.js-dispose(href="javascript:;" title="清除所有物件", data-action='disposeAll')
-						i.fa.fa-eraser.fa-lg
-	.widget-block
-		.widget-title.centered 檔案
-		.widget-content
-			ul.tools
-				li
-					a.full.btn.edit.js-setting(href="javascript:;" title="版面設定", data-action='artboardSettings')
-						i.fa.fa-cogs.fa-lg
-				li
-					a.full.btn.edit.js-save(href="javascript:;" title="儲存", data-action='saveState')
-						i.fa.fa-floppy-o.fa-lg
+					.widget-block
+						.widget-content
+							a.btn.edit.full.js-save-svg(href='javascript:;', data-action='saveSvg') SVG
+							a.btn.edit.full.js-save-png(href='javascript:;', data-action='savePng') PNG
+							a.btn.edit.full.js-save-json(href='javascript:;', data-action='saveJSON') JSON
+

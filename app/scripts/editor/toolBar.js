@@ -13,12 +13,22 @@ CanvasComposer.toolBar = function(){
     addMarquee: function (event) {
                   //Trigger Settings
                   $('#marquee-settings').addClass('active');
+                  $(document).mouseup(function (e){
+                    var container = $(".marquee-settings-inner");
+
+                    if (!container.is(e.target) // if the target of the click isn't the container...
+                        && container.has(e.target).length === 0) // ... nor a descendant of the container
+                    {
+                        container.parent().removeClass('active');
+                    }
+                });
                 },
     addClock: function(event) {
                 CanvasComposer.Artboard.Multimedia.clock();
               },
     addWeather: function(event) {
                 //Trigger Submenu
+                $(this).toggleClass('active');
                 var sub = $(this).siblings('ul');
                 sub.toggleClass('active');
               },
@@ -36,25 +46,36 @@ CanvasComposer.toolBar = function(){
                 CanvasComposer.Artboard.dispose();
               },
     artboardSettings: function(event) {
-                $('#canvassetting').fadeIn();
-                $(document).mouseup(function (e)
-                  {
-                      var container = $(".canvasconfig-wrapper");
+                $('#canvassetting').fadeToggle();
+                $(document).mouseup(function (e){
+                    var container = $("#sidebar");
 
-                      if (!container.is(e.target) // if the target of the click isn't the container...
-                          && container.has(e.target).length === 0) // ... nor a descendant of the container
-                      {
-                          container.parent().hide();
-                      }
-                  });
+                    if (!container.is(e.target) // if the target of the click isn't the container...
+                        && container.has(e.target).length === 0) // ... nor a descendant of the container
+                    {
+                        container.find($('#canvassetting')).hide();
+                    }
+                });
               },
     saveState: function(event) {
                 // CanvasComposer.Save.toSvg();
                 // CanvasComposer.Save.toPng();
-                CanvasComposer.Save.toObj();
+                // CanvasComposer.Save.toObj();
                 // Alert after save
-                
-              } 
+                //SELECT SAVE TYPE
+                $(this).toggleClass('active');
+                var sub = $(this).siblings('ul');
+                sub.toggleClass('active');
+              },
+    savePng: function(event) {
+      CanvasComposer.Save.toPng();
+    },
+    saveSvg: function(event) {
+      CanvasComposer.Save.toSvg();
+    },
+    saveJSON: function(event) {
+      CanvasComposer.Save.toObj();
+    }
   };
 
   $("a[data-action]").on("click", function (event) {

@@ -15,7 +15,7 @@ CanvasComposer.initCanvas = {
     // }
 
     canvas.on('object:moving', snapMoveToGrid);
-    canvas.on('object:scaling', snapScaleToGrid);
+    // canvas.on('object:scaling', snapScaleToGrid);
     // canvas.on('object:moving', fixBoundaries);
     // canvas.on('object:scaling', fixBoundaries);
 

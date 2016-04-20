@@ -85,7 +85,8 @@ $('#objectColor').spectrum({
     },
     change: function(color) {
       var obj = canvas.getActiveObject();
-      if (obj.type === "i-text" || obj.type === "marquee") {
+      color = color.toHexString();
+      if (obj.type === "textbox" || obj.type === "i-text" || obj.type === "marquee") {
         obj.setTextBackgroundColor(color);
         console.log(color);
       } else {
@@ -136,8 +137,10 @@ $('#objectTextColor').spectrum({
     },
     change: function(color) {
       var obj = canvas.getActiveObject();
-      if (obj.type === "i-text" || obj.type === "marquee") {
-        obj.setFill(color);
+      //Turn the Spectrum Object to Hex String
+      color = color.toHexString();
+      if (obj.type === "textbox" || obj.type === "i-text" || obj.type === "marquee") {
+        obj.setColor(color);
       } else {
         //
       }

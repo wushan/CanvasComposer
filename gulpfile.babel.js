@@ -5,6 +5,7 @@ import browserSync from 'browser-sync';
 import del from 'del';
 import {stream as wiredep} from 'wiredep';
 var ghPages = require('gulp-gh-pages');
+var gutil = require('gulp-util');
 
 const $ = gulpLoadPlugins();
 const reload = browserSync.reload;
@@ -33,9 +34,7 @@ gulp.task('styles', () => {
 
 gulp.task('scripts', () => {
   return gulp.src('app/scripts/**/*.js')
-    .pipe($.plumber())
-    .pipe($.sourcemaps.init())
-    .pipe($.sourcemaps.write('.'))
+
     .pipe(gulp.dest('.tmp/scripts'))
     .pipe(reload({stream: true}));
 });
@@ -72,7 +71,7 @@ gulp.task('views', () => {
 gulp.task('html', ['views', 'styles', 'scripts'], () => {
   return gulp.src(['app/*.html', '.tmp/*.html', '.tmp/**/*.html'])
     .pipe($.useref({searchPath: ['.tmp', 'app', '.']}))
-    .pipe($.if('*.js', $.uglify()))
+    
     .pipe($.if('*.css', $.cssnano()))
     .pipe($.if('*.html', $.htmlmin({collapseWhitespace: true})))
     .pipe(gulp.dest('dist'));

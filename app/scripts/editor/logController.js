@@ -29,7 +29,7 @@ var instantMeta = {
     angle = obj.angle;
     type = obj.type;
     link = obj.link;
-    if (obj.type === 'i-text') {
+    if (obj.type === 'textbox' || obj.type === 'i-text') {
         color = obj.textBackgroundColor;
     } else {
       color = obj.fill;

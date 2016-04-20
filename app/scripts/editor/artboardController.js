@@ -56,8 +56,7 @@ CanvasComposer.Artboard = {
       top: 200,
       width: 300,
       height: 300,
-      fontSize: 24,
-      hasControl: true
+      fontSize: 24
     })
     text.toObject = (function(toObject) {
       return function() {
@@ -253,6 +252,7 @@ CanvasComposer.Artboard.Multimedia = {
           'left': canvas.getWidth()/2-oImg.width/2,
           'top': canvas.getHeight()/2-oImg.height/2
         });
+        oImg.crossOrigin="anonymous";
         //Scale Superlarge Elements to fit the Current Canvas Size
         //Do Some Math
         var ratioW = oImg.getWidth()/canvas.getWidth();

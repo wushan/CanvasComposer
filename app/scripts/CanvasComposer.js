@@ -34,13 +34,15 @@ var CanvasComposer = {
       console.log(currentCanvas);
     },
     toPng: function(){
+      //Prevent saving image with a selected control points(borders).
+      canvas.deactivateAll().renderAll();
       var png = canvas.toDataURL('png');
+      //CROSS ORIGIN ISSUE
       window.open(png);
     },
     toSvg: function(){
       var svg = canvas.toSVG({suppressPreamble: true});
       console.log(svg);
-      
     }
   }
 };
