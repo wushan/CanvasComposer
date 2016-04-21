@@ -175,14 +175,67 @@ $('#objectInput').on("keydown keyup paste change", function() {
 });
 
 //Font Family
+//Get an Google Font List
+
+(function (){
+  $.getJSON( "https://www.googleapis.com/webfonts/v1/webfonts?sort=alpha&key=AIzaSyDvbHbq0AAW3irCwjSdbNKtklKSAia_SZ8", function() {
+  console.log( "success" );
+})
+  .done(function(data) {
+    console.log( "second success" );
+    var fontName;
+    var option = $('<option></option>');
+    console.log(data.items.length); //733 ?
+    console.log(data);
+    for (var i=0;i<data.items.length; i++) {
+      fontName = data.items[i].family;
+      // console.log(option);
+      $('#objectFontFamily').append($("<option>",{
+                      value: fontName,
+                      text: fontName
+      }))
+    }
+
+  })
+  .fail(function(err) {
+    console.log(err);
+  })
+  .always(function() {
+    console.log( "complete" );
+  });
+}())
+
+//Global
+var fontFamilies = new Array;
+
 $('#objectFontFamily').on('change', function(){
+  console.log('triggered');
   var selected = $(this).val();
   var obj = canvas.getActiveObject();
   obj.setFontFamily(selected);
   obj.setCoords();
   canvas.renderAll();
-});
 
+  fontFamilies.push(selected);
+  console.log(fontFamilies);
+  //Load Fonts
+  fontLoader(fontFamilies);
+
+});
+function fontLoader(name){
+  WebFontConfig = {
+    loading: function() {
+      console.log('loading');
+    },
+    active: function() {
+      console.log('active');
+    },
+    inactive: function() {
+      console.log('ahh');
+    }
+  };
+  WebFont.load({ google: {families: name}});
+}
 //Font Size
 $('#objectFontSize').on('change', function(){
   var size = $(this).val();

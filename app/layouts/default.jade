@@ -9,6 +9,30 @@ html.no-js
     meta(name='viewport' content='width=device-width, initial-scale=1')
     link(rel='apple-touch-icon' href='apple-touch-icon.png')
     // Place favicon.ico and apple-touch-icon.png in the root directory
+    
+    script.
+      (function(d) {
+        var wf = d.createElement('script'), s = d.scripts[0];
+        wf.src = 'https://ajax.googleapis.com/ajax/libs/webfont/1.5.18/webfont.js';
+        s.parentNode.insertBefore(wf, s);
+      })(document);
+      
+      //- function fontLoader(name){
+      //-   WebFontConfig = {
+      //-     loading: function() {
+      //-       console.log('loading');
+      //-     },
+      //-     active: function() {
+      //-       console.log('active');
+      //-     },
+      //-     inactive: function() {
+      //-       console.log('ahh');
+      //-     },
+      //-     google: {
+      //-       families: name
+      //-     }
+      //-   };
+      //- }
 
     // build:css styles/CanvasComposer.css
     link(rel='stylesheet' href='styles/editor.css')
@@ -32,6 +56,7 @@ html.no-js
       script(src='../bower_components/jquery/dist/jquery.js')
       // endbower
       // endbuild
+
       // build:js scripts/fabric.js
       script(src='scripts/vendor/fabric.js')
       // endbuild
