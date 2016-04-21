@@ -1944,14 +1944,54 @@ $('#objectInput').on("keydown keyup paste change", function() {
 });
 
 //Font Family
+//Get an Google Font List
+
+(function (){
+  $.getJSON( "https://www.googleapis.com/webfonts/v1/webfonts?sort=alpha&key=AIzaSyDvbHbq0AAW3irCwjSdbNKtklKSAia_SZ8", function() {
+  console.log( "success" );
+})
+  .done(function(data) {
+    console.log( "second success" );
+    var fontName;
+    var option = $('<option></option>');
+    console.log(data.items.length); //733 ?
+    console.log(data);
+    for (var i=0;i<data.items.length; i++) {
+      fontName = data.items[i].family;
+      // console.log(option);
+      $('#objectFontFamily').append($("<option>",{
+                      value: fontName,
+                      text: fontName
+      }));
+    }
+  })
+  .fail(function(err) {
+    console.log(err);
+  })
+  .always(function() {
+    console.log( "complete" );
+  });
+}());
+
+//Global
+var fontFamilies = new Array;
+
 $('#objectFontFamily').on('change', function(){
+  console.log('triggered');
   var selected = $(this).val();
   var obj = canvas.getActiveObject();
   obj.setFontFamily(selected);
   obj.setCoords();
   canvas.renderAll();
-});
 
+  fontFamilies.push(selected);
+  console.log(fontFamilies);
+  //Load Fonts
+  fontLoader(fontFamilies);
+});
+function fontLoader(name){
+  WebFont.load({ google: {families: name}});
+}
 //Font Size
 $('#objectFontSize').on('change', function(){
   var size = $(this).val();
@@ -2957,19 +2997,8 @@ CanvasComposer.Marquee = function(){
 	});
 	$('#marquee-settings').find('.js-close').on('click', function(){
 		$('#marquee-settings').removeClass('active');
-	})
-}
-'use strict'
-//Fonts
-var Typekit;
-(function(d) {
-	var config = {
-		kitId: 'daf4cqp',
-		scriptTimeout: 3000,
-		async: true
-	},
-	h=d.documentElement,t=setTimeout(function(){h.className=h.className.replace(/\bwf-loading\b/g,"")+" wf-inactive";},config.scriptTimeout),tk=d.createElement("script"),f=false,s=d.getElementsByTagName("script")[0],a;h.className+=" wf-loading";tk.src='https://use.typekit.net/'+config.kitId+'.js';tk.async=true;tk.onload=tk.onreadystatechange=function(){a=this.readyState;if(f||a&&a!="complete"&&a!="loaded")return;f=true;clearTimeout(t);try{Typekit.load(config)}catch(e){}};s.parentNode.insertBefore(tk,s)
-})(document);
+	});
+};
 
 // Spectrum Colorpicker v1.8.0
 // https://github.com/bgrins/spectrum

@@ -54,5 +54,5 @@ CanvasComposer.Marquee = function(){
 	});
 	$('#marquee-settings').find('.js-close').on('click', function(){
 		$('#marquee-settings').removeClass('active');
-	})
-}
+	});
+};

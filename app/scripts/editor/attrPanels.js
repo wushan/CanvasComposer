@@ -193,9 +193,8 @@ $('#objectInput').on("keydown keyup paste change", function() {
       $('#objectFontFamily').append($("<option>",{
                       value: fontName,
                       text: fontName
-      }))
+      }));
     }
-
   })
   .fail(function(err) {
     console.log(err);
@@ -203,7 +202,7 @@ $('#objectInput').on("keydown keyup paste change", function() {
   .always(function() {
     console.log( "complete" );
   });
-}())
+}());
 
 //Global
 var fontFamilies = new Array;
@@ -220,20 +219,8 @@ $('#objectFontFamily').on('change', function(){
   console.log(fontFamilies);
   //Load Fonts
   fontLoader(fontFamilies);
-
 });
 function fontLoader(name){
-  WebFontConfig = {
-    loading: function() {
-      console.log('loading');
-    },
-    active: function() {
-      console.log('active');
-    },
-    inactive: function() {
-      console.log('ahh');
-    }
-  };
   WebFont.load({ google: {families: name}});
 }
 //Font Size
