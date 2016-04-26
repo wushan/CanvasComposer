@@ -34,7 +34,6 @@ gulp.task('styles', () => {
 
 gulp.task('scripts', () => {
   return gulp.src('app/scripts/**/*.js')
-
     .pipe(gulp.dest('.tmp/scripts'))
     .pipe(reload({stream: true}));
 });
