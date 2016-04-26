@@ -64,6 +64,7 @@ fabric.Video.fromObject = function(objects, callback) {
     height: objects.height,
     scaleX: objects.scaleX,
     scaleY: objects.scaleY,
+    angle: objects.angle,
     top: objects.top,
     left: objects.left,
     media: {
@@ -316,7 +317,8 @@ fabric.Clock = fabric.util.createClass(fabric.Text, {
         },
   toObject: function () {
         return fabric.util.object.extend(this.callSuper('toObject'), {
-            
+            format: this.format,
+            link: this.link
         });
     },
   _render: function (ctx) {
@@ -324,8 +326,25 @@ fabric.Clock = fabric.util.createClass(fabric.Text, {
         }
 });
 
+fabric.Clock.fromObject = function(objects, callback) {
+  var v = new fabric.Clock(objects.text, {
+    fontSize: objects.fontSize,
+    fontFamily: objects.fontFamily,
+    fontWeight: objects.fontWeight,
+    format: objects.format,
+    left: objects.left,
+    top: objects.top
+  });
+  //Bind
+  bindEvents(v);
+  //Programmatically Select Newly Added Object
+  canvas.setActiveObject(v);
+  //Refresh log
+  return v;
+};
+
 //Create Fabric Marquee Class
-fabric.Marquee = fabric.util.createClass(fabric.Text, {
+fabric.Marquee = fabric.util.createClass(fabric.IText, {
   type: 'marquee',
   initialize: function (text, options) {
             options || (options = {});
@@ -342,6 +361,219 @@ fabric.Marquee = fabric.util.createClass(fabric.Text, {
             this.callSuper('_render', ctx);
         }
 });
+
+fabric.Marquee.fromObject = function(objects, callback) {
+  //revive Marquee
+  var i = 0;
+  var v = new fabric.Marquee(objects.text, {
+    text: objects.text,
+    fontSize: objects.fontSize,
+    fontFamily: objects.fontFamily,
+    fontStyle: objects.fontStyle,
+    marquee: objects.marquee,
+    left: objects.left,
+    top: objects.top,
+  });
+  v.setControlsVisibility({
+    bl: false,
+    br: false,
+    mb: false,
+    ml: false,
+    mr: false,
+    mt: false,
+    tl: false,
+    tr: false,
+    mtr: true
+  });
+  //Bind
+  bindEvents(v);
+  //Programmatically Select Newly Added Object
+  canvas.setActiveObject(v);
+  //Transition
+  setTimeout(function(){marquee(objects,i);},objects.marquee.leastTime*1000);
+
+  function marquee(str, i) {
+    if (i >= objects.marquee.string.length-1) {
+      i = 0;
+    } else {
+      i++;
+    }
+    v.setText(objects.marquee.string[i]);
+    canvas.renderAll();
+    setTimeout(function(){marquee(objects,i);},objects.marquee.leastTime*1000);
+  }
+  //Refresh log
+  return v;
+};
+
+//Create Fabric USB Class
+fabric.Usbframe = fabric.util.createClass(fabric.Group, {
+  type: 'usbframe',
+  initialize: function (objects, options) {
+            options || (options = {});
+            
+            this.callSuper('initialize', objects, options);
+            console.log('inittt');
+        },
+  toObject: function () {
+        return fabric.util.object.extend(this.callSuper('toObject'), {
+            link: this.link
+        });
+    },
+  _render: function (ctx) {
+            this.callSuper('_render', ctx);
+        }
+});
+
+fabric.Usbframe.fromObject = function(objects, callback) {
+  console.log(objects);
+  var bg = new fabric.Rect({
+        originX: objects.objects[0].originX,
+        originY: objects.objects[0].originY,
+        fill: objects.objects[0].fill,
+        width: objects.objects[0].width,
+        height: objects.objects[0].height,
+        scaleX: objects.objects[0].scaleX,
+        scaleY: objects.objects[0].scaleY,
+        left: objects.objects[0].left,
+        top: objects.objects[0].top,
+        padding: 0,
+        strokeWidth: 0
+      });
+
+    var text = new fabric.Text(objects.objects[1].text, {
+        originX: objects.objects[1].originX,
+        originY: objects.objects[1].originY,
+        width: objects.objects[1].width,
+        left: objects.objects[1].top,
+        top: objects.objects[1].left,
+        scaleX: objects.objects[1].scaleX,
+        scaleY: objects.objects[1].scaleY,
+        fontSize: objects.objects[1].fontSize,
+        fontFamily: objects.objects[1].fontFamily,
+        textAlign: objects.objects[1].textAlign,
+        fill: objects.objects[1].fill
+      });
+
+  var v = new fabric.Usbframe([bg,text],{
+      originX: objects.originX,
+      originY: objects.originY,
+      left: objects.left,
+      top: objects.top,
+      width: objects.width,
+      height: objects.height,
+      scaleX: objects.scaleX,
+      scaleY: objects.scaleY,
+      padding: 0,
+      strokeWidth: 0
+    });
+  //Bind
+  bindEvents(v);
+  //Programmatically Select Newly Added Object
+  canvas.setActiveObject(v);
+  //Refresh log
+  console.log(v);
+  return v;
+};
+
+//Create Fabric Webview Class
+fabric.Webview = fabric.util.createClass(fabric.Group, {
+  type: 'webview',
+  initialize: function (objects, options) {
+            options || (options = {});
+            
+            this.callSuper('initialize',objects, options);
+            console.log('inittt');
+        },
+  toObject: function () {
+        return fabric.util.object.extend(this.callSuper('toObject'), {
+            link: this.link,
+            view: this.view
+        });
+    },
+  _render: function (ctx) {
+            this.callSuper('_render', ctx);
+        }
+});
+
+fabric.Webview.fromObject = function(objects, callback) {
+  console.log(objects);
+  var bg = new fabric.Rect({
+        originX: objects.objects[0].originX,
+        originY: objects.objects[0].originY,
+        fill: objects.objects[0].fill,
+        width: objects.objects[0].width,
+        height: objects.objects[0].height,
+        scaleX: objects.objects[0].scaleX,
+        scaleY: objects.objects[0].scaleY,
+        left: objects.objects[0].left,
+        top: objects.objects[0].top,
+        padding: 0,
+        strokeWidth: 0
+      });
+
+    var text = new fabric.Text(objects.objects[1].text, {
+        originX: objects.objects[1].originX,
+        originY: objects.objects[1].originY,
+        width: objects.objects[1].width,
+        left: objects.objects[1].top,
+        top: objects.objects[1].left,
+        scaleX: objects.objects[1].scaleX,
+        scaleY: objects.objects[1].scaleY,
+        fontSize: objects.objects[1].fontSize,
+        fontFamily: objects.objects[1].fontFamily,
+        textAlign: objects.objects[1].textAlign,
+        fill: objects.objects[1].fill
+      });
+
+  var v = new fabric.Webview([bg,text],{
+      originX: objects.originX,
+      originY: objects.originY,
+      left: objects.left,
+      top: objects.top,
+      width: objects.width,
+      height: objects.height,
+      scaleX: objects.scaleX,
+      scaleY: objects.scaleY,
+      padding: 0,
+      strokeWidth: 0
+    });
+  //Bind
+  bindEvents(v);
+  //Programmatically Select Newly Added Object
+  canvas.setActiveObject(v);
+  //Refresh log
+  console.log(v);
+  return v;
+};
+
+//Create Fabric Weather Class
+fabric.Weather = fabric.util.createClass(fabric.Group, {
+  type: 'weather',
+  initialize: function (objects,options) {
+            options || (options = {});
+            this.callSuper('initialize',objects, options);
+
+            console.log('inittt');
+        },
+  toObject: function () {
+        return fabric.util.object.extend(this.callSuper('toObject'), {
+            link: this.link,
+            location: this.location
+        });
+    },
+  _render: function (ctx) {
+            this.callSuper('_render', ctx);
+        }
+});
+fabric.Weather.fromObject = function (object, callback) {
+    fabric.util.enlivenObjects(object.objects, function (enlivenedObjects) {
+        delete object.objects;
+        callback && callback(new fabric.Weather(enlivenedObjects, object));
+    });
+};
+
+fabric.Weather.async = true;
 //全域
 var canvas,
 	grid,
@@ -368,6 +600,7 @@ var CanvasComposer = {
 		    CanvasComposer.MediaLibrary();
         CanvasComposer.inboundLinks();
         CanvasComposer.Marquee();
+        CanvasComposer.Clock();
         // CanvasComposer.Load();
 
 		})
@@ -1021,6 +1254,12 @@ CanvasComposer.toolBar = function(){
     addRect:   function (event) {
                   CanvasComposer.Artboard.addRect();
                 },
+    addUsb:   function (event) {
+                  CanvasComposer.Artboard.addUsb();
+                },
+    addWeb: function(event) {
+              CanvasComposer.Artboard.addWeb();
+            },
     addCircle: function (event) {
                   CanvasComposer.Artboard.addCircle();
                 },
@@ -1041,9 +1280,15 @@ CanvasComposer.toolBar = function(){
                   });
                 },
     addClock: function(event) {
-                CanvasComposer.Artboard.Multimedia.clock();
+                // CanvasComposer.Artboard.Multimedia.clock();
+                $(this).parent().siblings().children('a, ul').removeClass('active');
+                //Trigger Submenu
+                $(this).toggleClass('active');
+                var sub = $(this).siblings('ul');
+                sub.toggleClass('active');
               },
     addWeather: function(event) {
+                $(this).parent().siblings().children('a, ul').removeClass('active');
                 //Trigger Submenu
                 $(this).toggleClass('active');
                 var sub = $(this).siblings('ul');
@@ -1205,6 +1450,102 @@ CanvasComposer.Artboard = {
       //Refresh log
       
     },
+  addUsb : function(){
+    var bg = new fabric.Rect({
+        fill: '#333333',
+        width: initRadius*2,
+        height: initRadius*2,
+        left: 0,
+        top: 0,
+        padding: 0,
+        strokeWidth: 0,
+        originX: 'center',
+        originY: 'center'
+      });
+    var text = new fabric.Text('<USB Frame>', {
+        left: 0,
+        top: 0,
+        fontSize: '14',
+        fontFamily: 'Open sans',
+        textAlign: 'center',
+        fill: '#cccccc',
+        originX: 'center',
+        originY: 'center'
+      });
+
+    var group = new fabric.Usbframe([bg,text],{
+        left: canvas.getWidth()/2-initRadius/2,
+        top: canvas.getHeight()/2-initRadius/2,
+        padding: 0,
+        strokeWidth: 0
+      });
+      
+      group.toObject = (function(toObject) {
+        return function() {
+          return fabric.util.object.extend(toObject.call(this), {
+            link: this.link
+          });
+        };
+      })(group.toObject);
+      group.perPixelTargetFind = true;
+      canvas.add(group);
+      //Bind
+      bindEvents(group);
+      //Programmatically Select Newly Added Object
+      canvas.setActiveObject(group);
+      //Refresh log
+  },
+  addWeb : function(url){
+    if (url == undefined) {
+      url = 'http://www.google.com';
+    }
+    var bg = new fabric.Rect({
+        // left: canvas.getWidth()/2-initRadius/2,
+        // top: canvas.getHeight()/2-initRadius/2,
+        fill: '#333333',
+        width: initRadius*2,
+        height: initRadius*2,
+        left: 0,
+        top: 0,
+        padding: 0,
+        strokeWidth: 0,
+        originX: 'center',
+        originY: 'center'
+      });
+
+    var text = new fabric.Text('<WebView>', {
+        left: 0,
+        top: 0,
+        fontSize: '14',
+        fontFamily: 'Open sans',
+        textAlign: 'center',
+        fill: '#cccccc',
+        originX: 'center',
+        originY: 'center'
+      });
+
+    var group = new fabric.Webview([bg,text],{
+        left: 0,
+        top: 0
+      });
+      
+    group.toObject = (function(toObject) {
+      return function() {
+        return fabric.util.object.extend(toObject.call(this), {
+          webview: url,
+          link: this.link
+        });
+      };
+    })(group.toObject);
+    
+    group.perPixelTargetFind = true;
+    canvas.add(group);
+    //Bind
+    bindEvents(group);
+    //Programmatically Select Newly Added Object
+    canvas.setActiveObject(group);
+    //Refresh log
+  },
   addCircle : function(){
     var circle = new fabric.Circle({
       left: canvas.getWidth()/2-initRadius/2,
@@ -1254,7 +1595,7 @@ CanvasComposer.Artboard = {
     // var str = [{string:'台灣人瘋臉書，你知道全台最有人氣粉絲團是哪位嗎？', leastTime: '6', transitionType: 'default', transitionPeriod: '2'}, {string:'具惠善安宰賢姊弟戀達陣！下月完婚(4551)', leastTime: '6', transitionType: 'default', transitionPeriod: '2'}, {string:'安海瑟威當媽媽已1周　產下健康男嬰(20213)', leastTime: '6', transitionType: 'default', transitionPeriod: '2'}];
     //Always Create Text Object from first string.
     var i = 0;
-    var text = new fabric.Marquee(str[i].string,{
+    var text = new fabric.Marquee(str.string[i],{
       //options
       left: canvas.getWidth()/2,
       top: canvas.getHeight()/2,
@@ -1288,17 +1629,17 @@ CanvasComposer.Artboard = {
     canvas.setActiveObject(text);
 
     //Transition
-    setTimeout(function(){marquee(str,i);},str[i].leastTime*1000);
+    setTimeout(function(){marquee(str,i);},str.leastTime*1000);
 
     function marquee(str, i) {
-      if (i >= str.length-1) {
+      if (i >= str.string.length-1) {
         i = 0;
       } else {
         i++;
       }
-      text.setText(str[i].string);
+      text.setText(str.string[i]);
       canvas.renderAll();
-      setTimeout(function(){marquee(str,i);},str[i].leastTime*1000);
+      setTimeout(function(){marquee(str,i);},str.leastTime*1000);
     }
   },
   addMedia : function(objImage) {
@@ -1669,19 +2010,59 @@ CanvasComposer.Artboard.Multimedia = {
        top: 100
       });
     },
-    clock : function() {
+    clock : function(format) {
+      var time;
+      //Determin TimeStamp Type
+      var timeFormat = function(format){
+        console.log(format);
+        switch (format) {
+          case '0':
+            time = moment().format();
+            return time;
+            break;
+          case '1':
+            time = moment().format("MMMM Do YYYY, h:mm:ss a");
+            return time;
+            break;
+          case '2':
+            time = moment().format("dddd");
+            return time;
+            break;
+          case '3':
+            time = moment().format("MMM Do YY");
+            return time;
+            break;
+          case '4':
+            time = moment().format('LLL');
+            return time;
+            break;
+          case '5':
+            time = moment().format('LLLL');
+            return time;
+            break;
+          case '6':
+            time = moment().format('LT');
+            return time;
+            break;
+          case '7':
+            time = moment().format('LTS');
+            return time;
+            break;
+        }
+      }
+      moment.locale('zh-tw');
+      console.log(time);
       //Add Clock Object
-      Date.prototype.timeNow = function(){ return ((this.getHours() < 10)?"0":"") + ((this.getHours()>12)?(this.getHours()-12):this.getHours()) +":"+ ((this.getMinutes() < 10)?"0":"") + this.getMinutes() +":"+ ((this.getSeconds() < 10)?"0":"") + this.getSeconds() + ((this.getHours()>12)?('PM'):'AM'); };
-
-      var clock = new fabric.Clock(new Date().timeNow(),{
+      var clock = new fabric.Clock(timeFormat(format),{
         fontSize: '36',
-        fontFamily: 'open-sans',
+        fontFamily: 'Open sans',
         fontWeight: 400
       });
       
       clock.toObject = (function(toObject) {
         return function() {
           return fabric.util.object.extend(toObject.call(this), {
+            format: format,
             link: this.link
           });
         };
@@ -1694,7 +2075,7 @@ CanvasComposer.Artboard.Multimedia = {
       canvas.setActiveObject(clock);
       //Refresh log
       // setTimeout(function(){bgRelacer(i,res,id)}, leastTime);
-      setInterval(function(){clock.setText(new Date().timeNow());canvas.renderAll();}, 1000);
+      setInterval(function(){clock.setText(timeFormat(format));canvas.renderAll();}, 1000);
 
     },
     weather: function(location) {
@@ -1718,53 +2099,44 @@ CanvasComposer.Artboard.Multimedia = {
             left: 70,
             top: 50,
             fontSize: '18',
-            fontFamily: 'open-sans'
+            fontFamily: 'Open sans'
           });
           var fTemp = new fabric.Text(temp, {
             left: 0,
             top: 90,
             fontSize: '60',
-            fontFamily: 'open-sans',
+            fontFamily: 'Open sans',
             fontWeight: 300
           });
           var fLocation = new fabric.Text(city, {
             left: 0,
             top: 0,
             fontSize: '18',
-            fontFamily: 'open-sans'
+            fontFamily: 'Open sans'
           });
-          // fLocation.scaleToWidth(fTemp.getWidth());
-          // console.log(fLocation.getWidth());
-          // console.log(fTemp.getWidth());
-          // fText.scaleToWidth(fTemp.getWidth()/fText.getWidth());
-          // fLocation.scaleToWidth(fTemp.getWidth()/fLocation.getWidth());
-          // console.log(fLocation.getWidth());
+          var weather = new fabric.Weather([fText,fTemp,fLocation,oImg], {
+            left: 0,
+            top: 0
+          });
 
-          var weather = new fabric.Group([ fText,fTemp,fLocation,oImg], {
-            left: 150,
-            top: 100
-          });
+          weather.toObject = (function(toObject) {
+            return function() {
+              return fabric.util.object.extend(toObject.call(this), {
+                location: location,
+                link: this.link
+              });
+            };
+          })(weather.toObject);
+
           canvas.add(weather);
-          // canvas.add(fText);
-          // canvas.add(fTemp);
-          // canvas.add(fLocation);
-          // canvas.add(oImg);
           //Bind
           bindEvents(weather);
-          // bindEvents(fText);
-          // bindEvents(fTemp);
-          // bindEvents(fLocation);
-          // bindEvents(oImg);
           //Programmatically Select Newly Added Object
           canvas.setActiveObject(weather);
         });
         
       });
-    },
-    iframe : function() {
-      //Get Screen Shot Only
     }
-
 };
 
 CanvasComposer.attrPanels = function(){
@@ -2962,15 +3334,18 @@ CanvasComposer.Marquee = function(){
 
 	$('.js-sendToMarquee').on('click', function(){
 		var marquee = {};
-		var marqueeGroup = [];
+		var marqueeGroup;
 		var marqueestring,
 			marqueeleasttime,
 			marqueetype,
 			marqueetransitionperiod;
 		var marqueedefault = 3;
+
 		var activeTarget = $('.marquee-form.active');
-		activeTarget.find('.string-item').each(function(){
-			marqueestring = $(this).find('.marquee-string').val();
+		activeTarget.each(function(){
+			marqueestring = new Array;
+			marqueestring = $(this).find('.marquee-string').val().split('\n');
+			console.log(marqueestring);
 			marqueeleasttime = $(this).find('.marquee-leasttime').val();
 			marqueetype = $(this).find('.marquee-type').val();
 			marqueetransitionperiod = $(this).find('.marquee-transitionperiod').val();
@@ -2987,17 +3362,26 @@ CanvasComposer.Marquee = function(){
 			if(marqueetransitionperiod == '') {
 				marqueetransitionperiod = marqueedefault;
 			}
-			marquee = {string: marqueestring, leastTime: marqueeleasttime, transitionType: marqueetype, transitionPeriod: marqueetransitionperiod};
-			marqueeGroup.push(marquee);
+			marquee = { string: marqueestring, leastTime: marqueeleasttime, transitionType: marqueetype, transitionPeriod: marqueetransitionperiod };
+			// marqueeGroup.push(marquee);
 		});
-		console.log(marqueeGroup);
+		console.log(marquee);
 		//Create
-		CanvasComposer.Artboard.addMarquee(marqueeGroup);
+		CanvasComposer.Artboard.addMarquee(marquee);
 		$('#marquee-settings').removeClass('active');
 	});
 	$('#marquee-settings').find('.js-close').on('click', function(){
 		$('#marquee-settings').removeClass('active');
 	});
+};
+CanvasComposer.Clock = function(){
+	$('.js-send-timeformat').on('click', function(){
+		var timeFormat = $('#timeFormat').val();
+		console.log(typeof timeFormat);
+		CanvasComposer.Artboard.Multimedia.clock(timeFormat);
+		$(this).parents('ul').removeClass('active');
+	});
+
 };
 
 // Spectrum Colorpicker v1.8.0
