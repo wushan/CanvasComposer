@@ -28,22 +28,25 @@ CanvasComposer.Artboard = {
     },
   addUsb : function(){
     var bg = new fabric.Rect({
-        // left: canvas.getWidth()/2-initRadius/2,
-        // top: canvas.getHeight()/2-initRadius/2,
         fill: '#333333',
         width: initRadius*2,
         height: initRadius*2,
+        left: 0,
+        top: 0,
         padding: 0,
-        strokeWidth: 0
+        strokeWidth: 0,
+        originX: 'center',
+        originY: 'center'
       });
     var text = new fabric.Text('<USB Frame>', {
-        width: initRadius,
-        left: 20,
-        top: 20,
+        left: 0,
+        top: 0,
         fontSize: '14',
         fontFamily: 'Open sans',
         textAlign: 'center',
-        fill: '#cccccc'
+        fill: '#cccccc',
+        originX: 'center',
+        originY: 'center'
       });
 
     var group = new fabric.Usbframe([bg,text],{
@@ -76,8 +79,8 @@ CanvasComposer.Artboard = {
         // left: canvas.getWidth()/2-initRadius/2,
         // top: canvas.getHeight()/2-initRadius/2,
         fill: '#333333',
-        width: initRadius*3,
-        height: initRadius*3,
+        width: initRadius*2,
+        height: initRadius*2,
         left: 0,
         top: 0,
         padding: 0,
@@ -85,6 +88,7 @@ CanvasComposer.Artboard = {
         originX: 'center',
         originY: 'center'
       });
+
     var text = new fabric.Text('<WebView>', {
         left: 0,
         top: 0,
@@ -101,22 +105,22 @@ CanvasComposer.Artboard = {
         top: 0
       });
       
-      group.toObject = (function(toObject) {
-        return function() {
-          return fabric.util.object.extend(toObject.call(this), {
-            webview: url,
-            link: this.link
-          });
-        };
-      })(group.toObject);
-      
-      group.perPixelTargetFind = true;
-      canvas.add(group);
-      //Bind
-      bindEvents(group);
-      //Programmatically Select Newly Added Object
-      canvas.setActiveObject(group);
-      //Refresh log
+    group.toObject = (function(toObject) {
+      return function() {
+        return fabric.util.object.extend(toObject.call(this), {
+          webview: url,
+          link: this.link
+        });
+      };
+    })(group.toObject);
+    
+    group.perPixelTargetFind = true;
+    canvas.add(group);
+    //Bind
+    bindEvents(group);
+    //Programmatically Select Newly Added Object
+    canvas.setActiveObject(group);
+    //Refresh log
   },
   addCircle : function(){
     var circle = new fabric.Circle({
