@@ -1038,7 +1038,7 @@ CanvasComposer.toolBar = function(){
                     {
                         container.parent().removeClass('active');
                     }
-                });
+                  });
                 },
     addClock: function(event) {
                 CanvasComposer.Artboard.Multimedia.clock();

@@ -26,6 +26,98 @@ CanvasComposer.Artboard = {
       //Refresh log
       
     },
+  addUsb : function(){
+    var bg = new fabric.Rect({
+        // left: canvas.getWidth()/2-initRadius/2,
+        // top: canvas.getHeight()/2-initRadius/2,
+        fill: '#333333',
+        width: initRadius*2,
+        height: initRadius*2,
+        padding: 0,
+        strokeWidth: 0
+      });
+    var text = new fabric.Text('<USB Frame>', {
+        width: initRadius,
+        left: 20,
+        top: 20,
+        fontSize: '14',
+        fontFamily: 'Open sans',
+        textAlign: 'center',
+        fill: '#cccccc'
+      });
+
+    var group = new fabric.Usbframe([bg,text],{
+        left: canvas.getWidth()/2-initRadius/2,
+        top: canvas.getHeight()/2-initRadius/2,
+        padding: 0,
+        strokeWidth: 0
+      });
+      
+      group.toObject = (function(toObject) {
+        return function() {
+          return fabric.util.object.extend(toObject.call(this), {
+            link: this.link
+          });
+        };
+      })(group.toObject);
+      group.perPixelTargetFind = true;
+      canvas.add(group);
+      //Bind
+      bindEvents(group);
+      //Programmatically Select Newly Added Object
+      canvas.setActiveObject(group);
+      //Refresh log
+  },
+  addWeb : function(url){
+    if (url == undefined) {
+      url = 'http://www.google.com';
+    }
+    var bg = new fabric.Rect({
+        // left: canvas.getWidth()/2-initRadius/2,
+        // top: canvas.getHeight()/2-initRadius/2,
+        fill: '#333333',
+        width: initRadius*3,
+        height: initRadius*3,
+        left: 0,
+        top: 0,
+        padding: 0,
+        strokeWidth: 0,
+        originX: 'center',
+        originY: 'center'
+      });
+    var text = new fabric.Text('<WebView>', {
+        left: 0,
+        top: 0,
+        fontSize: '14',
+        fontFamily: 'Open sans',
+        textAlign: 'center',
+        fill: '#cccccc',
+        originX: 'center',
+        originY: 'center'
+      });
+
+    var group = new fabric.Webview([bg,text],{
+        left: 0,
+        top: 0
+      });
+      
+      group.toObject = (function(toObject) {
+        return function() {
+          return fabric.util.object.extend(toObject.call(this), {
+            webview: url,
+            link: this.link
+          });
+        };
+      })(group.toObject);
+      
+      group.perPixelTargetFind = true;
+      canvas.add(group);
+      //Bind
+      bindEvents(group);
+      //Programmatically Select Newly Added Object
+      canvas.setActiveObject(group);
+      //Refresh log
+  },
   addCircle : function(){
     var circle = new fabric.Circle({
       left: canvas.getWidth()/2-initRadius/2,
@@ -75,7 +167,7 @@ CanvasComposer.Artboard = {
     // var str = [{string:'台灣人瘋臉書，你知道全台最有人氣粉絲團是哪位嗎？', leastTime: '6', transitionType: 'default', transitionPeriod: '2'}, {string:'具惠善安宰賢姊弟戀達陣！下月完婚(4551)', leastTime: '6', transitionType: 'default', transitionPeriod: '2'}, {string:'安海瑟威當媽媽已1周　產下健康男嬰(20213)', leastTime: '6', transitionType: 'default', transitionPeriod: '2'}];
     //Always Create Text Object from first string.
     var i = 0;
-    var text = new fabric.Marquee(str[i].string,{
+    var text = new fabric.Marquee(str.string[i],{
       //options
       left: canvas.getWidth()/2,
       top: canvas.getHeight()/2,
@@ -109,17 +201,17 @@ CanvasComposer.Artboard = {
     canvas.setActiveObject(text);
 
     //Transition
-    setTimeout(function(){marquee(str,i);},str[i].leastTime*1000);
+    setTimeout(function(){marquee(str,i);},str.leastTime*1000);
 
     function marquee(str, i) {
-      if (i >= str.length-1) {
+      if (i >= str.string.length-1) {
         i = 0;
       } else {
         i++;
       }
-      text.setText(str[i].string);
+      text.setText(str.string[i]);
       canvas.renderAll();
-      setTimeout(function(){marquee(str,i);},str[i].leastTime*1000);
+      setTimeout(function(){marquee(str,i);},str.leastTime*1000);
     }
   },
   addMedia : function(objImage) {
@@ -490,19 +582,59 @@ CanvasComposer.Artboard.Multimedia = {
        top: 100
       });
     },
-    clock : function() {
+    clock : function(format) {
+      var time;
+      //Determin TimeStamp Type
+      var timeFormat = function(format){
+        console.log(format);
+        switch (format) {
+          case '0':
+            time = moment().format();
+            return time;
+            break;
+          case '1':
+            time = moment().format("MMMM Do YYYY, h:mm:ss a");
+            return time;
+            break;
+          case '2':
+            time = moment().format("dddd");
+            return time;
+            break;
+          case '3':
+            time = moment().format("MMM Do YY");
+            return time;
+            break;
+          case '4':
+            time = moment().format('LLL');
+            return time;
+            break;
+          case '5':
+            time = moment().format('LLLL');
+            return time;
+            break;
+          case '6':
+            time = moment().format('LT');
+            return time;
+            break;
+          case '7':
+            time = moment().format('LTS');
+            return time;
+            break;
+        }
+      }
+      moment.locale('zh-tw');
+      console.log(time);
       //Add Clock Object
-      Date.prototype.timeNow = function(){ return ((this.getHours() < 10)?"0":"") + ((this.getHours()>12)?(this.getHours()-12):this.getHours()) +":"+ ((this.getMinutes() < 10)?"0":"") + this.getMinutes() +":"+ ((this.getSeconds() < 10)?"0":"") + this.getSeconds() + ((this.getHours()>12)?('PM'):'AM'); };
-
-      var clock = new fabric.Clock(new Date().timeNow(),{
+      var clock = new fabric.Clock(timeFormat(format),{
         fontSize: '36',
-        fontFamily: 'open-sans',
+        fontFamily: 'Open sans',
         fontWeight: 400
       });
       
       clock.toObject = (function(toObject) {
         return function() {
           return fabric.util.object.extend(toObject.call(this), {
+            format: format,
             link: this.link
           });
         };
@@ -515,7 +647,7 @@ CanvasComposer.Artboard.Multimedia = {
       canvas.setActiveObject(clock);
       //Refresh log
       // setTimeout(function(){bgRelacer(i,res,id)}, leastTime);
-      setInterval(function(){clock.setText(new Date().timeNow());canvas.renderAll();}, 1000);
+      setInterval(function(){clock.setText(timeFormat(format));canvas.renderAll();}, 1000);
 
     },
     weather: function(location) {
@@ -539,51 +671,42 @@ CanvasComposer.Artboard.Multimedia = {
             left: 70,
             top: 50,
             fontSize: '18',
-            fontFamily: 'open-sans'
+            fontFamily: 'Open sans'
           });
           var fTemp = new fabric.Text(temp, {
             left: 0,
             top: 90,
             fontSize: '60',
-            fontFamily: 'open-sans',
+            fontFamily: 'Open sans',
             fontWeight: 300
           });
           var fLocation = new fabric.Text(city, {
             left: 0,
             top: 0,
             fontSize: '18',
-            fontFamily: 'open-sans'
+            fontFamily: 'Open sans'
           });
-          // fLocation.scaleToWidth(fTemp.getWidth());
-          // console.log(fLocation.getWidth());
-          // console.log(fTemp.getWidth());
-          // fText.scaleToWidth(fTemp.getWidth()/fText.getWidth());
-          // fLocation.scaleToWidth(fTemp.getWidth()/fLocation.getWidth());
-          // console.log(fLocation.getWidth());
+          var weather = new fabric.Weather([fText,fTemp,fLocation,oImg], {
+            left: 0,
+            top: 0
+          });
 
-          var weather = new fabric.Group([ fText,fTemp,fLocation,oImg], {
-            left: 150,
-            top: 100
-          });
+          weather.toObject = (function(toObject) {
+            return function() {
+              return fabric.util.object.extend(toObject.call(this), {
+                location: location,
+                link: this.link
+              });
+            };
+          })(weather.toObject);
+
           canvas.add(weather);
-          // canvas.add(fText);
-          // canvas.add(fTemp);
-          // canvas.add(fLocation);
-          // canvas.add(oImg);
           //Bind
           bindEvents(weather);
-          // bindEvents(fText);
-          // bindEvents(fTemp);
-          // bindEvents(fLocation);
-          // bindEvents(oImg);
           //Programmatically Select Newly Added Object
           canvas.setActiveObject(weather);
         });
         
       });
-    },
-    iframe : function() {
-      //Get Screen Shot Only
     }
-
 };

@@ -24,6 +24,7 @@ var CanvasComposer = {
 		    CanvasComposer.MediaLibrary();
         CanvasComposer.inboundLinks();
         CanvasComposer.Marquee();
+        CanvasComposer.Clock();
         // CanvasComposer.Load();
 
 		})

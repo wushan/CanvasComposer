@@ -4,6 +4,11 @@
 			a.full.btn.basic.js-add-rect(href="javascript:;" title="新增矩形", data-action='addRect')
 				i.fa.fa-object-group.fa-lg
 		li
+			a.full.btn.basic(href="javascript:;" title="USB", data-action='addUsb') USB
+		li
+			a.full.btn.basic(href="javascript:;" title="WWW", data-action='addWeb') WWW
+		
+		li
 			a.full.btn.basic.js-add-circle(href="javascript:;" title="新增圓形", data-action='addCircle')
 				i.fa.fa-circle-thin.fa-lg
 		li
@@ -15,6 +20,25 @@
 		li
 			a.full.btn.basic.js-add-clock(href="javascript:;" title="新增時鐘", data-action='addClock')
 				i.fa.fa-clock-o.fa-lg
+			ul
+				li
+					.widget-block
+						.widget-title 加入時間格式
+						.widget-content
+							.controlgroup
+								.selet-wrapper
+									select#timeFormat
+										option(value='0') 2016-04-26T13:00:31+08:00
+										option(value='1') 四月 26日 2016, 12:59:12 下午
+										option(value='2') 星期二
+										option(value='3') 4月 26日 16
+										option(value='4') 2016年4月26日下午1點30分
+										option(value='5') 2016年4月26日星期二下午1點30分
+										option(value='6') 下午1點31分
+										option(value='7') 下午1點31分28秒
+							.call-action
+								a.btn.basic.full.js-send-timeformat(href='javascript:;') 置入
+							
 		li
 			a.full.btn.basic(href="javascript:;" title="新增天氣", data-action='addWeather')
 				i.fa.fa-cloud.fa-lg
@@ -76,6 +100,12 @@
 										.controls
 											input#canvasHeight(type="number" value="600")
 						.row.layoutpresets
+							.block
+								a(href="javascript:;" data-src="scripts/presets/800x600/loadtest.json")
+									.thumbnail
+										img(src='http://unsplash.it/400/400')
+									.name.
+										Component Test
 							.block
 								a(href="javascript:;" data-src="scripts/presets/800x600/local.json")
 									.thumbnail

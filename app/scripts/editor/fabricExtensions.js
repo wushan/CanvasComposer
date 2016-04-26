@@ -316,7 +316,8 @@ fabric.Clock = fabric.util.createClass(fabric.Text, {
         },
   toObject: function () {
         return fabric.util.object.extend(this.callSuper('toObject'), {
-            
+            format: this.format,
+            link: this.link
         });
     },
   _render: function (ctx) {
@@ -324,8 +325,23 @@ fabric.Clock = fabric.util.createClass(fabric.Text, {
         }
 });
 
+fabric.Clock.fromObject = function(objects, callback) {
+  var v = new fabric.Clock(objects.text, {
+    fontSize: '36',
+    fontFamily: 'Open sans',
+    fontWeight: 400,
+    format: objects.format
+  });
+  //Bind
+  bindEvents(v);
+  //Programmatically Select Newly Added Object
+  canvas.setActiveObject(v);
+  //Refresh log
+  return v;
+};
+
 //Create Fabric Marquee Class
-fabric.Marquee = fabric.util.createClass(fabric.Text, {
+fabric.Marquee = fabric.util.createClass(fabric.IText, {
   type: 'marquee',
   initialize: function (text, options) {
             options || (options = {});
@@ -342,3 +358,181 @@ fabric.Marquee = fabric.util.createClass(fabric.Text, {
             this.callSuper('_render', ctx);
         }
 });
+
+fabric.Marquee.fromObject = function(objects, callback) {
+  //revive Marquee
+  var i = 0;
+  var v = new fabric.Marquee(objects.text, {
+    text: objects.text,
+    fontSize: objects.fontSize,
+    fontFamily: objects.fontFamily,
+    fontStyle: objects.fontStyle,
+    marquee: objects.marquee,
+    left: objects.left,
+    top: objects.top,
+  });
+  v.setControlsVisibility({
+    bl: false,
+    br: false,
+    mb: false,
+    ml: false,
+    mr: false,
+    mt: false,
+    tl: false,
+    tr: false,
+    mtr: true
+  });
+  //Bind
+  bindEvents(v);
+  //Programmatically Select Newly Added Object
+  canvas.setActiveObject(v);
+  //Transition
+  setTimeout(function(){marquee(objects,i);},objects.marquee.leastTime*1000);
+
+  function marquee(str, i) {
+    if (i >= objects.marquee.string.length-1) {
+      i = 0;
+    } else {
+      i++;
+    }
+    v.setText(objects.marquee.string[i]);
+    canvas.renderAll();
+    setTimeout(function(){marquee(objects,i);},objects.marquee.leastTime*1000);
+  }
+  //Refresh log
+  return v;
+};
+
+//Create Fabric USB Class
+fabric.Usbframe = fabric.util.createClass(fabric.Group, {
+  type: 'usbframe',
+  initialize: function (objects, options) {
+            options || (options = {});
+            
+            this.callSuper('initialize', objects, options);
+            console.log('inittt');
+        },
+  toObject: function () {
+        return fabric.util.object.extend(this.callSuper('toObject'), {
+            link: this.link
+        });
+    },
+  _render: function (ctx) {
+            this.callSuper('_render', ctx);
+        }
+});
+
+//Create Fabric Webview Class
+fabric.Webview = fabric.util.createClass(fabric.Group, {
+  type: 'webview',
+  initialize: function (objects, options) {
+            options || (options = {});
+            
+            this.callSuper('initialize',objects, options);
+            console.log('inittt');
+        },
+  toObject: function () {
+        return fabric.util.object.extend(this.callSuper('toObject'), {
+            link: this.link,
+            view: this.view
+        });
+    },
+  _render: function (ctx) {
+            this.callSuper('_render', ctx);
+        }
+});
+
+fabric.Webview.fromObject = function(objects, callback) {
+  console.log(objects);
+  var bg = new fabric.Rect({
+        originX: objects.objects[0].originX,
+        originY: objects.objects[0].originY,
+        fill: objects.objects[0].fill,
+        width: objects.objects[0].width,
+        height: objects.objects[0].height,
+        scaleX: objects.objects[0].scaleX,
+        scaleY: objects.objects[0].scaleY,
+        left: objects.objects[0].left,
+        top: objects.objects[0].top,
+        padding: 0,
+        strokeWidth: 0
+      });
+
+    var text = new fabric.Text(objects.objects[1].text, {
+        originX: objects.objects[1].originX,
+        originY: objects.objects[1].originY,
+        width: objects.objects[1].width,
+        left: objects.objects[1].top,
+        top: objects.objects[1].left,
+        scaleX: objects.objects[1].scaleX,
+        scaleY: objects.objects[1].scaleY,
+        fontSize: objects.objects[1].fontSize,
+        fontFamily: objects.objects[1].fontFamily,
+        textAlign: objects.objects[1].textAlign,
+        fill: objects.objects[1].fill
+      });
+
+  var v = new fabric.Webview([bg,text],{
+      originX: objects.originX,
+      originY: objects.originY,
+      left: objects.left,
+      top: objects.top,
+      width: objects.width,
+      height: objects.height,
+      scaleX: objects.scaleX,
+      scaleY: objects.scaleY,
+      padding: 0,
+      strokeWidth: 0
+    });
+  //Bind
+  bindEvents(v);
+  //Programmatically Select Newly Added Object
+  canvas.setActiveObject(v);
+  //Refresh log
+  console.log(v);
+  return v;
+};
+
+//Create Fabric Weather Class
+fabric.Weather = fabric.util.createClass(fabric.Group, {
+  type: 'weather',
+  initialize: function (objects,options) {
+            options || (options = {});
+            
+            this.callSuper('initialize',objects, options);
+            console.log('inittt');
+        },
+  toObject: function () {
+        return fabric.util.object.extend(this.callSuper('toObject'), {
+            link: this.link,
+            location: this.location
+        });
+    },
+  _render: function (ctx) {
+            this.callSuper('_render', ctx);
+        }
+});
+fabric.Weather.fromObject = function (object, callback) {
+    var _enlivenedObjects;
+    console.log(object);
+    fabric.util.enlivenObjects(object.objects, function (enlivenedObjects) {
+        console.log(object.objects);
+        delete object.objects;
+        console.log(object.objects);
+        _enlivenedObjects = enlivenedObjects;
+        console.log(_enlivenedObjects);
+    });
+
+    var v = new fabric.Weather(_enlivenedObjects, object);
+    //Bind
+    bindEvents(v);
+    //Programmatically Select Newly Added Object
+    canvas.setActiveObject(v);
+    //Refresh log
+    canvas.add(_enlivenedObjects[0]);
+    console.log(v);
+    return v;
+};
+// fabric.Weather.fromObject = function(object, callback) {
+  
+// }

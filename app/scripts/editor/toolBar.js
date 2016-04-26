@@ -4,6 +4,12 @@ CanvasComposer.toolBar = function(){
     addRect:   function (event) {
                   CanvasComposer.Artboard.addRect();
                 },
+    addUsb:   function (event) {
+                  CanvasComposer.Artboard.addUsb();
+                },
+    addWeb: function(event) {
+              CanvasComposer.Artboard.addWeb();
+            },
     addCircle: function (event) {
                   CanvasComposer.Artboard.addCircle();
                 },
@@ -21,12 +27,18 @@ CanvasComposer.toolBar = function(){
                     {
                         container.parent().removeClass('active');
                     }
-                });
+                  });
                 },
     addClock: function(event) {
-                CanvasComposer.Artboard.Multimedia.clock();
+                // CanvasComposer.Artboard.Multimedia.clock();
+                $(this).parent().siblings().children('a, ul').removeClass('active');
+                //Trigger Submenu
+                $(this).toggleClass('active');
+                var sub = $(this).siblings('ul');
+                sub.toggleClass('active');
               },
     addWeather: function(event) {
+                $(this).parent().siblings().children('a, ul').removeClass('active');
                 //Trigger Submenu
                 $(this).toggleClass('active');
                 var sub = $(this).siblings('ul');

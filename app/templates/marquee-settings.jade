@@ -47,41 +47,32 @@
 									.controls
 										input.marquee-transitionperiod(type='number', placeholder='3')
 					#fromcustom.marquee-form
-						.button-group.right
-							a.btn.basic.js-addRow(href="javascript:;")
-								i.fa.fa-plus
-							a.btn.delete.js-removeRow(href="javascript:;")
-								i.fa.fa-times
+						
 						.string-list-wrapper
-							.string-item.row
-								.grid.g-3-12
-									.controlgroup
-										label 字串：
-										.controls
-											input.marquee-string(type='text', placeholder='字串')
-								.grid.g-3-12
+							.string-settings.row
+								.grid.g-4-12
 									.controlgroup
 										label 持續時間：
 										.controls
 											input.marquee-leasttime(type='number', placeholder='3')
-								.grid.g-3-12
+								.grid.g-4-12
 									.controlgroup
 										label 切換特效：
 										.controls
 											.select-wrapper
 												select.marquee-type
-													option(value='default') 預設
-													option(value='random') 隨機
-													option(value='rightleft') 由右至左
-													option(value='leftright') 由左至右
-													option(value='topbottom') 由上至下
-													option(value='bottomtop') 由下至上
-													option(value='fade') 淡入淡出
-								.grid.g-3-12
+													option(value='horizontal') 單行(水平)
+													option(value='vertical') 多行(垂直)
+								.grid.g-4-12
 									.controlgroup
 										label 特效時間：
 										.controls
 											input.marquee-transitionperiod(type='number', placeholder='3')
+							.string-item
+								.controlgroup
+									label 字串：
+									.controls
+										textarea.marquee-string(placeholder='字串')
 						
 				.call-action.centered
 					a.btn.basic.js-sendToMarquee(href="javascript:;") 建立跑馬燈

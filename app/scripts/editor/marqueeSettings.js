@@ -19,15 +19,18 @@ CanvasComposer.Marquee = function(){
 
 	$('.js-sendToMarquee').on('click', function(){
 		var marquee = {};
-		var marqueeGroup = [];
+		var marqueeGroup;
 		var marqueestring,
 			marqueeleasttime,
 			marqueetype,
 			marqueetransitionperiod;
 		var marqueedefault = 3;
+
 		var activeTarget = $('.marquee-form.active');
-		activeTarget.find('.string-item').each(function(){
-			marqueestring = $(this).find('.marquee-string').val();
+		activeTarget.each(function(){
+			marqueestring = new Array;
+			marqueestring = $(this).find('.marquee-string').val().split('\n');
+			console.log(marqueestring);
 			marqueeleasttime = $(this).find('.marquee-leasttime').val();
 			marqueetype = $(this).find('.marquee-type').val();
 			marqueetransitionperiod = $(this).find('.marquee-transitionperiod').val();
@@ -44,12 +47,12 @@ CanvasComposer.Marquee = function(){
 			if(marqueetransitionperiod == '') {
 				marqueetransitionperiod = marqueedefault;
 			}
-			marquee = {string: marqueestring, leastTime: marqueeleasttime, transitionType: marqueetype, transitionPeriod: marqueetransitionperiod};
-			marqueeGroup.push(marquee);
+			marquee = { string: marqueestring, leastTime: marqueeleasttime, transitionType: marqueetype, transitionPeriod: marqueetransitionperiod };
+			// marqueeGroup.push(marquee);
 		});
-		console.log(marqueeGroup);
+		console.log(marquee);
 		//Create
-		CanvasComposer.Artboard.addMarquee(marqueeGroup);
+		CanvasComposer.Artboard.addMarquee(marquee);
 		$('#marquee-settings').removeClass('active');
 	});
 	$('#marquee-settings').find('.js-close').on('click', function(){

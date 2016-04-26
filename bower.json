@@ -7,7 +7,8 @@
     "underscore": "^1.8.3",
     "fabric.js": "fabric#^1.5.0",
     "weyproui": "^0.0.4",
-    "bourbon": "^4.2.6"
+    "bourbon": "^4.2.6",
+    "moment": "^2.13.0"
   },
   "devDependencies": {
     "chai": "^3.5.0",

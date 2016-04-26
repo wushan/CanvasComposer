@@ -1,4 +1,4 @@
-include mixin/_mixin
+include ../templates/mixin/_mixin
 doctype html
 html.no-js
   head
@@ -79,9 +79,11 @@ html.no-js
       script(src='scripts/editor/logController.js')
       script(src='scripts/editor/weatherapi.js')
       script(src='scripts/editor/marqueeSettings.js')
+      script(src='scripts/editor/clockSettings.js')
       script(src='scripts/editor/fontHandler.js')
       script(src='scripts/vendor/spectrum.js')
       script(src='scripts/lib/Sortable.min.js')
+      script(src='../bower_components/moment/min/moment-with-locales.min.js')
       //- script(src='../bower_components/weyproui/dist/scripts/main.js')
       // endbuild
     block pagescripts
