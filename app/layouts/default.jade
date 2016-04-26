@@ -17,23 +17,6 @@ html.no-js
         s.parentNode.insertBefore(wf, s);
       })(document);
       
-      //- function fontLoader(name){
-      //-   WebFontConfig = {
-      //-     loading: function() {
-      //-       console.log('loading');
-      //-     },
-      //-     active: function() {
-      //-       console.log('active');
-      //-     },
-      //-     inactive: function() {
-      //-       console.log('ahh');
-      //-     },
-      //-     google: {
-      //-       families: name
-      //-     }
-      //-   };
-      //- }
-
     // build:css styles/CanvasComposer.css
     link(rel='stylesheet' href='styles/editor.css')
     // endbuild
@@ -60,6 +43,11 @@ html.no-js
       // build:js scripts/fabric.js
       script(src='scripts/vendor/fabric.js')
       // endbuild
+      
+      // build:js scripts/moment.js
+      script(src='../bower_components/moment/moment.js')
+      // endbuild
+      
       // build:js scripts/CanvasComposer.js
       script(src='scripts/editor/fabricExtensions.js')
       script(src='scripts/CanvasComposer.js')
@@ -83,7 +71,6 @@ html.no-js
       script(src='scripts/editor/fontHandler.js')
       script(src='scripts/vendor/spectrum.js')
       script(src='scripts/lib/Sortable.min.js')
-      script(src='../bower_components/moment/min/moment-with-locales.min.js')
       //- script(src='../bower_components/weyproui/dist/scripts/main.js')
       // endbuild
     block pagescripts
